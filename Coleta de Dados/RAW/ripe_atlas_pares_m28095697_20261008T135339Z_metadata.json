@@ -1,0 +1,42 @@
+{
+  "measurement_id": 28095697,
+  "is_oneoff": false,
+  "interval": 240,
+  "quantidade_pares_solicitados": 20,
+  "pares_prb_ids": [
+    6251,
+    6313,
+    6316,
+    6317,
+    6320,
+    6323,
+    6324,
+    6325,
+    6326,
+    6327,
+    6328,
+    6329,
+    6330,
+    6331,
+    6332,
+    6333,
+    6334,
+    6335,
+    6336,
+    6342
+  ],
+  "url": "https://atlas.ripe.net/api/v2/measurements/28095697/results/",
+  "parametros": {
+    "start": 1790862819,
+    "stop": 1791467619,
+    "probe_ids": "6251,6313,6316,6317,6320,6323,6324,6325,6326,6327,6328,6329,6330,6331,6332,6333,6334,6335,6336,6342",
+    "format": "json"
+  },
+  "inicio_utc": "2026-10-01T13:53:39.407734+00:00",
+  "fim_utc": "2026-10-08T13:53:39.407734+00:00",
+  "coletado_em_utc": "2026-10-08T13:53:39.407858+00:00",
+  "status_http": 200,
+  "quantidade_registros": 50251,
+  "arquivo_json": "ripe_atlas_pares_m28095697_20261008T135339Z.json",
+  "arquivo_tabelar": "ripe_atlas_pares_m28095697_20261008T135339Z.csv"
+}

@@ -1,0 +1,33 @@
+BR 5 
+'br-cci-as61618.anchors.atlas.ripe.net' -> Camacari Viva Tecnologia Telecom
+'br-pgz-as53046.anchors.atlas.ripe.net' -> Ponta Grossa Universidade Estadual de Ponta Grossa
+'br-poa-as19200.anchors.atlas.ripe.net' -> Porto Alegre Federal University of Rio Grande do Sul
+'br-sao-as12008.anchors.atlas.ripe.net' -> São Paulo DigiCert
+'br-fec-as264479.anchors.atlas.ripe.net' ->  Feira de Santana Turbozone Internet
+
+US 3
+'us-lax-as30058.anchors.atlas.ripe.net' -> Los Angeles FDC Servers.net, LLC
+'us-mes-as401332.anchors.atlas.ripe.net' -> Minneapolis Triplebit
+'us-mia-as199610.anchors.atlas.ripe.net' -> Miami marbis GmbH
+
+JP 2
+'jp-tyo-as63834.anchors.atlas.ripe.net' -> Tokyo PrimeXM Networks
+'jp-tch-as63806.anchors.atlas.ripe.net' -> Tsuchiura Human-life Information Platforms Institute
+
+NZ 2
+'nz-npl-as132254.anchors.atlas.ripe.net' -> New Plymouth Primo
+'nz-akl-as138398.anchors.atlas.ripe.net' -> Auckland Prodigi Technology Services Limited
+
+CO 3
+'co-ptx-as269907.anchors.atlas.ripe.net' -> LA PLATA SISCOHUILA SAS
+'co-bog-as273103.anchors.atlas.ripe.net' -> Bogotá TVYMAS SAS
+'co-sdq-as271927.anchors.atlas.ripe.net' -> Contratación, Santander, Colombia IPcom Sistemas S.A.S
+
+DE 3
+'de-muc-as15456.anchors.atlas.ripe.net' -> Munich InterNetX GmbH
+'de-mdt-as56368.anchors.atlas.ripe.net' -> Mutterstadt von Thadden IT
+'de-mai-as2857.anchors.atlas.ripe.net' -> Mainz Johannes Gutenberg-Universitaet Mainz
+
+FI 2
+'fi-tmp-as719.anchors.atlas.ripe.net' -> Tampere Elisa Oyj
+'fi-sal-as39699.anchors.atlas.ripe.net' -> Salo Lounea palvelut Oy

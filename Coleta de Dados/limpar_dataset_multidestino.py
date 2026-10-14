@@ -3,6 +3,8 @@
 Uso:
     python limpar_dataset_multidestino.py <csv_de_entrada> [csv_de_saida]
 
+O script não sobrescreve um arquivo de saída que já exista.
+
 Correções aplicadas:
 - regiao_destino: o arquivo original teve os acentos corrompidos e o texto cortado
   ("Am??rica do", "??sia"). A região é recalculada a partir do país do destino
@@ -60,6 +62,8 @@ def main():
         sys.exit(__doc__)
     entrada = Path(sys.argv[1])
     saida = Path(sys.argv[2]) if len(sys.argv) > 2 else Path(__file__).parent / "RAW" / "dataset_pares_multidestino.csv"
+    if saida.exists():
+        sys.exit(f"{saida} já existe. Apague o arquivo ou informe outro caminho de saída para não sobrescrever.")
 
     # O arquivo original não é UTF-8 válido (acentos corrompidos); latin-1 lê qualquer byte.
     df = limpar(pd.read_csv(entrada, encoding="latin-1"))

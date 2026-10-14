@@ -61,7 +61,7 @@ def main():
     if len(sys.argv) < 2:
         sys.exit(__doc__)
     entrada = Path(sys.argv[1])
-    saida = Path(sys.argv[2]) if len(sys.argv) > 2 else Path(__file__).parent / "RAW" / "dataset_pares_multidestino.csv"
+    saida = Path(sys.argv[2]) if len(sys.argv) > 2 else Path(__file__).parent / "PROCESSADO" / "dataset_pares_multidestino_limpo.csv"
     if saida.exists():
         sys.exit(f"{saida} já existe. Apague o arquivo ou informe outro caminho de saída para não sobrescrever.")
 

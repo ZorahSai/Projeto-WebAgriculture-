@@ -1,4 +1,4 @@
-"""Limpeza do dataset multidestino gerado por " dados_ripe_atlas_.ipynb".
+"""Limpeza do dataset multidestino gerado por "coleta_multidestino.ipynb".
 
 Uso:
     python limpar_dataset_multidestino.py <csv_de_entrada> [csv_de_saida]

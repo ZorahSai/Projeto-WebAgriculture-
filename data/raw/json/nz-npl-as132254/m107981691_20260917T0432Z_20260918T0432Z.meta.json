@@ -1,0 +1,25 @@
+{
+  "destino_fqdn": "nz-npl-as132254.anchors.atlas.ripe.net",
+  "measurement_id": 107981691,
+  "probe_ids": [
+    6904,
+    7018,
+    7325,
+    7385,
+    7547
+  ],
+  "inicio_utc": "2026-09-17T04:32:00+00:00",
+  "fim_utc_exclusivo": "2026-09-18T04:32:00+00:00",
+  "url": "https://atlas.ripe.net/api/v2/measurements/107981691/results/",
+  "parametros": {
+    "start": 1789619520,
+    "stop": 1789705919,
+    "probe_ids": "6904,7018,7325,7385,7547",
+    "format": "json"
+  },
+  "status_http": 200,
+  "quantidade_registros": 1775,
+  "coletado_em_utc": "2026-10-14T20:54:52.139373+00:00",
+  "sha256_resposta": "5806ee87a0a7f2b06d585237de1e45c946943be9b1d8a8a4e66a99d426934a71",
+  "arquivo": "m107981691_20260917T0432Z_20260918T0432Z.json.gz"
+}

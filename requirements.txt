@@ -1,0 +1,6 @@
+# Tarefa 1: coleta bruta e relatório de qualidade (src/coletar_bruto.py, src/montar_tabela_bruta.py, src/relatorio_qualidade.py)
+requests==2.34.2
+pandas==3.0.6
+numpy==2.5.4
+# Tarefa 3: árvore de decisão (src/treinar_arvore.py)
+scikit-learn==1.9.1

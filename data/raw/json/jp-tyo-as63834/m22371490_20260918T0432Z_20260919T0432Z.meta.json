@@ -1,0 +1,25 @@
+{
+  "destino_fqdn": "jp-tyo-as63834.anchors.atlas.ripe.net",
+  "measurement_id": 22371490,
+  "probe_ids": [
+    7126,
+    7423,
+    7628,
+    7670,
+    7675
+  ],
+  "inicio_utc": "2026-09-18T04:32:00+00:00",
+  "fim_utc_exclusivo": "2026-09-19T04:32:00+00:00",
+  "url": "https://atlas.ripe.net/api/v2/measurements/22371490/results/",
+  "parametros": {
+    "start": 1789705920,
+    "stop": 1789792319,
+    "probe_ids": "7126,7423,7628,7670,7675",
+    "format": "json"
+  },
+  "status_http": 200,
+  "quantidade_registros": 1741,
+  "coletado_em_utc": "2026-10-14T20:53:27.051731+00:00",
+  "sha256_resposta": "9349ab01d8503293a3af34dc08f605732d253caf566a02e81240c89885af1f0b",
+  "arquivo": "m22371490_20260918T0432Z_20260919T0432Z.json.gz"
+}

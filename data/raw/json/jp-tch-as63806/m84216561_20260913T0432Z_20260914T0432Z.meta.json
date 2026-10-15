@@ -1,0 +1,25 @@
+{
+  "destino_fqdn": "jp-tch-as63806.anchors.atlas.ripe.net",
+  "measurement_id": 84216561,
+  "probe_ids": [
+    6505,
+    6887,
+    7020,
+    7172,
+    7277
+  ],
+  "inicio_utc": "2026-09-13T04:32:00+00:00",
+  "fim_utc_exclusivo": "2026-09-14T04:32:00+00:00",
+  "url": "https://atlas.ripe.net/api/v2/measurements/84216561/results/",
+  "parametros": {
+    "start": 1789273920,
+    "stop": 1789360319,
+    "probe_ids": "6505,6887,7020,7172,7277",
+    "format": "json"
+  },
+  "status_http": 200,
+  "quantidade_registros": 1800,
+  "coletado_em_utc": "2026-10-14T20:53:56.042202+00:00",
+  "sha256_resposta": "7d430c2a4f3703ddd4c9f3a938df3dd8664cd193284fd016cba5dd956d069f01",
+  "arquivo": "m84216561_20260913T0432Z_20260914T0432Z.json.gz"
+}

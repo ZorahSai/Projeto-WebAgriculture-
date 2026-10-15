@@ -1,0 +1,35 @@
+{
+  "inicio_B": "2026-09-13T04:32:00Z",
+  "fim_treino": "2026-09-16T16:32:00Z",
+  "fim_validacao": "2026-09-18T02:08:00Z",
+  "fim_B": "2026-09-20T04:32:00Z",
+  "embargo_medicoes": 4,
+  "n_por_bloco": {
+    "treino": 115804,
+    "teste": 68472,
+    "validacao": 45842,
+    "embargo": 736
+  },
+  "classes_por_bloco": {
+    "embargo": {
+      "OK": 580,
+      "FALHA": 117,
+      "RISCO": 39
+    },
+    "teste": {
+      "OK": 53590,
+      "FALHA": 9737,
+      "RISCO": 5145
+    },
+    "treino": {
+      "OK": 95643,
+      "FALHA": 12649,
+      "RISCO": 7512
+    },
+    "validacao": {
+      "OK": 35838,
+      "FALHA": 6317,
+      "RISCO": 3687
+    }
+  }
+}

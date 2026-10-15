@@ -1,0 +1,25 @@
+{
+  "destino_fqdn": "de-mai-as2857.anchors.atlas.ripe.net",
+  "measurement_id": 11445096,
+  "probe_ids": [
+    6352,
+    6655,
+    6878,
+    7322,
+    7698
+  ],
+  "inicio_utc": "2026-09-11T04:32:00+00:00",
+  "fim_utc_exclusivo": "2026-09-12T04:32:00+00:00",
+  "url": "https://atlas.ripe.net/api/v2/measurements/11445096/results/",
+  "parametros": {
+    "start": 1789101120,
+    "stop": 1789187519,
+    "probe_ids": "6352,6655,6878,7322,7698",
+    "format": "json"
+  },
+  "status_http": 200,
+  "quantidade_registros": 1800,
+  "coletado_em_utc": "2026-10-14T21:00:15.480046+00:00",
+  "sha256_resposta": "80dec1ad7206ac4f223eef1defe17d1cd888fa3acafc265ffc24cec84d73a799",
+  "arquivo": "m11445096_20260911T0432Z_20260912T0432Z.json.gz"
+}

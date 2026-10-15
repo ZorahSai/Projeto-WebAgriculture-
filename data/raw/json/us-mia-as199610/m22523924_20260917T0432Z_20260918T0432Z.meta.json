@@ -1,0 +1,25 @@
+{
+  "destino_fqdn": "us-mia-as199610.anchors.atlas.ripe.net",
+  "measurement_id": 22523924,
+  "probe_ids": [
+    6522,
+    7104,
+    7283,
+    7436,
+    7528
+  ],
+  "inicio_utc": "2026-09-17T04:32:00+00:00",
+  "fim_utc_exclusivo": "2026-09-18T04:32:00+00:00",
+  "url": "https://atlas.ripe.net/api/v2/measurements/22523924/results/",
+  "parametros": {
+    "start": 1789619520,
+    "stop": 1789705919,
+    "probe_ids": "6522,7104,7283,7436,7528",
+    "format": "json"
+  },
+  "status_http": 200,
+  "quantidade_registros": 1796,
+  "coletado_em_utc": "2026-10-14T20:52:31.144741+00:00",
+  "sha256_resposta": "df0f5b3246bfd8e3b14db6bf84e1b3fcf07ffbf59f7dbc1b3714779f1611f9f7",
+  "arquivo": "m22523924_20260917T0432Z_20260918T0432Z.json.gz"
+}

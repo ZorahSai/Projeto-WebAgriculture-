@@ -1,0 +1,27 @@
+{
+  "descricao": "Parâmetros da Tarefa 2: baseline por fluxo (Período A), métricas relativas e rótulo do Período B, corte temporal. Valores copiados da Tarefa 2 e do RFC.",
+  "baseline": {
+    "piso_rtt_validos_A": 1500,
+    "fator_mad": 1.4826,
+    "fator_iqr": 1.349,
+    "denominador_minimo_ms": 1.0
+  },
+  "janela_persistencia": 5,
+  "regras": {
+    "falha_perda_pct_min": 10,
+    "falha_n5_timeout_min": 3,
+    "falha_z_robusto_min": 3.5,
+    "falha_aumento_pct_limite": 80,
+    "falha_n5_aumento80_min": 2,
+    "risco_z_robusto_min": 2,
+    "risco_aumento_pct_min": 30,
+    "risco_aumento_pct_max": 80,
+    "risco_jitter_relativo_min": 3,
+    "risco_n5_risco_min": 2
+  },
+  "corte": {
+    "proporcoes": {"treino": 0.5, "validacao": 0.2, "teste": 0.3},
+    "embargo_medicoes": 4,
+    "explicacao_embargo": "As 4 primeiras medições de cada fluxo na validação e no teste ficam fora dos dois blocos: as colunas n5_* delas olham medições do bloco anterior."
+  }
+}

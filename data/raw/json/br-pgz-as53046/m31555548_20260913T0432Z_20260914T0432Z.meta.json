@@ -1,0 +1,25 @@
+{
+  "destino_fqdn": "br-pgz-as53046.anchors.atlas.ripe.net",
+  "measurement_id": 31555548,
+  "probe_ids": [
+    7019,
+    7460,
+    7542,
+    7609,
+    7659
+  ],
+  "inicio_utc": "2026-09-13T04:32:00+00:00",
+  "fim_utc_exclusivo": "2026-09-14T04:32:00+00:00",
+  "url": "https://atlas.ripe.net/api/v2/measurements/31555548/results/",
+  "parametros": {
+    "start": 1789273920,
+    "stop": 1789360319,
+    "probe_ids": "7019,7460,7542,7609,7659",
+    "format": "json"
+  },
+  "status_http": 200,
+  "quantidade_registros": 1800,
+  "coletado_em_utc": "2026-10-14T20:47:53.203721+00:00",
+  "sha256_resposta": "da2cea85029b8d6db82a004590f436b959d4160e87daf7744b6143fc498af78b",
+  "arquivo": "m31555548_20260913T0432Z_20260914T0432Z.json.gz"
+}

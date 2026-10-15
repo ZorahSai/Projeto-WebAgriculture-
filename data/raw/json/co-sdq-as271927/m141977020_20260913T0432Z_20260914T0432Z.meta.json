@@ -1,0 +1,25 @@
+{
+  "destino_fqdn": "co-sdq-as271927.anchors.atlas.ripe.net",
+  "measurement_id": 141977020,
+  "probe_ids": [
+    7019,
+    7460,
+    7586,
+    7594,
+    7729
+  ],
+  "inicio_utc": "2026-09-13T04:32:00+00:00",
+  "fim_utc_exclusivo": "2026-09-14T04:32:00+00:00",
+  "url": "https://atlas.ripe.net/api/v2/measurements/141977020/results/",
+  "parametros": {
+    "start": 1789273920,
+    "stop": 1789360319,
+    "probe_ids": "7019,7460,7586,7594,7729",
+    "format": "json"
+  },
+  "status_http": 200,
+  "quantidade_registros": 1800,
+  "coletado_em_utc": "2026-10-14T20:57:52.159718+00:00",
+  "sha256_resposta": "fccb5678056c1946c89a3cf2aea3572b29b07e8c7c27c5b4331fcf7d01620bc0",
+  "arquivo": "m141977020_20260913T0432Z_20260914T0432Z.json.gz"
+}

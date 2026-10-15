@@ -14,58 +14,55 @@ Desenvolver, de forma iterativa e incremental via Scrum, uma aplicação que tre
 um log histórico de rede e disponibilize um dashboard capaz de classificar dispositivos em tempo real, monitorando a
 rede local e permitindo injetar eventos simulados sob demanda
 
-## Dataset oficial
+## Preditor de degradação com RTT normalizado (Tarefas 1 a 3)
 
-**`Coleta de Dados/PROCESSADO/dataset_pares_multidestino_limpo.csv`** é a base usada para treinar a árvore de decisão.
+A versão atual do projeto segue as Tarefas 1, 2 e 3 e o RFC "Preditor de degradação de rede com RTT normalizado". Cada medição de ping é classificada como **OK**, **RISCO** ou **FALHA** pelo desvio em relação ao normal **do próprio fluxo**, e não por um limite fixo de RTT. Um RTT alto, sozinho, não indica falha.
 
-- Fonte: API pública do RIPE Atlas, com medições contínuas de ping entre Anchors (decisão registrada no memorando de decisão).
-- Janela: 03/10/2026 22:06 UTC a 10/10/2026 22:06 UTC (7 dias), com uma medição a cada 240 s por par.
-- Cobertura: 20 Anchors de destino em 7 países (BR, US, CO, DE, JP, NZ, FI), com 5 origens da mesma região por destino. São 100 pares e 249.784 registros.
-- Classes (`status_real`): OK 87,9% · RISCO 5,4% · FALHA 6,7%, calculadas em relação à linha de base de cada par.
+- **Fonte:** medições públicas de ping IPv4 entre Anchors do RIPE Atlas, só com `GET`, sem criar medição nem gastar crédito.
+- **Fluxos:** `fluxo_id = probe_id|dst_addr`. São 20 destinos com 5 origens da mesma região, num total de 100 pares. Três pares são auto-ping e ficam de fora, o que deixa 97 fluxos. Os RTTs medianos vão de cerca de 1 ms a 318 ms, ou seja, há caminhos curtos e longos.
+- **Período A** (só baseline): 06/09/2026 04:32 a 13/09/2026 04:32 UTC.
+- **Período B** (rotulado): 13/09/2026 04:32 a 20/09/2026 04:32 UTC.
 
-| Coluna | Descrição |
-|---|---|
-| `timestamp` | Instante da medição (UTC) |
-| `par_id` | Identificador do par: `<prb_id de origem>-><Anchor de destino>` |
-| `destino_fqdn`, `regiao_destino` | Anchor de destino e sua região |
-| `prb_id`, `pais_origem`, `ip` | Sonda (Anchor) de origem, país e endereço IPv4 |
-| `latencia_ms` | RTT médio do ping. Fica vazio quando todos os pacotes se perdem |
-| `perda_pacotes_pct` | Percentual de pacotes perdidos |
-| `jitter_ms` | Média da variação entre RTTs consecutivos. Fica vazio quando todos os pacotes se perdem |
-| `status_real` | Rótulo: `OK`, `RISCO` ou `FALHA` |
+| Etapa | Script | Saída | Relatório |
+|---|---|---|---|
+| Tarefa 1: coleta bruta, sem rótulo | `src/coletar_bruto.py`, `src/montar_tabela_bruta.py`, `src/relatorio_qualidade.py` | `data/raw/json/` (respostas da API, intactas) e `data/raw/medicoes_brutas.csv.gz` | [`docs/relatorio_qualidade_tarefa1.md`](docs/relatorio_qualidade_tarefa1.md), [`docs/dicionario_v0.1.md`](docs/dicionario_v0.1.md) |
+| Tarefa 2: baseline, rótulo e corte | `src/baseline_e_rotulo.py` | `data/processed/baseline_por_fluxo.csv`, `dataset_rotulado_B.csv.gz`, `corte_temporal.json` | [`docs/relatorio_tarefa2.md`](docs/relatorio_tarefa2.md), [`docs/dicionario_v0.2.md`](docs/dicionario_v0.2.md) |
+| Tarefa 3: primeira árvore e árvore de contraste | `src/treinar_arvore.py` | `results/tarefa3/` | [`docs/relatorio_tarefa3.md`](docs/relatorio_tarefa3.md) |
 
-A Anchor `co-bog-as273103` (Bogotá) ficou fora do ar durante toda a janela. Seus registros foram mantidos como `FALHA` e respondem por cerca de 75% dessa classe. As decisões de limpeza estão na Seção 8 de `coleta_multidestino.ipynb`.
+Os diários das três tarefas, com a parte técnica preenchida, estão em [`docs/diarios/`](docs/diarios/).
 
-## Estrutura do repositório
+Os parâmetros ficam em `config/`, fora do código:
+- `config/coleta.json`: períodos, destinos, sondas e exclusões.
+- `config/rotulagem.json`: piso do baseline, limiares da tabela de rótulo e corte temporal.
+- `config/arvore.json`: colunas permitidas e proibidas, critério, semente e grade de parâmetros.
 
-```
-├── 1 - Template_Memorando_de_Decisao.md   Memorando: escolha da fonte de dados (RIPE Atlas x dataset do Kaggle)
-├── memorando-de-decisao/                  Testes das opções A e B, recomendação e riscos
-├── Anchors.txt                            Anchors de destino escolhidas pela equipe
-└── Coleta de Dados/
-    ├── Coleta_de_dados.ipynb              Entrega 1: coleta one-off das medições 210957734 e 210958049
-    ├── passo_a_passo_fluxo.ipynb          Tutorial: como achar Anchor de destino, medição e sondas de origem
-    ├── coleta_destino_unico.ipynb         Coleta contínua de 20 pares para um único destino (BH)
-    ├── coleta_multidestino.ipynb          Coleta contínua de 100 pares para 20 destinos (gera o dataset oficial)
-    ├── limpar_dataset_multidestino.py     Script que gera o dataset limpo a partir da cópia do .rar
-    ├── RAW/                               Saídas brutas das coletas
-    │   ├── ID1_*, ID2_*                       Coleta one-off (JSON, tabela e metadados)
-    │   ├── dataset_pares_contrato.csv         Saída de coleta_destino_unico.ipynb
-    │   └── dataset_pares_multidestino.rar     Saída de coleta_multidestino.ipynb (sem limpeza)
-    └── PROCESSADO/
-        └── dataset_pares_multidestino_limpo.csv   Dataset oficial
-```
+### Como executar
 
-Os JSONs brutos de cada destino da coleta multidestino e o `pares_selecionados.json` ficaram no Google Drive (`MyDrive/ripe_atlas/raw/`). A Seção 10 de `coleta_multidestino.ipynb` explica como refazer a coleta na mesma janela.
-
-## Como executar
-
-Os notebooks rodam no Google Colab, que salva os arquivos no Drive, ou localmente, salvando em `./ripe_atlas/`. Dependências: `pandas`, `numpy` e `requests`. As consultas à API do RIPE Atlas são públicas e não exigem chave.
-
-Para gerar o dataset limpo a partir da cópia do `.rar`, extraia `dataset_pares_multidestino.csv` e rode:
+Na raiz do repositório:
 
 ```bash
-python "Coleta de Dados/limpar_dataset_multidestino.py" caminho/para/dataset_pares_multidestino.csv
+pip install -r requirements.txt
+python src/coletar_bruto.py
+python src/montar_tabela_bruta.py
+python src/relatorio_qualidade.py
+python src/baseline_e_rotulo.py
+python src/treinar_arvore.py
 ```
 
-O script não sobrescreve um arquivo de saída que já exista.
+Cada script tem um comportamento definido quando roda de novo:
+- **`coletar_bruto.py`:** não baixa de novo um bloco que já existe.
+- **Scripts que geram tabela:** recusam sobrescrever uma saída existente sem `--sobrescrever`.
+- **`treinar_arvore.py`:** não carrega o bloco de teste, que fica fechado até a Tarefa 5.
+
+## Material das etapas anteriores (histórico)
+
+Estas pastas registram as entregas anteriores e **não são usadas** pelas Tarefas 1 a 3.
+
+| Pasta / arquivo | O que é | Por que não é usado agora |
+|---|---|---|
+| `1 - Template_Memorando_de_Decisao.md`, `memorando-de-decisao/` | Memorando: escolha do RIPE Atlas no lugar do dataset do Kaggle | Decisão já tomada. A fonte continua sendo o RIPE Atlas |
+| `Anchors.txt` | As 20 Anchors de destino escolhidas pela equipe | Os mesmos destinos estão em `config/coleta.json` |
+| `Coleta de Dados/Coleta_de_dados.ipynb` | Entrega 1: coleta one-off das medições 210957734 e 210958049 | Medição one-off, sem série temporal |
+| `Coleta de Dados/passo_a_passo_fluxo.ipynb` | Tutorial: como achar Anchor, medição e sondas | Material de estudo |
+| `Coleta de Dados/coleta_destino_unico.ipynb`, `coleta_multidestino.ipynb` | Coletas contínuas de outubro (um destino; 20 destinos) | Uma janela só (sem Períodos A e B). O jitter é a média das diferenças, não o desvio-padrão. O rótulo usa média e desvio da própria janela. O `coleta_multidestino.ipynb` continua sendo a origem do sorteio dos 100 pares |
+| `Coleta de Dados/RAW/`, `Coleta de Dados/PROCESSADO/`, `limpar_dataset_multidestino.py` | Saídas dessas coletas e a limpeza do dataset multidestino | Substituídas por `data/` |

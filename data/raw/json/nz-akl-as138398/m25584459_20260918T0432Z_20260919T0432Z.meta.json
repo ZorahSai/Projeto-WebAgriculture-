@@ -1,0 +1,25 @@
+{
+  "destino_fqdn": "nz-akl-as138398.anchors.atlas.ripe.net",
+  "measurement_id": 25584459,
+  "probe_ids": [
+    6727,
+    6904,
+    7018,
+    7385,
+    7561
+  ],
+  "inicio_utc": "2026-09-18T04:32:00+00:00",
+  "fim_utc_exclusivo": "2026-09-19T04:32:00+00:00",
+  "url": "https://atlas.ripe.net/api/v2/measurements/25584459/results/",
+  "parametros": {
+    "start": 1789705920,
+    "stop": 1789792319,
+    "probe_ids": "6727,6904,7018,7385,7561",
+    "format": "json"
+  },
+  "status_http": 200,
+  "quantidade_registros": 1775,
+  "coletado_em_utc": "2026-10-14T20:55:43.501269+00:00",
+  "sha256_resposta": "6f5d92199691fbf3ea0b966dd25d986c29d9cff51d02c3f577e8baf39c4aa021",
+  "arquivo": "m25584459_20260918T0432Z_20260919T0432Z.json.gz"
+}

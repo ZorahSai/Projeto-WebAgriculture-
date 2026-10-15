@@ -1,0 +1,25 @@
+{
+  "destino_fqdn": "br-sao-as12008.anchors.atlas.ripe.net",
+  "measurement_id": 29650317,
+  "probe_ids": [
+    6659,
+    7147,
+    7163,
+    7530,
+    7608
+  ],
+  "inicio_utc": "2026-09-15T04:32:00+00:00",
+  "fim_utc_exclusivo": "2026-09-16T04:32:00+00:00",
+  "url": "https://atlas.ripe.net/api/v2/measurements/29650317/results/",
+  "parametros": {
+    "start": 1789446720,
+    "stop": 1789533119,
+    "probe_ids": "6659,7147,7163,7530,7608",
+    "format": "json"
+  },
+  "status_http": 200,
+  "quantidade_registros": 1800,
+  "coletado_em_utc": "2026-10-14T20:49:19.800563+00:00",
+  "sha256_resposta": "0fcb1b0e936f8dfc9b278b58c13a1cc9b2bf6580a93df03ec9cbb1a2e7ea109a",
+  "arquivo": "m29650317_20260915T0432Z_20260916T0432Z.json.gz"
+}

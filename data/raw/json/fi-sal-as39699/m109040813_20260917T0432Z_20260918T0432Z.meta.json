@@ -1,0 +1,25 @@
+{
+  "destino_fqdn": "fi-sal-as39699.anchors.atlas.ripe.net",
+  "measurement_id": 109040813,
+  "probe_ids": [
+    7083,
+    7446,
+    7538,
+    7569,
+    7696
+  ],
+  "inicio_utc": "2026-09-17T04:32:00+00:00",
+  "fim_utc_exclusivo": "2026-09-18T04:32:00+00:00",
+  "url": "https://atlas.ripe.net/api/v2/measurements/109040813/results/",
+  "parametros": {
+    "start": 1789619520,
+    "stop": 1789705919,
+    "probe_ids": "7083,7446,7538,7569,7696",
+    "format": "json"
+  },
+  "status_http": 200,
+  "quantidade_registros": 1797,
+  "coletado_em_utc": "2026-10-14T21:02:18.247661+00:00",
+  "sha256_resposta": "bf974a74b72974b6f128c901a64d77a8437df7d92e5a17d1656fff6f00a562e9",
+  "arquivo": "m109040813_20260917T0432Z_20260918T0432Z.json.gz"
+}

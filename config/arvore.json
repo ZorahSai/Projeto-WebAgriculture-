@@ -1,0 +1,19 @@
+{
+  "descricao": "Parâmetros da Tarefa 3: primeira árvore de decisão (CART do scikit-learn). Escolha de max_depth e min_samples_leaf só pela validação; o teste fica fechado até a Tarefa 5.",
+  "colunas_oficiais": ["z_robusto", "aumento_pct", "jitter_relativo", "perda_pct", "timeout_atual",
+                       "n5_timeout", "n5_aumento80", "n5_risco"],
+  "colunas_proibidas": ["pais_origem", "regiao", "dst_addr", "destino_fqdn", "probe_id", "fluxo_id",
+                        "latencia_ms", "jitter_ms", "mediana"],
+  "colunas_contraste_extra": ["latencia_ms", "jitter_ms"],
+  "colunas_contraste_so_absolutas": ["latencia_ms", "jitter_ms", "perda_pct", "timeout_atual"],
+  "alvo": "classe",
+  "classes": ["OK", "RISCO", "FALHA"],
+  "criterio": "gini",
+  "semente": 42,
+  "grade": {
+    "max_depth": [2, 3, 4, 5, 6, 8, 10, 12],
+    "min_samples_leaf": [1, 10, 50, 200]
+  },
+  "tolerancia_f1": 0.005,
+  "metrica_de_escolha": "f1_macro na validação; entre as combinações a até tolerancia_f1 da melhor, fica a de menos folhas"
+}

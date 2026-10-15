@@ -1,0 +1,25 @@
+{
+  "destino_fqdn": "us-mes-as401332.anchors.atlas.ripe.net",
+  "measurement_id": 80082935,
+  "probe_ids": [
+    6804,
+    6888,
+    7104,
+    7541,
+    7673
+  ],
+  "inicio_utc": "2026-09-13T04:32:00+00:00",
+  "fim_utc_exclusivo": "2026-09-14T04:32:00+00:00",
+  "url": "https://atlas.ripe.net/api/v2/measurements/80082935/results/",
+  "parametros": {
+    "start": 1789273920,
+    "stop": 1789360319,
+    "probe_ids": "6804,6888,7104,7541,7673",
+    "format": "json"
+  },
+  "status_http": 200,
+  "quantidade_registros": 1800,
+  "coletado_em_utc": "2026-10-14T20:51:28.051705+00:00",
+  "sha256_resposta": "14a04aca017114a17d2f6bdbfc23589849d403cba1c3edddf05161d8aadc34e0",
+  "arquivo": "m80082935_20260913T0432Z_20260914T0432Z.json.gz"
+}

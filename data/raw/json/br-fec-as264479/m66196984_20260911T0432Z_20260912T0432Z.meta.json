@@ -1,0 +1,25 @@
+{
+  "destino_fqdn": "br-fec-as264479.anchors.atlas.ripe.net",
+  "measurement_id": 66196984,
+  "probe_ids": [
+    6488,
+    7124,
+    7468,
+    7609,
+    7659
+  ],
+  "inicio_utc": "2026-09-11T04:32:00+00:00",
+  "fim_utc_exclusivo": "2026-09-12T04:32:00+00:00",
+  "url": "https://atlas.ripe.net/api/v2/measurements/66196984/results/",
+  "parametros": {
+    "start": 1789101120,
+    "stop": 1789187519,
+    "probe_ids": "6488,7124,7468,7609,7659",
+    "format": "json"
+  },
+  "status_http": 200,
+  "quantidade_registros": 1799,
+  "coletado_em_utc": "2026-10-14T20:49:56.962792+00:00",
+  "sha256_resposta": "73d64fd21853ca74b55655f5ec2b6ba62d44d0ba38b2514a9c2c129b26d67593",
+  "arquivo": "m66196984_20260911T0432Z_20260912T0432Z.json.gz"
+}

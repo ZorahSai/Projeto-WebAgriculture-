@@ -1,0 +1,25 @@
+{
+  "destino_fqdn": "br-poa-as19200.anchors.atlas.ripe.net",
+  "measurement_id": 11688943,
+  "probe_ids": [
+    6349,
+    7608,
+    7631,
+    7709,
+    7729
+  ],
+  "inicio_utc": "2026-09-07T04:32:00+00:00",
+  "fim_utc_exclusivo": "2026-09-08T04:32:00+00:00",
+  "url": "https://atlas.ripe.net/api/v2/measurements/11688943/results/",
+  "parametros": {
+    "start": 1788755520,
+    "stop": 1788841919,
+    "probe_ids": "6349,7608,7631,7709,7729",
+    "format": "json"
+  },
+  "status_http": 200,
+  "quantidade_registros": 1800,
+  "coletado_em_utc": "2026-10-14T20:48:16.183120+00:00",
+  "sha256_resposta": "236bb5ac66784e2a3cb096cb6fdb4ac6a5f979e92b84a9b8ca094d08a36d1820",
+  "arquivo": "m11688943_20260907T0432Z_20260908T0432Z.json.gz"
+}

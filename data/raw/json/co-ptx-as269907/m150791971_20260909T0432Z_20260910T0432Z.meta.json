@@ -1,0 +1,25 @@
+{
+  "destino_fqdn": "co-ptx-as269907.anchors.atlas.ripe.net",
+  "measurement_id": 150791971,
+  "probe_ids": [
+    6801,
+    7460,
+    7578,
+    7586,
+    7694
+  ],
+  "inicio_utc": "2026-09-09T04:32:00+00:00",
+  "fim_utc_exclusivo": "2026-09-10T04:32:00+00:00",
+  "url": "https://atlas.ripe.net/api/v2/measurements/150791971/results/",
+  "parametros": {
+    "start": 1788928320,
+    "stop": 1789014719,
+    "probe_ids": "6801,7460,7578,7586,7694",
+    "format": "json"
+  },
+  "status_http": 200,
+  "quantidade_registros": 1799,
+  "coletado_em_utc": "2026-10-14T20:55:57.919839+00:00",
+  "sha256_resposta": "29d45fe676818efa06aebbadb3b272e0a03b1516b37ee8f8b5c6f46f9190ed6f",
+  "arquivo": "m150791971_20260909T0432Z_20260910T0432Z.json.gz"
+}

@@ -1,0 +1,25 @@
+{
+  "destino_fqdn": "co-bog-as273103.anchors.atlas.ripe.net",
+  "measurement_id": 112438336,
+  "probe_ids": [
+    6790,
+    7147,
+    7163,
+    7586,
+    7659
+  ],
+  "inicio_utc": "2026-09-09T04:32:00+00:00",
+  "fim_utc_exclusivo": "2026-09-10T04:32:00+00:00",
+  "url": "https://atlas.ripe.net/api/v2/measurements/112438336/results/",
+  "parametros": {
+    "start": 1788928320,
+    "stop": 1789014719,
+    "probe_ids": "6790,7147,7163,7586,7659",
+    "format": "json"
+  },
+  "status_http": 200,
+  "quantidade_registros": 1800,
+  "coletado_em_utc": "2026-10-14T20:56:39.524707+00:00",
+  "sha256_resposta": "b49b1e728d286917b3677ad5894439240aae97bf0193ba81e4ec2d5c42d64331",
+  "arquivo": "m112438336_20260909T0432Z_20260910T0432Z.json.gz"
+}

@@ -1,0 +1,49 @@
+|--- z_robusto <= 3.501
+|   |--- n5_risco <= 1.500
+|   |   |--- perda_pct <= 16.665
+|   |   |   |--- n5_aumento80 <= 1.500
+|   |   |   |   |--- n5_timeout <= 2.500
+|   |   |   |   |   |--- class: OK
+|   |   |   |   |--- n5_timeout >  2.500
+|   |   |   |   |   |--- class: FALHA
+|   |   |   |--- n5_aumento80 >  1.500
+|   |   |   |   |--- class: FALHA
+|   |   |--- perda_pct >  16.665
+|   |   |   |--- class: FALHA
+|   |--- n5_risco >  1.500
+|   |   |--- jitter_relativo <= 2.997
+|   |   |   |--- z_robusto <= 1.620
+|   |   |   |   |--- aumento_pct <= 29.772
+|   |   |   |   |   |--- perda_pct <= 16.665
+|   |   |   |   |   |   |--- class: OK
+|   |   |   |   |   |--- perda_pct >  16.665
+|   |   |   |   |   |   |--- class: FALHA
+|   |   |   |   |--- aumento_pct >  29.772
+|   |   |   |   |   |--- perda_pct <= 16.665
+|   |   |   |   |   |   |--- class: RISCO
+|   |   |   |   |   |--- perda_pct >  16.665
+|   |   |   |   |   |   |--- class: FALHA
+|   |   |   |--- z_robusto >  1.620
+|   |   |   |   |--- z_robusto <= 2.000
+|   |   |   |   |   |--- aumento_pct <= 29.506
+|   |   |   |   |   |   |--- class: OK
+|   |   |   |   |   |--- aumento_pct >  29.506
+|   |   |   |   |   |   |--- class: RISCO
+|   |   |   |   |--- z_robusto >  2.000
+|   |   |   |   |   |--- perda_pct <= 16.665
+|   |   |   |   |   |   |--- class: RISCO
+|   |   |   |   |   |--- perda_pct >  16.665
+|   |   |   |   |   |   |--- class: FALHA
+|   |   |--- jitter_relativo >  2.997
+|   |   |   |--- perda_pct <= 16.665
+|   |   |   |   |--- n5_aumento80 <= 1.500
+|   |   |   |   |   |--- n5_timeout <= 2.500
+|   |   |   |   |   |   |--- class: RISCO
+|   |   |   |   |   |--- n5_timeout >  2.500
+|   |   |   |   |   |   |--- class: FALHA
+|   |   |   |   |--- n5_aumento80 >  1.500
+|   |   |   |   |   |--- class: FALHA
+|   |   |   |--- perda_pct >  16.665
+|   |   |   |   |--- class: FALHA
+|--- z_robusto >  3.501
+|   |--- class: FALHA

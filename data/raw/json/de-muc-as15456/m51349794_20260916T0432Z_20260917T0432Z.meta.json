@@ -1,0 +1,25 @@
+{
+  "destino_fqdn": "de-muc-as15456.anchors.atlas.ripe.net",
+  "measurement_id": 51349794,
+  "probe_ids": [
+    6509,
+    6878,
+    6926,
+    7569,
+    7647
+  ],
+  "inicio_utc": "2026-09-16T04:32:00+00:00",
+  "fim_utc_exclusivo": "2026-09-17T04:32:00+00:00",
+  "url": "https://atlas.ripe.net/api/v2/measurements/51349794/results/",
+  "parametros": {
+    "start": 1789533120,
+    "stop": 1789619519,
+    "probe_ids": "6509,6878,6926,7569,7647",
+    "format": "json"
+  },
+  "status_http": 200,
+  "quantidade_registros": 1798,
+  "coletado_em_utc": "2026-10-14T20:58:49.049771+00:00",
+  "sha256_resposta": "75328ae24ffe4f7ee0e7d65f61667aa22eea25470c359800d0cdc3ad16afee59",
+  "arquivo": "m51349794_20260916T0432Z_20260917T0432Z.json.gz"
+}

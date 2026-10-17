@@ -15,7 +15,7 @@
 
 | | Artefato | Onde está |
 |---|---|---|
-| **Sai** | RFC preenchido pelo grupo | [a preencher pela equipe: link do RFC do grupo] |
+| **Sai** | RFC preenchido pelo grupo | [`docs/RFC_Preditor_Degradacao_Rede.md`](../RFC_Preditor_Degradacao_Rede.md) |
 | **Sai** | Dicionário v0.1 só com colunas **brutas** | [`docs/dicionario_v0.1.md`](../dicionario_v0.1.md) |
 | **Sai** | `data/raw/` + `config/` + `requirements.txt` | `data/raw/json/`, `data/raw/medicoes_brutas.csv.gz`, `config/coleta.json`, `requirements.txt` |
 | **Sai** | Este diário | `docs/diarios/Tarefa1_Coleta_Bruta.md` |
@@ -33,7 +33,7 @@
 | Quem usa o alerta? | Quem opera o enlace: investigar (FALHA), observar (RISCO) ou não agir (OK). |
 | O que está proibido como definição de falha? | Limiar global de RTT, país, continente ou nome da rota. |
 
-- [ ] RFC do grupo preenchido a partir desta tabela [a fazer pela equipe]
+- [x] RFC do grupo preenchido a partir desta tabela: [`docs/RFC_Preditor_Degradacao_Rede.md`](../RFC_Preditor_Degradacao_Rede.md)
 - [x] Dicionário v0.1 só com variáveis brutas
 
 ## 2. O que coletar (e o que não criar)
@@ -81,7 +81,7 @@ Regras da coleta:
 **Evidências:**
 - Código: `src/coletar_bruto.py` (coleta), `src/montar_tabela_bruta.py` (tabela) e `src/relatorio_qualidade.py` (relatório).
 - Configuração: `config/coleta.json`.
-- Commits: [a preencher pela equipe: link do commit].
+- Commits: https://github.com/ZorahSai/Projeto-WebAgriculture-/commits/main/docs/RFC_Preditor_Degradacao_Rede.md (RFC) e https://github.com/ZorahSai/Projeto-WebAgriculture-/commits/main/src (coleta).
 
 ## 3. Relatório de qualidade — ainda sem classe
 
@@ -134,7 +134,7 @@ Dificuldades técnicas registradas, para a equipe aproveitar no diário:
 
 ## 6. Evidências gerais
 
-- Link do RFC: [a preencher pela equipe]
+- Link do RFC: https://github.com/ZorahSai/Projeto-WebAgriculture-/blob/main/docs/RFC_Preditor_Degradacao_Rede.md
 - Link do dicionário v0.1: https://github.com/ZorahSai/Projeto-WebAgriculture-/blob/main/docs/dicionario_v0.1.md
-- Link dos commits: [a preencher pela equipe]
+- Link dos commits: https://github.com/ZorahSai/Projeto-WebAgriculture-/commits/main
 - Link de `data/raw/` e do `config/`: https://github.com/ZorahSai/Projeto-WebAgriculture-/tree/main/data/raw e https://github.com/ZorahSai/Projeto-WebAgriculture-/tree/main/config

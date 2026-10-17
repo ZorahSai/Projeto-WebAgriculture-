@@ -125,7 +125,7 @@ Relatório completo: [`docs/relatorio_qualidade_tarefa1.md`](../relatorio_qualid
 | Icaro Luiz Dellalo Silva | [a preencher] | [a preencher] | [a preencher] |
 | Ieda de Oliveira | [a preencher] | [a preencher] | [a preencher] |
 | João Pedro C. de Morais | [a preencher] | [a preencher] | [a preencher] |
-| Lucas Matteus Baptista de Godoy | [a preencher] | [a preencher] | [a preencher] |
+| Lucas Matteus Baptista de Godoy | Elaborei o RFC do grupo (`docs/RFC_Preditor_Degradacao_Rede.md`) a partir do modelo da professora e das regras da Tarefa 1, usando o recorte real da coleta (97 fluxos, períodos A/B, dicionário v0.1). Revisei a documentação ligada a essa entrega: diário da Tarefa 1, `README.md` e links do RFC, do dicionário e dos commits. | Separar o que é contrato do RFC (rótulo, baseline, horizonte) do que a Tarefa 1 de fato entrega (bruto sem classe). Não copiar números da professora (67 fluxos, outro volume) e não misturar Período A/B com treino/validação/teste. | Manter o RFC como contrato único do problema e a regra de RTT normalizado por fluxo. Ajustar depois: coluna RECALIBRAR, Protocolo B (fluxos novos) e o preditor de 12 minutos, que o RFC deixa em aberto. |
 
 Dificuldades técnicas registradas, para a equipe aproveitar no diário:
 - Três pares eram auto-ping e foram identificados pelo RTT de cerca de 0,2 ms.

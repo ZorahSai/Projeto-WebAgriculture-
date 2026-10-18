@@ -1,0 +1,24 @@
+{
+  "descricao": "Parâmetros da Tarefa 4: ajuste da mesma árvore de decisão a partir dos erros da Tarefa 3. Mesmas colunas relativas, mesmo corte, teste fechado. Não entra rota, país, IP nem RTT absoluto.",
+  "colunas_oficiais": ["z_robusto", "aumento_pct", "jitter_relativo", "perda_pct", "timeout_atual",
+                       "n5_timeout", "n5_aumento80", "n5_risco"],
+  "colunas_proibidas": ["pais_origem", "regiao", "dst_addr", "destino_fqdn", "probe_id", "fluxo_id",
+                        "latencia_ms", "jitter_ms", "mediana"],
+  "alvo": "classe",
+  "classes": ["OK", "RISCO", "FALHA"],
+  "semente": 42,
+  "referencia_tarefa3": {
+    "criterio": "gini",
+    "max_depth": 6,
+    "min_samples_leaf": 1,
+    "ccp_alpha": 0.0
+  },
+  "grade": {
+    "criterio": ["gini", "entropy"],
+    "max_depth": [6, 8, 10],
+    "min_samples_leaf": [1, 10],
+    "ccp_alpha": [0.0, 0.0001]
+  },
+  "motivo_da_grade": "A Tarefa 3, com profundidade 6, deixou 10 FALHA virarem OK (linha 4 do rótulo: n5_aumento80 ≥ 2 com RTT atual normal). A grade testa mais profundidade, folha mínima, Gini vs entropia e uma poda leve. Sem coluna nova: n5_aumento80 já existe.",
+  "metrica_de_escolha": "F1 macro na validação; em empate, maior recall de FALHA; depois menos folhas"
+}

@@ -14,9 +14,9 @@ Desenvolver, de forma iterativa e incremental via Scrum, uma aplicação que tre
 um log histórico de rede e disponibilize um dashboard capaz de classificar dispositivos em tempo real, monitorando a
 rede local e permitindo injetar eventos simulados sob demanda
 
-## Preditor de degradação com RTT normalizado (Tarefas 1 a 3)
+## Preditor de degradação com RTT normalizado (Tarefas 1 a 4)
 
-A versão atual do projeto segue as Tarefas 1, 2 e 3 e o RFC do grupo ["Preditor de degradação de rede com RTT normalizado"](docs/RFC_Preditor_Degradacao_Rede.md). Cada medição de ping é classificada como **OK**, **RISCO** ou **FALHA** pelo desvio em relação ao normal **do próprio fluxo**, e não por um limite fixo de RTT. Um RTT alto, sozinho, não indica falha.
+A versão atual do projeto segue as Tarefas 1 a 4 e o RFC do grupo ["Preditor de degradação de rede com RTT normalizado"](docs/RFC_Preditor_Degradacao_Rede.md). Cada medição de ping é classificada como **OK**, **RISCO** ou **FALHA** pelo desvio em relação ao normal **do próprio fluxo**, e não por um limite fixo de RTT. Um RTT alto, sozinho, não indica falha.
 
 - **Fonte:** medições públicas de ping IPv4 entre Anchors do RIPE Atlas, só com `GET`, sem criar medição nem gastar crédito.
 - **Fluxos:** `fluxo_id = probe_id|dst_addr`. São 20 destinos com 5 origens da mesma região, num total de 100 pares. Três pares são auto-ping e ficam de fora, o que deixa 97 fluxos. Os RTTs medianos vão de cerca de 1 ms a 318 ms, ou seja, há caminhos curtos e longos.
@@ -28,13 +28,15 @@ A versão atual do projeto segue as Tarefas 1, 2 e 3 e o RFC do grupo ["Preditor
 | Tarefa 1: coleta bruta, sem rótulo | `src/coletar_bruto.py`, `src/montar_tabela_bruta.py`, `src/relatorio_qualidade.py` | `data/raw/json/` (respostas da API, intactas) e `data/raw/medicoes_brutas.csv.gz` | [`docs/RFC_Preditor_Degradacao_Rede.md`](docs/RFC_Preditor_Degradacao_Rede.md), [`docs/relatorio_qualidade_tarefa1.md`](docs/relatorio_qualidade_tarefa1.md), [`docs/dicionario_v0.1.md`](docs/dicionario_v0.1.md) |
 | Tarefa 2: baseline, rótulo e corte | `src/baseline_e_rotulo.py` | `data/processed/baseline_por_fluxo.csv`, `dataset_rotulado_B.csv.gz`, `corte_temporal.json` | [`docs/relatorio_tarefa2.md`](docs/relatorio_tarefa2.md), [`docs/dicionario_v0.2.md`](docs/dicionario_v0.2.md) |
 | Tarefa 3: primeira árvore e árvore de contraste | `src/treinar_arvore.py` | `results/tarefa3/` | [`docs/relatorio_tarefa3.md`](docs/relatorio_tarefa3.md) |
+| Tarefa 4: ajuste da árvore a partir do erro | `src/ajustar_arvore.py` | `results/tarefa4/` | [`docs/relatorio_tarefa4.md`](docs/relatorio_tarefa4.md) |
 
-Os diários das três tarefas, com a parte técnica preenchida, estão em [`docs/diarios/`](docs/diarios/).
+Os diários das tarefas, com a parte técnica preenchida, estão em [`docs/diarios/`](docs/diarios/).
 
 Os parâmetros ficam em `config/`, fora do código:
 - `config/coleta.json`: períodos, destinos, sondas e exclusões.
 - `config/rotulagem.json`: piso do baseline, limiares da tabela de rótulo e corte temporal.
-- `config/arvore.json`: colunas permitidas e proibidas, critério, semente e grade de parâmetros.
+- `config/arvore.json`: colunas e grade da primeira árvore (Tarefa 3).
+- `config/arvore_tarefa4.json`: grade de ajuste (profundidade, folha, Gini/entropia, poda).
 
 ### Como executar
 
@@ -47,12 +49,13 @@ python src/montar_tabela_bruta.py
 python src/relatorio_qualidade.py
 python src/baseline_e_rotulo.py
 python src/treinar_arvore.py
+python src/ajustar_arvore.py
 ```
 
 Cada script tem um comportamento definido quando roda de novo:
 - **`coletar_bruto.py`:** não baixa de novo um bloco que já existe.
 - **Scripts que geram tabela:** recusam sobrescrever uma saída existente sem `--sobrescrever`.
-- **`treinar_arvore.py`:** não carrega o bloco de teste, que fica fechado até a Tarefa 5.
+- **`treinar_arvore.py` e `ajustar_arvore.py`:** não carregam o bloco de teste, que fica fechado até a Tarefa 5. A Tarefa 5 parte da árvore em `results/tarefa4/`.
 
 ## Material das etapas anteriores (histórico)
 

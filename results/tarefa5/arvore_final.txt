@@ -1,0 +1,55 @@
+|--- z_robusto <= 3.50
+|   |--- n5_risco <= 1.50
+|   |   |--- perda_pct <= 16.67
+|   |   |   |--- n5_aumento80 <= 1.50
+|   |   |   |   |--- n5_timeout <= 2.50
+|   |   |   |   |   |--- class: OK
+|   |   |   |   |--- n5_timeout >  2.50
+|   |   |   |   |   |--- class: FALHA
+|   |   |   |--- n5_aumento80 >  1.50
+|   |   |   |   |--- class: FALHA
+|   |   |--- perda_pct >  16.67
+|   |   |   |--- class: FALHA
+|   |--- n5_risco >  1.50
+|   |   |--- jitter_relativo <= 3.00
+|   |   |   |--- z_robusto <= 1.62
+|   |   |   |   |--- aumento_pct <= 29.77
+|   |   |   |   |   |--- perda_pct <= 16.67
+|   |   |   |   |   |   |--- n5_aumento80 <= 1.50
+|   |   |   |   |   |   |   |--- class: OK
+|   |   |   |   |   |   |--- n5_aumento80 >  1.50
+|   |   |   |   |   |   |   |--- class: FALHA
+|   |   |   |   |   |--- perda_pct >  16.67
+|   |   |   |   |   |   |--- class: FALHA
+|   |   |   |   |--- aumento_pct >  29.77
+|   |   |   |   |   |--- perda_pct <= 16.67
+|   |   |   |   |   |   |--- class: RISCO
+|   |   |   |   |   |--- perda_pct >  16.67
+|   |   |   |   |   |   |--- class: FALHA
+|   |   |   |--- z_robusto >  1.62
+|   |   |   |   |--- z_robusto <= 2.00
+|   |   |   |   |   |--- aumento_pct <= 29.51
+|   |   |   |   |   |   |--- class: OK
+|   |   |   |   |   |--- aumento_pct >  29.51
+|   |   |   |   |   |   |--- perda_pct <= 16.67
+|   |   |   |   |   |   |   |--- class: RISCO
+|   |   |   |   |   |   |--- perda_pct >  16.67
+|   |   |   |   |   |   |   |--- class: FALHA
+|   |   |   |   |--- z_robusto >  2.00
+|   |   |   |   |   |--- perda_pct <= 16.67
+|   |   |   |   |   |   |--- n5_aumento80 <= 1.50
+|   |   |   |   |   |   |   |--- class: RISCO
+|   |   |   |   |   |   |--- n5_aumento80 >  1.50
+|   |   |   |   |   |   |   |--- class: FALHA
+|   |   |   |   |   |--- perda_pct >  16.67
+|   |   |   |   |   |   |--- class: FALHA
+|   |   |--- jitter_relativo >  3.00
+|   |   |   |--- perda_pct <= 16.67
+|   |   |   |   |--- n5_aumento80 <= 1.50
+|   |   |   |   |   |--- class: RISCO
+|   |   |   |   |--- n5_aumento80 >  1.50
+|   |   |   |   |   |--- class: FALHA
+|   |   |   |--- perda_pct >  16.67
+|   |   |   |   |--- class: FALHA
+|--- z_robusto >  3.50
+|   |--- class: FALHA

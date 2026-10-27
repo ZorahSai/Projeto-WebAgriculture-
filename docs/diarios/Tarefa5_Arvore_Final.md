@@ -4,7 +4,7 @@
 **Projeto:** Preditor de degradação de rede com RTT normalizado (independente da rota)
 
 **Equipe:** WebAgriculture (Apollo Moura De Sousa, Icaro Luiz Dellalo Silva, Ieda de Oliveira, João Pedro C. de Morais, Lucas Matteus Baptista de Godoy)  
-**Scrum Master da tarefa:** [a preencher pela equipe]  
+**Scrum Master da tarefa:** Lucas Matteus Baptista de Godoy  
 **Repositório GitHub:** https://github.com/ZorahSai/Projeto-WebAgriculture-
 
 > A árvore que entra aqui é a da Tarefa 4. O baseline e o rótulo são os da Tarefa 2. O teste, guardado desde a Tarefa 2, é medido **uma vez**.

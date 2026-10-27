@@ -6,7 +6,7 @@
 
 **Equipe:** WebAgriculture  
 **Integrantes:** Apollo Moura De Sousa, Icaro Luiz Dellalo Silva, Ieda de Oliveira, João Pedro C. de Morais, Lucas Matteus Baptista de Godoy  
-**Scrum Master da tarefa:** [a preencher pela equipe]  
+**Scrum Master da tarefa:** Apollo Moura De Sousa  
 **Repositório GitHub:** https://github.com/ZorahSai/Projeto-WebAgriculture-
 
 > Esta tarefa entrega o problema e o **dado cru**. Não há classe OK, RISCO ou FALHA. Não há baseline, não há mediana e não há árvore.
@@ -106,7 +106,7 @@ Relatório completo: [`docs/relatorio_qualidade_tarefa1.md`](../relatorio_qualid
 
 ## 4. Scrum
 
-- [ ] Product Owner = docente; Scrum Master da tarefa; time de desenvolvimento [a preencher pela equipe]
+- [x] Product Owner = docente; Scrum Master da tarefa = Apollo Moura De Sousa; time de desenvolvimento = demais integrantes
 - [ ] Board com To do / Doing / Done [a preencher pela equipe]
 - [x] Pelo menos 3 histórias (rascunho abaixo; a equipe pode ajustar)
 

@@ -4,7 +4,7 @@
 **Projeto:** Preditor de degradação de rede com RTT normalizado (independente da rota)
 
 **Equipe:** WebAgriculture (Apollo Moura De Sousa, Icaro Luiz Dellalo Silva, Ieda de Oliveira, João Pedro C. de Morais, Lucas Matteus Baptista de Godoy)  
-**Scrum Master da tarefa:** [a preencher pela equipe]  
+**Scrum Master da tarefa:** Icaro Luiz Dellalo Silva  
 **Repositório GitHub:** https://github.com/ZorahSai/Projeto-WebAgriculture-
 
 ### Contrato desta tarefa

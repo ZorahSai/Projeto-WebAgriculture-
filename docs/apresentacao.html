@@ -1,0 +1,740 @@
+<!doctype html><html lang="pt-BR"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Preditor de Degradação de Rede</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..800&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: documento técnico em coluna única (~70ch) com sumário fixo à esquerda em telas largas; figuras e tabelas largas rolam dentro do próprio bloco. */
+:root {
+  --bg: #f2f6f8;
+  --surface: #ffffff;
+  --ink: #333A57;
+  --muted: #4f5a6e;
+  --rule: #cddde3;
+  --accent: #336063;
+  --accent-soft: #e1eef2;
+  --ok: #2f7d4f;
+  --risco: #b07a12;
+  --falha: #b23a3a;
+  --ok-soft: #e4f2e9;
+  --risco-soft: #f8eed7;
+  --falha-soft: #f7e3e3;
+  --code-bg: #eaf1f4;
+  --font-display: "Archivo", "Arial Narrow", system-ui, sans-serif;
+  --font-body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --step--1: 0.875rem;
+  --step-0: 1.0625rem;
+  --step-1: 1.25rem;
+  --step-2: 1.6rem;
+  --step-3: 2.4rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #22263a; --surface: #2b3150; --ink: #eef3f5; --muted: #a9c4cd; --rule: #414a6b;
+    --accent: #88BAC8; --accent-soft: #2c4553;
+    --ok: #6cc28f; --risco: #e0b04f; --falha: #ec7b7b;
+    --ok-soft: #173024; --risco-soft: #33290f; --falha-soft: #3a1c1c; --code-bg: #3a2b42;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #22263a; --surface: #2b3150; --ink: #eef3f5; --muted: #a9c4cd; --rule: #414a6b;
+  --accent: #88BAC8; --accent-soft: #2c4553;
+  --ok: #6cc28f; --risco: #e0b04f; --falha: #ec7b7b;
+  --ok-soft: #173024; --risco-soft: #33290f; --falha-soft: #3a1c1c; --code-bg: #3a2b42;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  padding-inline: 16px;
+  padding-block: 0 64px;
+}
+.page {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 40px;
+}
+@media (min-width: 1100px) {
+  .page { grid-template-columns: 220px minmax(0, 1fr); }
+}
+
+/* Sumário */
+.toc { display: none; }
+@media (min-width: 1100px) {
+  .toc {
+    display: block;
+    position: sticky;
+    top: calc(env(safe-area-inset-top, 0px) + 24px);
+    align-self: start;
+    padding-top: 48px;
+    font-size: var(--step--1);
+  }
+}
+.toc p {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin: 0 0 12px;
+}
+.toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.toc a { color: var(--muted); text-decoration: none; }
+.toc a:hover, .toc a:focus-visible { color: var(--accent); }
+
+main { min-width: 0; max-width: 760px; }
+
+/* Cabeçalho */
+header.doc {
+  padding: 40px clamp(20px, 4vw, 36px) 28px;
+  margin-top: 24px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #333A57 0%, #422C47 100%);
+  color: #eef3f5;
+  --muted: #c4d8de;
+  --accent: #88BAC8;
+  border-bottom: 4px solid #4D869B;
+  margin-bottom: 8px;
+  display: grid;
+  gap: 14px;
+}
+.eyebrow {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0;
+}
+h1 {
+  font-family: var(--font-display);
+  font-stretch: 80%;
+  font-weight: 800;
+  font-size: clamp(2rem, 6vw, var(--step-3));
+  line-height: 1.05;
+  margin: 0;
+  text-wrap: balance;
+}
+.lede { font-size: var(--step-1); color: var(--muted); margin: 0; max-width: 62ch; }
+.meta {
+  display: flex; flex-wrap: wrap; gap: 6px 24px;
+  font-size: var(--step--1); color: var(--muted); margin: 0;
+}
+.meta strong { color: var(--ink); font-weight: 600; }
+
+/* Seções */
+section { padding-block: 36px 8px; }
+h2 {
+  font-family: var(--font-display);
+  font-stretch: 85%;
+  font-weight: 750;
+  font-size: var(--step-2);
+  line-height: 1.15;
+  margin: 0 0 4px;
+  text-wrap: balance;
+}
+.tarefa {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin: 0 0 16px;
+}
+h3 {
+  font-family: var(--font-display);
+  font-weight: 650;
+  font-size: var(--step-1);
+  margin: 28px 0 8px;
+}
+p, ul, ol { margin: 0 0 14px; max-width: 68ch; }
+li { margin-bottom: 4px; }
+a { color: var(--accent); }
+code, .mono {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  background: var(--code-bg);
+  padding: 0.08em 0.35em;
+  border-radius: 3px;
+  overflow-wrap: anywhere;
+}
+.nota {
+  border-left: 3px solid var(--accent);
+  background: var(--accent-soft);
+  padding: 12px 16px;
+  margin: 18px 0;
+  max-width: 68ch;
+}
+.nota p:last-child { margin-bottom: 0; }
+
+/* Tabelas */
+.tabela { overflow-x: auto; margin: 16px 0 20px; }
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: var(--step--1);
+  font-variant-numeric: tabular-nums;
+}
+th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th {
+  font-family: var(--font-display);
+  font-weight: 650;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1.5px solid var(--ink);
+}
+td.num, th.num { text-align: right; white-space: nowrap; }
+caption {
+  caption-side: bottom;
+  text-align: left;
+  color: var(--muted);
+  font-size: 0.8rem;
+  padding-top: 8px;
+}
+
+/* Rótulos de classe */
+.cls {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  padding: 1px 7px;
+  border-radius: 3px;
+}
+.cls.ok { color: var(--ok); background: var(--ok-soft); }
+.cls.risco { color: var(--risco); background: var(--risco-soft); }
+.cls.falha { color: var(--falha); background: var(--falha-soft); }
+
+/* Fatos do resumo */
+.fatos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  margin: 20px 0;
+}
+.fato { padding: 14px 12px 14px 0; display: grid; gap: 2px; min-width: 0; }
+.fato b {
+  font-family: var(--font-display);
+  font-stretch: 85%;
+  font-weight: 750;
+  font-size: 1.5rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+.fato span { font-size: 0.82rem; color: var(--muted); }
+
+/* Figuras */
+figure { margin: 22px 0 26px; }
+.grafico { overflow-x: auto; background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 12px 8px 4px; }
+.grafico svg { display: block; width: 100%; min-width: 520px; height: auto; }
+figcaption { font-size: 0.85rem; color: var(--muted); margin-top: 8px; max-width: 68ch; }
+.legenda { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 0.82rem; color: var(--muted); padding: 4px 8px 8px; }
+.legenda i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+
+pre.arvore {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  background: var(--code-bg);
+  padding: 16px;
+  border-radius: 6px;
+  overflow-x: auto;
+  margin: 16px 0;
+}
+pre.arvore .ok { color: var(--ok); font-weight: 600; }
+pre.arvore .risco { color: var(--risco); font-weight: 600; }
+pre.arvore .falha { color: var(--falha); font-weight: 600; }
+
+ol.regras { padding-left: 1.3em; }
+ol.regras li { margin-bottom: 10px; }
+
+footer.doc {
+  margin-top: 48px;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule);
+  font-size: var(--step--1);
+  color: var(--muted);
+}
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+</style>
+
+<div class="page">
+  <nav class="toc" aria-label="Sumário">
+    <p>Sumário</p>
+    <ol>
+      <li><a href="#resumo">Resumo</a></li>
+      <li><a href="#problema">O problema</a></li>
+      <li><a href="#coleta">Coleta bruta</a></li>
+      <li><a href="#baseline">Baseline e rótulo</a></li>
+      <li><a href="#arvore">A árvore (T3)</a></li>
+      <li><a href="#ajuste">Ajuste (T4)</a></li>
+      <li><a href="#final">Árvore final e teste (T5)</a></li>
+      <li><a href="#limitacoes">Limitações</a></li>
+      <li><a href="#reproduzir">Como reproduzir</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <header class="doc">
+      <p class="eyebrow">Projeto integrador · Estrutura de Dados II · Redes · Análise de Sistemas</p>
+      <h1>Preditor de Degradação de Rede</h1>
+      <p class="lede">Uma árvore de decisão que classifica cada medição de ping como OK, RISCO ou FALHA pelo desvio em relação ao normal do próprio caminho, e não pela distância.</p>
+      <p class="meta">
+        <span><strong>Equipe WebAgriculture:</strong> Apollo Moura De Sousa, Icaro Luiz Dellalo Silva, Ieda de Oliveira, João Pedro C. de Morais, Lucas Matteus Baptista de Godoy</span>
+        <span><strong>Orientação:</strong> Profas. Andréa Ono Sakai e Denise Braito de Souza, Prof. Luis Ricardo de Oliveira</span>
+        <span><strong>Escopo:</strong> Tarefas 1 a 5</span>
+        <span><strong>Repositório:</strong> <a href="https://github.com/ZorahSai/Projeto-WebAgriculture-">github.com/ZorahSai/Projeto-WebAgriculture-</a></span>
+      </p>
+    </header>
+
+    <section id="resumo" aria-labelledby="t-resumo">
+      <h2 id="t-resumo">Resumo</h2>
+      <p>Coletamos 14 dias de medições públicas de ping entre Anchors do RIPE Atlas, em 97 fluxos com caminhos de 1 ms a 318 ms. A primeira semana (Período A) só serviu para estimar o normal de cada fluxo. A segunda (Período B) foi rotulada pela tabela da Tarefa 2 e dividida no tempo em treino, validação e teste. A árvore oficial lê apenas métricas relativas ao normal do fluxo e reproduz a política de rótulo na validação. Uma árvore de contraste, que só vê medidas absolutas, passa a cortar em milissegundos fixos e cai para F1 macro de 0,510. Na Tarefa 4 a árvore foi ajustada só na validação e as FALHA previstas como OK caíram de 10 para 0. Na Tarefa 5 o teste foi aberto uma vez: F1 macro de 0,9999, e um fluxo fora do treino teve 100% de acerto.</p>
+      <div class="fatos">
+        <div class="fato"><b>486.487</b><span>medições brutas</span></div>
+        <div class="fato"><b>97</b><span>fluxos (92 com baseline)</span></div>
+        <div class="fato"><b>1–318 ms</b><span>RTT mediano dos fluxos</span></div>
+        <div class="fato"><b>0,9996</b><span>F1 macro na validação (T3)</span></div>
+        <div class="fato"><b>0,9999</b><span>F1 macro no teste (T5)</span></div>
+      </div>
+    </section>
+
+    <section id="problema" aria-labelledby="t-problema">
+      <h2 id="t-problema">O problema</h2>
+      <p class="tarefa">Tarefa 1 · RFC do projeto</p>
+      <p>Um RTT de 300 ms pode ser o normal de um caminho saudável entre o Iraque e o Japão. Um salto de 1 ms para 5 ms pode ser degradação num caminho dentro da mesma cidade. Uma regra global do tipo "acima de 100 ms é falha" ensina geografia: marca como FALHA, para sempre, todo caminho longo, e deixa passar a piora de um caminho curto.</p>
+      <p>Por isso a classe descreve o afastamento do fluxo em relação ao próprio comportamento normal.</p>
+      <div class="tabela">
+        <table>
+          <thead><tr><th>Pergunta</th><th>Resposta</th></tr></thead>
+          <tbody>
+            <tr><td>O que a árvore classifica?</td><td>A degradação do fluxo em relação ao próprio normal: <span class="cls ok">OK</span> <span class="cls risco">RISCO</span> <span class="cls falha">FALHA</span></td></tr>
+            <tr><td>O que é um fluxo?</td><td><code>fluxo_id = probe_id|dst_addr</code>: a Anchor que mede e o IP da Anchor medida.</td></tr>
+            <tr><td>O que é uma linha?</td><td>Uma medição ICMP do fluxo: rajada de 3 pings, a cada 240 s.</td></tr>
+            <tr><td>Quem usa o alerta?</td><td>Quem opera o enlace: investiga (FALHA), observa (RISCO) ou não age (OK).</td></tr>
+            <tr><td>O que é proibido?</td><td>Limiar global de RTT, país, continente ou nome da rota como critério ou como coluna da árvore.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="coleta" aria-labelledby="t-coleta">
+      <h2 id="t-coleta">Coleta bruta</h2>
+      <p class="tarefa">Tarefa 1 · src/coletar_bruto.py · src/montar_tabela_bruta.py · config/coleta.json</p>
+      <p>A fonte é o <em>anchoring mesh</em> do RIPE Atlas: Anchors em datacenters que se pingam a cada 240 s. Só fizemos leituras públicas (<code>GET</code>), sem criar medição e sem gastar crédito.</p>
+      <ul>
+        <li><strong>Desenho:</strong> 20 Anchors de destino em 7 países (BR, US, CO, DE, JP, NZ, FI), cada uma medida por 5 Anchors de origem da mesma região. São 100 pares, sorteados com semente fixa.</li>
+        <li><strong>Exclusões:</strong> três pares eram auto-ping, em que a origem é a própria Anchor de destino, com RTT perto de 0,2 ms. Eles ficaram de fora, como manda o Guia de Coleta. Restam 97 fluxos.</li>
+        <li><strong>Períodos, sem sobreposição:</strong>
+          <ul>
+            <li>Período A, de 06/09/2026 04:32 a 13/09/2026 04:32 UTC, só para o baseline.</li>
+            <li>Período B, de 13/09/2026 04:32 a 20/09/2026 04:32 UTC, para rotular.</li>
+          </ul>
+        </li>
+        <li><strong>Bruto preservado:</strong> cada resposta da API foi gravada exatamente como veio, em 280 blocos de 24 h compactados. Cada bloco tem a URL, os parâmetros, o status HTTP e o SHA-256 da resposta. A tabela é refeita a partir desses arquivos sem alterá-los.</li>
+        <li><strong>Coleta idempotente:</strong> rodar a coleta de novo não baixa um bloco que já existe. Erros temporários (timeout, 429, 5xx) são tentados até 4 vezes.</li>
+      </ul>
+
+      <h3>Regras da tabela bruta</h3>
+      <ul>
+        <li><strong>RTT ausente fica vazio, nunca 0.</strong> A API devolve <code>-1</code> quando nada volta, e esse valor vira vazio.</li>
+        <li><strong>Jitter</strong> é o desvio-padrão dos RTTs da rajada, só com 2 ou mais respostas. Senão, fica vazio, e nunca vira um 0 que pareça estabilidade.</li>
+        <li><strong>Timeout</strong> (<code>timeout_atual = 1</code>) quando não há RTT ou a perda é de 100%. O timeout continua na tabela.</li>
+        <li><strong>País e destino</strong> ficam só como colunas de auditoria.</li>
+      </ul>
+
+      <div class="tabela">
+        <table>
+          <thead><tr><th>Relatório de qualidade (sem classe)</th><th class="num">Valor</th></tr></thead>
+          <tbody>
+            <tr><td>Medições brutas (A / B)</td><td class="num">486.487 (243.051 / 243.436)</td></tr>
+            <tr><td>Fluxos / destinos</td><td class="num">97 / 20</td></tr>
+            <tr><td>Medições por fluxo</td><td class="num">4.486 a 5.040</td></tr>
+            <tr><td>Duplicatas (fluxo, instante)</td><td class="num">0</td></tr>
+            <tr><td>Timeouts</td><td class="num">21.349</td></tr>
+            <tr><td>RTT gravado como 0</td><td class="num">0</td></tr>
+            <tr><td>RTT: mínimo · mediana · máximo</td><td class="num">0,71 · 68,22 · 1.326,44 ms</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <figure>
+        <div class="grafico">
+          <svg id="g-fluxos" viewBox="0 0 720 360" role="img" aria-labelledby="g-fluxos-t g-fluxos-d">
+            <title id="g-fluxos-t">RTT normal de cada fluxo contra a fração de FALHA no Período B</title>
+            <desc id="g-fluxos-d">Gráfico de dispersão com 92 fluxos. O eixo horizontal é a mediana do RTT no Período A, em escala logarítmica de 0,5 a 500 ms. O eixo vertical é a fração de medições rotuladas FALHA no Período B. Caminhos longos não têm mais FALHA que os curtos.</desc>
+          </svg>
+          <div class="legenda">
+            <span><i style="background: var(--accent)"></i>fluxo com baseline</span>
+            <span><i style="background: var(--falha)"></i>fluxo citado no texto</span>
+          </div>
+        </div>
+        <figcaption>Cada ponto é um fluxo. No eixo horizontal está o normal do fluxo (mediana do RTT no Período A, em escala logarítmica). No eixo vertical está a fração das medições do Período B que saiu FALHA. Os caminhos longos, à direita, não ficam mais altos que os curtos: a classe não acompanha a distância. Os fluxos que sobem até 70% e 100% são os casos de mudança de rota descritos nas Limitações. Os 5 fluxos de Bogotá não aparecem, porque ficaram sem baseline.</figcaption>
+      </figure>
+    </section>
+
+    <section id="baseline" aria-labelledby="t-baseline">
+      <h2 id="t-baseline">Baseline e rótulo</h2>
+      <p class="tarefa">Tarefa 2 · src/baseline_e_rotulo.py · config/rotulagem.json</p>
+
+      <h3>Ficha de baseline (só Período A)</h3>
+      <p>Cada fluxo recebe uma ficha calculada só com as medições do Período A e depois congelada. Os timeouts ficam fora da mediana e do MAD, mas continuam no dataset como evento.</p>
+      <ul>
+        <li><strong>Mediana</strong> dos RTTs válidos.</li>
+        <li><strong>MAD:</strong> mediana de |RTT − mediana|.</li>
+        <li><strong>Jitter típico:</strong> mediana do jitter.</li>
+        <li><strong>Perda típica:</strong> mediana da perda.</li>
+        <li><strong>Proporção de resposta</strong> do fluxo.</li>
+      </ul>
+      <p>Um fluxo com menos de 1.500 RTTs válidos não recebe ficha e não é rotulado. Os 5 fluxos para a Anchor de Bogotá tiveram cerca de 958 e ficaram de fora, sem mediana inventada. Restam <strong>92 fluxos</strong>.</p>
+      <div class="tabela">
+        <table>
+          <thead><tr><th>Fluxo</th><th>Origem → destino</th><th class="num">Mediana</th><th class="num">MAD</th><th class="num">Jitter típico</th></tr></thead>
+          <tbody>
+            <tr><td><code>6904|103.121.34.150</code></td><td>NZ → nz-akl (curto)</td><td class="num">0,97 ms</td><td class="num">0,10 ms</td><td class="num">0,10 ms</td></tr>
+            <tr><td><code>7020|43.228.174.199</code></td><td>IQ → jp-tch (longo)</td><td class="num">315,15 ms</td><td class="num">4,41 ms</td><td class="num">0,39 ms</td></tr>
+          </tbody>
+          <caption>As duas medianas são o "normal" de cada fluxo, embora uma seja 300 vezes maior que a outra.</caption>
+        </table>
+      </div>
+
+      <h3>Métricas relativas (Período B)</h3>
+      <div class="tabela">
+        <table>
+          <thead><tr><th>Métrica</th><th>Fórmula</th></tr></thead>
+          <tbody>
+            <tr><td><code>z_robusto</code></td><td>(RTT − mediana) / (1,4826 × MAD)</td></tr>
+            <tr><td><code>aumento_pct</code></td><td>(RTT − mediana) / mediana × 100</td></tr>
+            <tr><td><code>jitter_relativo</code></td><td>jitter atual / jitter típico</td></tr>
+            <tr><td><code>perda_pct</code>, <code>timeout_atual</code></td><td>perda da rajada; 1 se não há RTT ou a perda é de 100%</td></tr>
+            <tr><td><code>n5_timeout</code>, <code>n5_aumento80</code>, <code>n5_risco</code></td><td>quantas das últimas 5 medições do fluxo tiveram timeout, aumento &gt; 80% ou desvio moderado</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Tabela de rótulo: vale a primeira linha verdadeira</h3>
+      <div class="tabela">
+        <table>
+          <thead><tr><th class="num">Ordem</th><th>Classe</th><th>Condição</th><th class="num">Medições no B</th></tr></thead>
+          <tbody>
+            <tr><td class="num">1</td><td><span class="cls falha">FALHA</span></td><td><code>perda_pct</code> ≥ 10 nesta medição</td><td class="num">1.567</td></tr>
+            <tr><td class="num">2</td><td><span class="cls falha">FALHA</span></td><td><code>n5_timeout</code> ≥ 3</td><td class="num">51</td></tr>
+            <tr><td class="num">3</td><td><span class="cls falha">FALHA</span></td><td><code>z_robusto</code> ≥ 3,5, com RTT presente</td><td class="num">26.975</td></tr>
+            <tr><td class="num">4</td><td><span class="cls falha">FALHA</span></td><td><code>n5_aumento80</code> ≥ 2</td><td class="num">227</td></tr>
+            <tr><td class="num">5</td><td><span class="cls risco">RISCO</span></td><td>desvio moderado nesta medição (2 ≤ z &lt; 3,5, ou aumento de 30% a 80%, ou jitter relativo ≥ 3) e <code>n5_risco</code> ≥ 2</td><td class="num">16.383</td></tr>
+            <tr><td class="num">6</td><td><span class="cls ok">OK</span></td><td>nenhuma linha anterior (pico isolado também é OK)</td><td class="num">185.651</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Três medições reais</h3>
+      <div class="tabela">
+        <table>
+          <thead><tr><th>Caso</th><th>Fluxo</th><th class="num">Normal</th><th class="num">RTT</th><th class="num">z</th><th>Classe</th></tr></thead>
+          <tbody>
+            <tr><td>Caminho longo estável</td><td>IQ → jp-tch, 15/09 07:53</td><td class="num">315,15 ms</td><td class="num">321,67 ms</td><td class="num">1,00</td><td><span class="cls ok">OK</span></td></tr>
+            <tr><td>Desvio moderado repetido</td><td>AR → br-poa, 17/09 20:38</td><td class="num">58,14 ms</td><td class="num">59,53 ms</td><td class="num">2,18</td><td><span class="cls risco">RISCO</span></td></tr>
+            <tr><td>Caminho curto degradado</td><td>HN → us-mia, 15/09 07:33</td><td class="num">29,71 ms</td><td class="num">143,57 ms</td><td class="num">1.633,98</td><td><span class="cls falha">FALHA</span></td></tr>
+          </tbody>
+          <caption>321 ms seria FALHA numa regra absoluta, mas está a 1 desvio robusto do normal do fluxo. Já 143 ms num caminho de 30 ms é FALHA.</caption>
+        </table>
+      </div>
+
+      <h3>Corte no tempo dentro do Período B</h3>
+      <p>O corte usa as mesmas datas para todos os fluxos, sem sorteio de linhas:</p>
+      <ul>
+        <li>Treino: o trecho mais antigo (50%).</li>
+        <li>Validação: o trecho do meio (20%).</li>
+        <li>Teste: o trecho mais recente (30%).</li>
+      </ul>
+      <p>As 4 primeiras medições de cada fluxo na validação e no teste (736 ao todo) ficam fora dos dois blocos. É uma folga, porque as colunas <code>n5_*</code> delas olham o bloco anterior.</p>
+      <figure>
+        <div class="grafico">
+          <svg id="g-blocos" viewBox="0 0 720 200" role="img" aria-labelledby="g-blocos-t g-blocos-d">
+            <title id="g-blocos-t">Classes em cada bloco do corte temporal</title>
+            <desc id="g-blocos-d">Barras empilhadas de 100% para treino, validação e teste, com a proporção de OK, RISCO e FALHA em cada bloco.</desc>
+          </svg>
+          <div class="legenda">
+            <span><i style="background: var(--ok)"></i>OK</span>
+            <span><i style="background: var(--risco)"></i>RISCO</span>
+            <span><i style="background: var(--falha)"></i>FALHA</span>
+          </div>
+        </div>
+        <figcaption>Datas e quantidade de medições de cada bloco:
+          <ul>
+            <li>Treino: de 13/09 04:32 a 16/09 16:32 UTC, 115.804 medições.</li>
+            <li>Validação: até 18/09 02:08, 45.842 medições.</li>
+            <li>Teste: até 20/09 04:32, 68.472 medições.</li>
+          </ul>
+          Os três blocos têm as três classes.</figcaption>
+      </figure>
+    </section>
+
+    <section id="arvore" aria-labelledby="t-arvore">
+      <h2 id="t-arvore">A árvore (Tarefa 3)</h2>
+      <p class="tarefa">Tarefa 3 · src/treinar_arvore.py · config/arvore.json</p>
+      <p>A árvore oficial é uma árvore de decisão CART (<code>DecisionTreeClassifier</code>, scikit-learn) com critério Gini e semente 42. O fit foi feito só no treino. Ela lê apenas as 8 métricas relativas da tabela acima. País, IP, rota, identificação do fluxo e RTT ou jitter em milissegundos estão proibidos, e o script interrompe a execução se algum deles entrar.</p>
+      <p>Testamos 32 combinações de profundidade máxima e de mínimo de amostras na folha, comparadas pela F1 macro <strong>na validação</strong>. Entre as que ficaram a até 0,005 da melhor, escolhemos a de menos folhas, que é a mais fácil de ler. O resultado foi profundidade 6 e 17 folhas. <strong>O bloco de teste não foi carregado:</strong> ele fica fechado até a Tarefa 5 (abaixo).</p>
+
+      <pre class="arvore" aria-label="Árvore oficial completa">z_robusto ≤ 3,501
+├─ sim: n5_risco ≤ 1,5
+│  ├─ sim: perda_pct ≤ 16,665
+│  │  ├─ sim: n5_aumento80 ≤ 1,5
+│  │  │  ├─ sim: n5_timeout ≤ 2,5 → <span class="ok">OK</span> / senão <span class="falha">FALHA</span>
+│  │  │  └─ não: <span class="falha">FALHA</span>
+│  │  └─ não: <span class="falha">FALHA</span>
+│  └─ não: jitter_relativo ≤ 2,997
+│     ├─ sim: z_robusto ≤ 1,62
+│     │  ├─ sim: aumento_pct ≤ 29,8 → <span class="ok">OK</span>, senão <span class="risco">RISCO</span> (perda &gt; 16,7 → <span class="falha">FALHA</span>)
+│     │  └─ não: z_robusto ≤ 2,0
+│     │     ├─ sim: aumento_pct ≤ 29,5 → <span class="ok">OK</span>, senão <span class="risco">RISCO</span>
+│     │     └─ não: <span class="risco">RISCO</span> (perda &gt; 16,7 → <span class="falha">FALHA</span>)
+│     └─ não: perda ≤ 16,7 e n5_aumento80 ≤ 1,5 e n5_timeout ≤ 2,5 → <span class="risco">RISCO</span>, senão <span class="falha">FALHA</span>
+└─ não (ou sem RTT): <span class="falha">FALHA</span></pre>
+
+      <h3>Regras lidas da árvore</h3>
+      <ol class="regras">
+        <li>Se <code>z_robusto</code> ≤ 3,5 e <code>n5_risco</code> ≤ 1,5 e <code>perda_pct</code> ≤ 16,7 e <code>n5_aumento80</code> ≤ 1,5 e <code>n5_timeout</code> ≤ 2,5, então <span class="cls ok">OK</span>. São 88.757 medições do treino, todas OK. Em palavras: RTT dentro de 3,5 desvios do normal, sem perda e sem desvios ou timeouts repetidos.</li>
+        <li>Se <code>z_robusto</code> ≤ 3,5 e <code>n5_risco</code> &gt; 1,5 e <code>jitter_relativo</code> &gt; 3, sem perda e sem timeouts ou aumentos repetidos, então <span class="cls risco">RISCO</span>. São 4.366 medições, todas RISCO. Em palavras: o jitter está mais de 3 vezes acima do típico, e o desvio se repete.</li>
+        <li>Se <code>z_robusto</code> &gt; 3,5, ou se não há RTT, então <span class="cls falha">FALHA</span>. São 11.959 medições, todas FALHA.</li>
+      </ol>
+
+      <h3>Resultado na validação</h3>
+      <div class="tabela">
+        <table>
+          <thead><tr><th>Real \ previsto</th><th class="num">OK</th><th class="num">RISCO</th><th class="num">FALHA</th><th class="num">Precisão</th><th class="num">Recall</th><th class="num">F1</th></tr></thead>
+          <tbody>
+            <tr><td><span class="cls ok">OK</span></td><td class="num">35.837</td><td class="num">1</td><td class="num">0</td><td class="num">1,000</td><td class="num">1,000</td><td class="num">1,000</td></tr>
+            <tr><td><span class="cls risco">RISCO</span></td><td class="num">0</td><td class="num">3.687</td><td class="num">0</td><td class="num">1,000</td><td class="num">1,000</td><td class="num">1,000</td></tr>
+            <tr><td><span class="cls falha">FALHA</span></td><td class="num">10</td><td class="num">0</td><td class="num">6.307</td><td class="num">1,000</td><td class="num">0,998</td><td class="num">0,999</td></tr>
+          </tbody>
+          <caption>Validação: 45.842 medições. F1 macro de 0,9996. Prever sempre OK daria 78,2% de acurácia, mas F1 macro de só 0,293. Por isso a escolha foi pela F1 macro, e não pela acurácia.</caption>
+        </table>
+      </div>
+      <div class="nota">
+        <p><strong>Por que a F1 fica perto de 1.</strong> O rótulo da Tarefa 2 é uma regra fixa calculada com essas mesmas 8 métricas. A árvore reaprende a política: seus cortes caem sobre os limiares da tabela (<code>z_robusto</code> 3,5, jitter relativo 3, perda entre 0% e 33%). Isso mostra que ela segue o critério relativo, e não a distância. Mas ela aprende a política de rotulagem, não uma falha confirmada em equipamento.</p>
+      </div>
+      <p><strong>Erros concretos:</strong></p>
+      <ul>
+        <li><strong>Caminho longo estável marcado como FALHA:</strong> nenhum caso na validação.</li>
+        <li><strong>FALHA marcada como OK:</strong> 10 casos. Exemplo: IT → de-muc, em 17/09 11:53, com RTT de 22,85 ms, igual ao normal de 23,02 ms. Ela é FALHA pela linha 4, porque duas das últimas 5 medições tiveram aumento acima de 80%. Com profundidade 6, a árvore nem sempre combina esses sinais. É o primeiro alvo da Tarefa 4.</li>
+      </ul>
+
+      <h3>Árvores de contraste (fora da entrega)</h3>
+      <div class="tabela">
+        <table>
+          <thead><tr><th>Árvore</th><th>Colunas</th><th>Divisão perto da raiz</th><th class="num">F1 macro (validação)</th></tr></thead>
+          <tbody>
+            <tr><td>Oficial</td><td>8 métricas relativas</td><td><code>z_robusto ≤ 3,5</code></td><td class="num">0,9996</td></tr>
+            <tr><td>Contraste A</td><td>relativas + RTT e jitter em ms</td><td><code>z_robusto ≤ 3,5</code> (os milissegundos não foram usados)</td><td class="num">1,000</td></tr>
+            <tr><td>Contraste B</td><td>só absolutas: RTT e jitter em ms, perda, timeout</td><td><code>jitter_ms ≤ 0,342</code>, depois <code>latencia_ms ≤ 149</code></td><td class="num">0,510</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Sem o desvio em relação ao baseline, a árvore passa a cortar em milissegundos fixos. O RTT absoluto responde sozinho por 62% da importância, ou seja, ela aprende o comprimento do caminho e não a degradação de cada fluxo. Quando o desvio relativo está disponível, ela ignora os milissegundos. As duas árvores de contraste servem só para essa demonstração e não fazem parte do modelo.</p>
+    </section>
+
+    <section id="ajuste" aria-labelledby="t-ajuste">
+      <h2 id="t-ajuste">Ajuste da árvore</h2>
+      <p class="tarefa">Tarefa 4 · src/ajustar_arvore.py · config/arvore_tarefa4.json · results/tarefa4/</p>
+      <p>A grade testou <code>max_depth</code>, <code>min_samples_leaf</code> e <code>ccp_alpha</code> com as mesmas 8 colunas relativas. A escolha usou <strong>só a validação</strong>; o teste continuou fechado. O critério foi F1 macro, desempatado pelo recall de FALHA, porque deixar passar uma falha custa mais que um alarme a mais.</p>
+      <h3>Tarefa 3 × Tarefa 4 na validação</h3>
+      <div class="tabela"><table><thead><tr><th></th><th class="num">Tarefa 3</th><th class="num">Tarefa 4</th></tr></thead><tbody><tr><td>Parâmetros</td><td><code>config/arvore.json</code></td><td>gini, max_depth 8, min_samples_leaf 10, ccp_alpha 0,0001, semente 42</td></tr><tr><td>Profundidade real</td><td class="num">6</td><td class="num">7</td></tr><tr><td>Folhas</td><td class="num">17</td><td class="num">19</td></tr><tr><td>F1 macro</td><td class="num">0,9996</td><td class="num">0,99995</td></tr><tr><td>Recall de FALHA</td><td class="num">0,998</td><td class="num">1,000</td></tr><tr><td>FALHA prevista como OK</td><td class="num">10</td><td class="num">0</td></tr></tbody></table></div>
+      <h3>Matriz na validação (Tarefa 4)</h3>
+      <div class="tabela"><table><thead><tr><th>Real \ previsto</th><th class="num">OK</th><th class="num">RISCO</th><th class="num">FALHA</th><th class="num">Precisão</th><th class="num">Recall</th><th class="num">F1</th></tr></thead><tbody><tr><td><span class="cls ok">OK</span></td><td class="num">35.837</td><td class="num">1</td><td class="num">0</td><td class="num">1,0000</td><td class="num">1,0000</td><td class="num">1,0000</td></tr><tr><td><span class="cls risco">RISCO</span></td><td class="num">0</td><td class="num">3.687</td><td class="num">0</td><td class="num">0,9997</td><td class="num">1,0000</td><td class="num">0,9999</td></tr><tr><td><span class="cls falha">FALHA</span></td><td class="num">0</td><td class="num">0</td><td class="num">6.317</td><td class="num">1,0000</td><td class="num">1,0000</td><td class="num">1,0000</td></tr></tbody><caption>Validação: F1 macro 0,99995, acurácia 0,99998. O único erro é 1 OK previsto como RISCO.</caption></table></div>
+      <div class="nota"><p><strong>O que mudou.</strong> Um nível a mais de profundidade separou as 10 medições de FALHA que a árvore da Tarefa 3 mandava para OK. Os parâmetros ficam gravados em <code>results/tarefa4/metricas_validacao.json</code> e a Tarefa 5 lê de lá.</p></div>
+    </section>
+
+    <section id="final" aria-labelledby="t-final">
+      <h2 id="t-final">Árvore final e teste único</h2>
+      <p class="tarefa">Tarefa 5 · src/arvore_final.py · results/tarefa5/</p>
+      <p>A árvore final é treinada no bloco de treino (115.804 medições) com os parâmetros da Tarefa 4, sem reescolha. O bloco de teste (68.472 medições, o trecho mais recente do Período B) foi aberto <strong>uma única vez</strong>.</p>
+      <pre class="arvore" aria-label="Árvore final completa">z_robusto ≤ 3,50
+├─ sim: n5_risco ≤ 1,50
+│  ├─ sim: perda_pct ≤ 16,67
+│  │  ├─ sim: n5_aumento80 ≤ 1,50
+│  │  │  ├─ sim: n5_timeout ≤ 2,50
+│  │  │  │  ├─ sim: <span class="ok">OK</span>
+│  │  │  │  └─ não: <span class="falha">FALHA</span>
+│  │  │  └─ não: <span class="falha">FALHA</span>
+│  │  └─ não: <span class="falha">FALHA</span>
+│  └─ não: jitter_relativo ≤ 3,00
+│     ├─ sim: z_robusto ≤ 1,62
+│     │  ├─ sim: aumento_pct ≤ 29,77
+│     │  │  ├─ sim: perda_pct ≤ 16,67
+│     │  │  │  ├─ sim: n5_aumento80 ≤ 1,50
+│     │  │  │  │  ├─ sim: <span class="ok">OK</span>
+│     │  │  │  │  └─ não: <span class="falha">FALHA</span>
+│     │  │  │  └─ não: <span class="falha">FALHA</span>
+│     │  │  └─ não: perda_pct ≤ 16,67
+│     │  │     ├─ sim: <span class="risco">RISCO</span>
+│     │  │     └─ não: <span class="falha">FALHA</span>
+│     │  └─ não: z_robusto ≤ 2,00
+│     │     ├─ sim: aumento_pct ≤ 29,51
+│     │     │  ├─ sim: <span class="ok">OK</span>
+│     │     │  └─ não: perda_pct ≤ 16,67
+│     │     │     ├─ sim: <span class="risco">RISCO</span>
+│     │     │     └─ não: <span class="falha">FALHA</span>
+│     │     └─ não: perda_pct ≤ 16,67
+│     │        ├─ sim: n5_aumento80 ≤ 1,50
+│     │        │  ├─ sim: <span class="risco">RISCO</span>
+│     │        │  └─ não: <span class="falha">FALHA</span>
+│     │        └─ não: <span class="falha">FALHA</span>
+│     └─ não: perda_pct ≤ 16,67
+│        ├─ sim: n5_aumento80 ≤ 1,50
+│        │  ├─ sim: <span class="risco">RISCO</span>
+│        │  └─ não: <span class="falha">FALHA</span>
+│        └─ não: <span class="falha">FALHA</span>
+└─ não: <span class="falha">FALHA</span></pre>
+      <h3>Regras lidas da árvore</h3>
+      <ol class="regras"><li><code>z_robusto</code> ≤ 3,50, <code>n5_risco</code> ≤ 1,50, <code>perda_pct</code> ≤ 16,67, <code>n5_aumento80</code> ≤ 1,50 e <code>n5_timeout</code> ≤ 2,50 → <span class="cls ok">OK</span></li><li><code>z_robusto</code> ≤ 3,50, <code>n5_risco</code> &gt; 1,50, <code>jitter_relativo</code> &gt; 3,00, <code>perda_pct</code> ≤ 16,67 e <code>n5_aumento80</code> ≤ 1,50 → <span class="cls risco">RISCO</span></li><li><code>z_robusto</code> &gt; 3,50 → <span class="cls falha">FALHA</span></li></ol>
+      <h3>Resultado no teste</h3>
+      <div class="tabela"><table><thead><tr><th>Real \ previsto</th><th class="num">OK</th><th class="num">RISCO</th><th class="num">FALHA</th><th class="num">Precisão</th><th class="num">Recall</th><th class="num">F1</th></tr></thead><tbody><tr><td><span class="cls ok">OK</span></td><td class="num">53.589</td><td class="num">1</td><td class="num">0</td><td class="num">0,9999</td><td class="num">1,0000</td><td class="num">0,9999</td></tr><tr><td><span class="cls risco">RISCO</span></td><td class="num">0</td><td class="num">5.145</td><td class="num">0</td><td class="num">0,9998</td><td class="num">1,0000</td><td class="num">0,9999</td></tr><tr><td><span class="cls falha">FALHA</span></td><td class="num">3</td><td class="num">0</td><td class="num">9.734</td><td class="num">1,0000</td><td class="num">0,9997</td><td class="num">0,9998</td></tr></tbody><caption>Teste: 68.472 medições. F1 macro 0,9999.</caption></table></div>
+      <p>Recall de FALHA 0,9997. Nenhuma troca entre RISCO e FALHA. Ficaram 4 erros: 3 FALHA previstas como OK e 1 OK previsto como RISCO.</p>
+      <p><strong>Casos concretos:</strong></p>
+      <ul><li><strong>Acerto em caminho longo:</strong> <code>6488|138.117.32.11</code>, 18/09/2026 02:25:38 UTC. Mediana do fluxo ≈ 153,3 ms, <code>z_robusto</code> ≈ 0,11 → <span class="cls ok">OK</span>. A latência alta é normal para esse caminho, e a árvore não a lê.</li><li><strong>Erro:</strong> <code>7528|109.230.214.3</code>, 19/09/2026 02:05:04 UTC. <code>z_robusto</code> ≈ 1,66, perda 0 e <code>n5_aumento80</code> = 2. O rótulo é <span class="cls falha">FALHA</span> pela linha 4 da tabela, mas a árvore previu <span class="cls ok">OK</span>: ela corta <code>n5_aumento80</code> em 1,50 só em parte dos ramos.</li></ul>
+      <h3>Fluxo não visto</h3>
+      <p>O fluxo <code>6420|23.237.111.10</code> saiu do treino. A ficha dele vem do Período A e tem o piso de 1.500 RTT válidos. Nas 752 medições de teste desse fluxo, a acurácia foi 1,0.</p>
+      <div class="tabela"><table><thead><tr><th>Classe</th><th class="num">Real</th><th class="num">Previsto</th></tr></thead><tbody><tr><td><span class="cls ok">OK</span></td><td class="num">505</td><td class="num">505</td></tr><tr><td><span class="cls risco">RISCO</span></td><td class="num">103</td><td class="num">103</td></tr><tr><td><span class="cls falha">FALHA</span></td><td class="num">144</td><td class="num">144</td></tr><tr><td>Total</td><td class="num">752</td><td class="num">752</td></tr></tbody></table></div>
+      <div class="nota"><p><strong>Detector, não preditor.</strong> A árvore aprende a política de rotulagem e diz o estado atual do fluxo. Ela não antecipa o estado futuro; a comparação com "repetir a classe atual" a 12 minutos não foi feita.</p></div>
+      <h3>Ficha da árvore</h3>
+      <div class="tabela"><table><thead><tr><th>Campo</th><th class="num">Conteúdo</th></tr></thead><tbody><tr><td>Problema</td><td>Classe OK, RISCO ou FALHA pelo desvio ao baseline do fluxo</td></tr><tr><td>Unidade</td><td>Uma medição de um <code>fluxo_id</code> no Período B</td></tr><tr><td>Baseline</td><td>Período A, mediana e MAD, piso de 1.500 RTT válidos</td></tr><tr><td>Colunas</td><td><code>z_robusto</code>, <code>aumento_pct</code>, <code>jitter_relativo</code>, <code>perda_pct</code>, <code>timeout_atual</code>, <code>n5_timeout</code>, <code>n5_aumento80</code>, <code>n5_risco</code></td></tr><tr><td>Árvore</td><td>gini, max_depth 8 (real 7), min_samples_leaf 10, ccp_alpha 0,0001, 19 folhas, semente 42</td></tr><tr><td>Teste</td><td>F1 macro 0,9999; recall de FALHA 0,9997</td></tr><tr><td>O que não faz</td><td>Não classifica distância. Não opera em fluxo sem ficha. Não prediz estado futuro.</td></tr><tr><td>Reproduzir</td><td><code>requirements.txt</code>, <code>src/</code>, <code>config/arvore_tarefa4.json</code>, <code>data/processed/corte_temporal.json</code></td></tr></tbody></table></div>
+    </section>
+
+    <section id="limitacoes" aria-labelledby="t-limitacoes">
+      <h2 id="t-limitacoes">Limitações</h2>
+      <ul>
+        <li><strong>Mudança de rota vira FALHA.</strong> No fluxo LU → de-mdt, o RTT passou de 7,2 ms (A) para 13,1 ms (B) e ficou estável, sem perda e com jitter normal. Todas as 2.495 medições do Período B saíram FALHA. Três dos quatro fluxos para co-ptx chegam a 65–69% de FALHA pelo mesmo tipo de mudança: em AR → co-ptx, por exemplo, o normal passou de 95 ms para 151 ms. É o estado RECALIBRAR da seção 8.5 do RFC, que o baseline fixo de 7 dias não cobre.</li>
+        <li><strong>MAD muito pequeno.</strong> No fluxo VE → br-for, o MAD é de 0,09 ms, e um aumento de cerca de 1 ms já passa de 3,5 desvios. A linha 3 da tabela (<code>z_robusto</code> ≥ 3,5) gera 94% das FALHAs.</li>
+        <li><strong>O modelo reproduz uma política.</strong> Os rótulos são heurísticos, e a árvore aprende a regra, não um registro de falha de roteador.</li>
+        <li><strong>Rajada de 3 pacotes.</strong> A perda só assume 0%, 33%, 67% ou 100%, e o jitter de 3 RTTs é uma estimativa ruim.</li>
+        <li><strong>Anchors não são a rede do campus.</strong> Os datacenters são mais bem servidos que um enlace de último quilômetro.</li>
+        <li><strong>Origens da mesma região.</strong> Os caminhos mais longos chegam a 318 ms. Não há rotas intercontinentais como BR → JP.</li>
+        <li><strong>Detector, não preditor.</strong> A árvore diz o estado atual. Não foi comparada com repetir a classe atual a 12 minutos.</li>
+        <li><strong>Baseline fixo.</strong> Se a rota de um fluxo muda, a ficha do Período A não acompanha; o fluxo precisa ser recalibrado.</li>
+      </ul>
+    </section>
+
+    <section id="reproduzir" aria-labelledby="t-reproduzir">
+      <h2 id="t-reproduzir">Como reproduzir</h2>
+      <p>Na raiz do repositório, com Python 3:</p>
+      <pre class="arvore">pip install -r requirements.txt
+python src/coletar_bruto.py          # Tarefa 1: baixa os 280 blocos (não repete os que já existem)
+python src/montar_tabela_bruta.py    # Tarefa 1: tabela bruta, sem classe
+python src/relatorio_qualidade.py    # Tarefa 1: relatório de qualidade
+python src/baseline_e_rotulo.py      # Tarefa 2: ficha, métricas, rótulo e corte
+python src/treinar_arvore.py         # Tarefa 3: árvore oficial e contrastes
+python src/ajustar_arvore.py         # Tarefa 4: ajuste na validação
+python src/arvore_final.py           # Tarefa 5: árvore final e teste único</pre>
+      <div class="tabela">
+        <table>
+          <thead><tr><th>Arquivo</th><th>Conteúdo</th></tr></thead>
+          <tbody>
+            <tr><td><code>config/</code></td><td>Períodos, destinos, exclusões, limiares do rótulo, corte e parâmetros da árvore</td></tr>
+            <tr><td><code>data/raw/</code></td><td>Respostas originais da API e a tabela bruta (Tarefa 1)</td></tr>
+            <tr><td><code>data/processed/</code></td><td>Fichas de baseline, dataset rotulado do Período B e corte (Tarefa 2)</td></tr>
+            <tr><td><code>results/tarefa3/</code></td><td>Árvore em texto, grade de validação e métricas</td></tr>
+            <tr><td><code>results/tarefa4/</code></td><td>Grade de ajuste e métricas de validação</td></tr>
+            <tr><td><code>results/tarefa5/</code></td><td>Árvore final em texto e métricas do teste</td></tr>
+            <tr><td><code>docs/</code></td><td>Dicionários v0.1, v0.2 e v0.4, relatórios de cada tarefa e diários</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Versões: Python 3.14, pandas 3.0.6, numpy 2.5.4, scikit-learn 1.9.1, requests 2.34.2. Semente: 42.</p>
+    </section>
+
+    <footer class="doc">
+      Dados: RIPE Atlas (RIPE NCC), medições públicas do anchoring mesh, usadas para pesquisa conforme os termos de serviço do RIPE Atlas. Documentação do projeto integrador WebAgriculture, outubro de 2026.
+    </footer>
+  </main>
+</div>
+
+<script>
+(function () {
+  var fluxos = [{"d":"de-mdt","o":"LV","m":33.67,"f":0.106},{"d":"de-mai","o":"ES","m":42.72,"f":0.108},{"d":"fi-tmp","o":"BA","m":51.25,"f":0.006},{"d":"us-lax","o":"MX","m":55.71,"f":0.235},{"d":"br-fec","o":"EC","m":153.25,"f":0.153},{"d":"jp-tch","o":"GE","m":307.51,"f":0.032},{"d":"de-muc","o":"IT","m":23.02,"f":0.106},{"d":"us-mia","o":"CA","m":40.08,"f":0.078},{"d":"fi-tmp","o":"CH","m":29.67,"f":0.017},{"d":"de-mai","o":"NL","m":7.25,"f":0.004},{"d":"br-sao","o":"BR","m":1.29,"f":0.036},{"d":"de-mdt","o":"NL","m":12.24,"f":0.074},{"d":"nz-akl","o":"AU","m":33.93,"f":0.0},{"d":"fi-tmp","o":"GR","m":72.68,"f":0.006},{"d":"fi-tmp","o":"IT","m":45.03,"f":0.065},{"d":"co-ptx","o":"CL","m":126.5,"f":0.685},{"d":"us-mes","o":"US","m":33.66,"f":0.004},{"d":"de-mai","o":"BY","m":25.69,"f":0.08},{"d":"de-muc","o":"BY","m":42.1,"f":0.528},{"d":"jp-tch","o":"PH","m":79.43,"f":0.044},{"d":"us-mes","o":"CA","m":17.62,"f":0.105},{"d":"nz-akl","o":"NZ","m":0.97,"f":0.105},{"d":"nz-npl","o":"NZ","m":5.65,"f":0.087},{"d":"de-muc","o":"ES","m":35.78,"f":0.046},{"d":"br-for","o":"CO","m":180.11,"f":0.069},{"d":"nz-akl","o":"NC","m":56.55,"f":0.075},{"d":"nz-npl","o":"NC","m":51.43,"f":0.276},{"d":"co-sdq","o":"BR","m":171.37,"f":0.111},{"d":"jp-tch","o":"IQ","m":315.15,"f":0.009},{"d":"br-for","o":"VE","m":108.15,"f":0.684},{"d":"fi-sal","o":"AT","m":40.92,"f":0.031},{"d":"us-mia","o":"PA","m":53.49,"f":0.004},{"d":"us-mes","o":"PA","m":95.17,"f":0.114},{"d":"us-lax","o":"PA","m":109.53,"f":0.006},{"d":"br-fec","o":"CL","m":96.57,"f":0.048},{"d":"jp-tyo","o":"TH","m":106.88,"f":0.052},{"d":"br-sao","o":"UY","m":25.84,"f":0.31},{"d":"br-sao","o":"PE","m":91.48,"f":0.31},{"d":"jp-tch","o":"KR","m":42.99,"f":0.04},{"d":"fi-tmp","o":"NL","m":24.05,"f":0.021},{"d":"jp-tch","o":"IN","m":173.33,"f":0.063},{"d":"us-mia","o":"HN","m":29.71,"f":0.027},{"d":"de-mai","o":"IT","m":11.59,"f":0.008},{"d":"nz-npl","o":"AU","m":41.66,"f":0.114},{"d":"br-for","o":"CL","m":159.29,"f":0.09},{"d":"de-mdt","o":"UA","m":18.62,"f":0.18},{"d":"nz-akl","o":"GU","m":185.17,"f":0.014},{"d":"nz-npl","o":"GU","m":184.65,"f":0.059},{"d":"de-mdt","o":"LU","m":7.22,"f":1.0},{"d":"us-lax","o":"GT","m":84.42,"f":0.053},{"d":"jp-tyo","o":"ID","m":90.73,"f":0.034},{"d":"us-mia","o":"US","m":52.51,"f":0.002},{"d":"fi-sal","o":"NL","m":27.41,"f":0.004},{"d":"br-pgz","o":"UY","m":34.72,"f":0.021},{"d":"br-for","o":"UY","m":68.3,"f":0.079},{"d":"co-sdq","o":"UY","m":190.49,"f":0.09},{"d":"co-ptx","o":"UY","m":151.34,"f":0.654},{"d":"br-fec","o":"VE","m":188.6,"f":0.067},{"d":"us-lax","o":"US","m":48.66,"f":0.097},{"d":"us-lax","o":"CR","m":116.73,"f":0.005},{"d":"us-mia","o":"GT","m":24.64,"f":0.125},{"d":"br-sao","o":"VE","m":154.4,"f":0.011},{"d":"fi-sal","o":"BG","m":48.32,"f":0.047},{"d":"us-mes","o":"CR","m":89.22,"f":0.123},{"d":"br-pgz","o":"AR","m":47.33,"f":0.374},{"d":"nz-npl","o":"AU","m":80.54,"f":0.532},{"d":"nz-akl","o":"AU","m":34.21,"f":0.083},{"d":"de-muc","o":"MD","m":35.84,"f":0.125},{"d":"fi-sal","o":"MD","m":64.14,"f":0.182},{"d":"co-ptx","o":"AR","m":94.93,"f":0.685},{"d":"br-for","o":"BO","m":126.03,"f":0.068},{"d":"co-sdq","o":"BO","m":134.85,"f":0.056},{"d":"co-ptx","o":"BO","m":159.18,"f":0.04},{"d":"co-sdq","o":"VE","m":81.94,"f":0.021},{"d":"br-sao","o":"CO","m":113.37,"f":0.42},{"d":"br-poa","o":"CO","m":130.12,"f":0.002},{"d":"br-fec","o":"PE","m":124.29,"f":0.111},{"d":"br-pgz","o":"PE","m":83.73,"f":0.001},{"d":"jp-tyo","o":"AZ","m":311.21,"f":0.023},{"d":"br-poa","o":"VE","m":151.09,"f":0.015},{"d":"de-muc","o":"PT","m":43.68,"f":0.336},{"d":"br-fec","o":"CO","m":187.17,"f":0.08},{"d":"br-pgz","o":"CO","m":171.55,"f":0.097},{"d":"jp-tyo","o":"NP","m":147.75,"f":0.128},{"d":"us-mes","o":"SV","m":74.32,"f":0.084},{"d":"jp-tyo","o":"KR","m":208.47,"f":0.006},{"d":"fi-sal","o":"SK","m":38.48,"f":0.007},{"d":"de-mdt","o":"SK","m":14.0,"f":0.006},{"d":"de-mai","o":"PL","m":17.61,"f":0.018},{"d":"br-poa","o":"EC","m":150.78,"f":0.003},{"d":"co-sdq","o":"AR","m":208.15,"f":0.097},{"d":"br-poa","o":"AR","m":58.13,"f":0.025}];
+  var NS = "http://www.w3.org/2000/svg";
+  function el(nome, attrs, texto) {
+    var e = document.createElementNS(NS, nome);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (texto != null) e.textContent = texto;
+    return e;
+  }
+  function br(n, casas) { return n.toFixed(casas).replace(".", ","); }
+
+  // Gráfico 1: normal do fluxo (log) x fração de FALHA
+  var g1 = document.getElementById("g-fluxos");
+  var L = 64, R = 700, T = 20, B = 310;
+  var xmin = Math.log10(0.5), xmax = Math.log10(500);
+  var x = function (ms) { return L + (Math.log10(ms) - xmin) / (xmax - xmin) * (R - L); };
+  var y = function (f) { return B - f * (B - T); };
+  [0, 0.25, 0.5, 0.75, 1].forEach(function (v) {
+    g1.appendChild(el("line", { x1: L, x2: R, y1: y(v), y2: y(v), stroke: "var(--rule)", "stroke-width": 1 }));
+    g1.appendChild(el("text", { x: L - 8, y: y(v) + 4, "text-anchor": "end", "font-size": 11, fill: "var(--muted)" }, (v * 100) + "%"));
+  });
+  [1, 3, 10, 30, 100, 300].forEach(function (v) {
+    g1.appendChild(el("line", { x1: x(v), x2: x(v), y1: B, y2: B + 5, stroke: "var(--muted)", "stroke-width": 1 }));
+    g1.appendChild(el("text", { x: x(v), y: B + 19, "text-anchor": "middle", "font-size": 11, fill: "var(--muted)" }, v + " ms"));
+  });
+  g1.appendChild(el("line", { x1: L, x2: R, y1: B, y2: B, stroke: "var(--muted)", "stroke-width": 1 }));
+  g1.appendChild(el("text", { x: (L + R) / 2, y: B + 40, "text-anchor": "middle", "font-size": 12, fill: "var(--ink)" }, "RTT normal do fluxo (mediana no Período A, escala log)"));
+  g1.appendChild(el("text", { x: 14, y: (T + B) / 2, "text-anchor": "middle", "font-size": 12, fill: "var(--ink)", transform: "rotate(-90 14 " + ((T + B) / 2) + ")" }, "FALHA no Período B"));
+
+  var destaques = { "de-mdt|LU": "LU → de-mdt: mudança de rota", "br-for|VE": "VE → br-for: MAD de 0,09 ms", "jp-tch|IQ": "IQ → jp-tch: 315 ms, 0,9% FALHA" };
+  fluxos.forEach(function (p) {
+    var chave = p.d + "|" + p.o;
+    var c = el("circle", { cx: x(p.m), cy: y(p.f), r: destaques[chave] ? 5.5 : 4,
+      fill: destaques[chave] ? "var(--falha)" : "var(--accent)", "fill-opacity": destaques[chave] ? 1 : 0.7,
+      stroke: "var(--surface)", "stroke-width": 1 });
+    c.appendChild(el("title", {}, p.o + " → " + p.d + ": normal " + br(p.m, 1) + " ms, FALHA " + br(p.f * 100, 1) + "%"));
+    g1.appendChild(c);
+  });
+  [
+    { k: "de-mdt|LU", dx: 10, dy: 4, a: "start" },
+    { k: "br-for|VE", dx: 10, dy: 4, a: "start" },
+    { k: "jp-tch|IQ", dx: -10, dy: -10, a: "end" }
+  ].forEach(function (n) {
+    var p = fluxos.filter(function (q) { return q.d + "|" + q.o === n.k; })[0];
+    g1.appendChild(el("text", { x: x(p.m) + n.dx, y: y(p.f) + n.dy, "text-anchor": n.a, "font-size": 11, fill: "var(--ink)" }, destaques[n.k]));
+  });
+
+  // Gráfico 2: classes por bloco
+  var blocos = [
+    { nome: "Treino", n: 115804, ok: 95643, risco: 7512, falha: 12649 },
+    { nome: "Validação", n: 45842, ok: 35838, risco: 3687, falha: 6317 },
+    { nome: "Teste", n: 68472, ok: 53590, risco: 5145, falha: 9737 }
+  ];
+  var g2 = document.getElementById("g-blocos");
+  var L2 = 96, R2 = 640, larg = R2 - L2;
+  blocos.forEach(function (b, i) {
+    var yy = 20 + i * 56, x0 = L2;
+    g2.appendChild(el("text", { x: L2 - 10, y: yy + 19, "text-anchor": "end", "font-size": 13, "font-weight": 600, fill: "var(--ink)" }, b.nome));
+    [["ok", "var(--ok)"], ["risco", "var(--risco)"], ["falha", "var(--falha)"]].forEach(function (cls) {
+      var frac = b[cls[0]] / b.n, w = frac * larg;
+      var r = el("rect", { x: x0, y: yy, width: w, height: 28, fill: cls[1] });
+      r.appendChild(el("title", {}, b.nome + ": " + cls[0].toUpperCase() + " " + b[cls[0]].toLocaleString("pt-BR") + " (" + br(frac * 100, 1) + "%)"));
+      g2.appendChild(r);
+      if (w > 44) {
+        g2.appendChild(el("text", { x: x0 + w / 2, y: yy + 19, "text-anchor": "middle", "font-size": 11, "font-weight": 600, fill: "var(--surface)" }, br(frac * 100, 1) + "%"));
+      }
+      x0 += w;
+    });
+    g2.appendChild(el("text", { x: R2 + 10, y: yy + 19, "font-size": 12, fill: "var(--muted)" }, b.n.toLocaleString("pt-BR")));
+  });
+})();
+</script>
+
+</body></html>

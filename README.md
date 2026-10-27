@@ -14,9 +14,9 @@ Desenvolver, de forma iterativa e incremental via Scrum, uma aplicação que tre
 um log histórico de rede e disponibilize um dashboard capaz de classificar dispositivos em tempo real, monitorando a
 rede local e permitindo injetar eventos simulados sob demanda
 
-## Preditor de degradação com RTT normalizado (Tarefas 1 a 4)
+## Preditor de degradação com RTT normalizado (Tarefas 1 a 5)
 
-A versão atual do projeto segue as Tarefas 1 a 4 e o RFC do grupo ["Preditor de degradação de rede com RTT normalizado"](docs/RFC_Preditor_Degradacao_Rede.md). Cada medição de ping é classificada como **OK**, **RISCO** ou **FALHA** pelo desvio em relação ao normal **do próprio fluxo**, e não por um limite fixo de RTT. Um RTT alto, sozinho, não indica falha.
+A versão atual do projeto segue as Tarefas 1 a 5 e o RFC do grupo ["Preditor de degradação de rede com RTT normalizado"](docs/RFC_Preditor_Degradacao_Rede.md). Cada medição de ping é classificada como **OK**, **RISCO** ou **FALHA** pelo desvio em relação ao normal **do próprio fluxo**, e não por um limite fixo de RTT. Um RTT alto, sozinho, não indica falha.
 
 - **Fonte:** medições públicas de ping IPv4 entre Anchors do RIPE Atlas, só com `GET`, sem criar medição nem gastar crédito.
 - **Fluxos:** `fluxo_id = probe_id|dst_addr`. São 20 destinos com 5 origens da mesma região, num total de 100 pares. Três pares são auto-ping e ficam de fora, o que deixa 97 fluxos. Os RTTs medianos vão de cerca de 1 ms a 318 ms, ou seja, há caminhos curtos e longos.
@@ -29,6 +29,7 @@ A versão atual do projeto segue as Tarefas 1 a 4 e o RFC do grupo ["Preditor de
 | Tarefa 2: baseline, rótulo e corte | `src/baseline_e_rotulo.py` | `data/processed/baseline_por_fluxo.csv`, `dataset_rotulado_B.csv.gz`, `corte_temporal.json` | [`docs/relatorio_tarefa2.md`](docs/relatorio_tarefa2.md), [`docs/dicionario_v0.2.md`](docs/dicionario_v0.2.md) |
 | Tarefa 3: primeira árvore e árvore de contraste | `src/treinar_arvore.py` | `results/tarefa3/` | [`docs/relatorio_tarefa3.md`](docs/relatorio_tarefa3.md) |
 | Tarefa 4: ajuste da árvore a partir do erro | `src/ajustar_arvore.py` | `results/tarefa4/` | [`docs/relatorio_tarefa4.md`](docs/relatorio_tarefa4.md) |
+| Tarefa 5: árvore final e teste único | `src/arvore_final.py` | `results/tarefa5/` | [`docs/dicionario_v0.4.md`](docs/dicionario_v0.4.md), [diário](docs/diarios/Tarefa5_Arvore_Final.md) |
 
 Os diários das tarefas, com a parte técnica preenchida, estão em [`docs/diarios/`](docs/diarios/).
 
@@ -50,16 +51,18 @@ python src/relatorio_qualidade.py
 python src/baseline_e_rotulo.py
 python src/treinar_arvore.py
 python src/ajustar_arvore.py
+python src/arvore_final.py
 ```
 
 Cada script tem um comportamento definido quando roda de novo:
 - **`coletar_bruto.py`:** não baixa de novo um bloco que já existe.
 - **Scripts que geram tabela:** recusam sobrescrever uma saída existente sem `--sobrescrever`.
-- **`treinar_arvore.py` e `ajustar_arvore.py`:** não carregam o bloco de teste, que fica fechado até a Tarefa 5. A Tarefa 5 parte da árvore em `results/tarefa4/`.
+- **`treinar_arvore.py` e `ajustar_arvore.py`:** não carregam o bloco de teste, que ficou fechado até a Tarefa 4.
+- **`arvore_final.py`:** abre o teste uma única vez, com os parâmetros lidos de `results/tarefa4/metricas_validacao.json`.
 
 ## Material das etapas anteriores (histórico)
 
-Estas pastas registram as entregas anteriores e **não são usadas** pelas Tarefas 1 a 3.
+Estas pastas registram as entregas anteriores e **não são usadas** pelas Tarefas 1 a 5.
 
 | Pasta / arquivo | O que é | Por que não é usado agora |
 |---|---|---|

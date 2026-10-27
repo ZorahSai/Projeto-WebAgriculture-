@@ -270,6 +270,13 @@ footer.doc {
   color: var(--muted);
 }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.authors{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:16px}
+.author{background:var(--surface);border:1px solid var(--rule);border-top:4px solid #4D869B;border-radius:4px;padding:16px;display:flex;flex-direction:column;gap:6px}
+.author-photo{width:64px;height:64px;border-radius:50%;overflow:hidden;position:relative;display:inline-grid;place-items:center;background:#333A57;color:#fff;font-weight:700}
+.author-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.author-links{display:flex;gap:10px}
+.icon-link{color:var(--accent);display:inline-flex}
+.icon-link svg{width:20px;height:20px;fill:currentColor}
 </style>
 
 <div class="page">
@@ -285,6 +292,7 @@ footer.doc {
       <li><a href="#final">Árvore final e teste (T5)</a></li>
       <li><a href="#limitacoes">Limitações</a></li>
       <li><a href="#reproduzir">Como reproduzir</a></li>
+      <li><a href="#autores">Autores</a></li>
     </ol>
   </nav>
 
@@ -655,6 +663,18 @@ python src/arvore_final.py           # Tarefa 5: árvore final e teste único</p
         </table>
       </div>
       <p>Versões: Python 3.14, pandas 3.0.6, numpy 2.5.4, scikit-learn 1.9.1, requests 2.34.2. Semente: 42.</p>
+    </section>
+
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="i-github" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></symbol><symbol id="i-linkedin" viewBox="0 0 24 24"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></symbol></svg>
+    <section id="autores" aria-labelledby="t-autores">
+      <h2 id="t-autores">Autores</h2>
+      <div class="authors">
+        <div class="author"><span class="author-photo" aria-hidden="true">AS<img onerror="this.remove()" src="https://github.com/apollomoura.png?size=128" width="64" height="64" loading="lazy" decoding="async" alt=""></span><b>Apollo Moura De Sousa</b><div class="author-links"><a class="icon-link" href="https://github.com/apollomoura" target="_blank" rel="noopener" aria-label="GitHub de Apollo Moura De Sousa" title="GitHub: @apollomoura"><svg aria-hidden="true"><use href="#i-github"/></svg></a> <a class="icon-link" href="https://www.linkedin.com/in/apollo-moura-215306320/" target="_blank" rel="noopener" aria-label="LinkedIn de Apollo Moura De Sousa" title="LinkedIn"><svg aria-hidden="true"><use href="#i-linkedin"/></svg></a></div></div>
+        <div class="author"><span class="author-photo" aria-hidden="true">IS<img onerror="this.remove()" src="https://github.com/clicaro.png?size=128" width="64" height="64" loading="lazy" decoding="async" alt=""></span><b>Icaro Luiz Dellalo Silva</b><div class="author-links"><a class="icon-link" href="https://github.com/clicaro" target="_blank" rel="noopener" aria-label="GitHub de Icaro Luiz Dellalo Silva" title="GitHub: @clicaro"><svg aria-hidden="true"><use href="#i-github"/></svg></a> <a class="icon-link" href="https://www.linkedin.com/in/icaro-dellalo/" target="_blank" rel="noopener" aria-label="LinkedIn de Icaro Luiz Dellalo Silva" title="LinkedIn"><svg aria-hidden="true"><use href="#i-linkedin"/></svg></a></div></div>
+        <div class="author"><span class="author-photo" aria-hidden="true">IO<img onerror="this.remove()" src="https://github.com/iedahirari.png?size=128" width="64" height="64" loading="lazy" decoding="async" alt=""></span><b>Ieda de Oliveira</b><div class="author-links"><a class="icon-link" href="https://github.com/iedahirari" target="_blank" rel="noopener" aria-label="GitHub de Ieda de Oliveira" title="GitHub: @iedahirari"><svg aria-hidden="true"><use href="#i-github"/></svg></a> <a class="icon-link" href="https://www.linkedin.com/in/ieda-oliveira/" target="_blank" rel="noopener" aria-label="LinkedIn de Ieda de Oliveira" title="LinkedIn"><svg aria-hidden="true"><use href="#i-linkedin"/></svg></a></div></div>
+        <div class="author"><span class="author-photo" aria-hidden="true">JM<img onerror="this.remove()" src="https://github.com/ZorahSai.png?size=128" width="64" height="64" loading="lazy" decoding="async" alt=""></span><b>João Pedro C. de Morais</b><div class="author-links"><a class="icon-link" href="https://github.com/ZorahSai" target="_blank" rel="noopener" aria-label="GitHub de João Pedro C. de Morais" title="GitHub: @ZorahSai"><svg aria-hidden="true"><use href="#i-github"/></svg></a> <a class="icon-link" href="https://www.linkedin.com/in/jo%C3%A3o-pedro-06724430b/" target="_blank" rel="noopener" aria-label="LinkedIn de João Pedro C. de Morais" title="LinkedIn"><svg aria-hidden="true"><use href="#i-linkedin"/></svg></a></div></div>
+        <div class="author"><span class="author-photo" aria-hidden="true">LG<img onerror="this.remove()" src="https://github.com/SuperLucas2000.png?size=128" width="64" height="64" loading="lazy" decoding="async" alt=""></span><b>Lucas Matteus Baptista de Godoy</b><div class="author-links"><a class="icon-link" href="https://github.com/SuperLucas2000" target="_blank" rel="noopener" aria-label="GitHub de Lucas Matteus Baptista de Godoy" title="GitHub: @SuperLucas2000"><svg aria-hidden="true"><use href="#i-github"/></svg></a> <a class="icon-link" href="https://www.linkedin.com/in/lucasmatteus/" target="_blank" rel="noopener" aria-label="LinkedIn de Lucas Matteus Baptista de Godoy" title="LinkedIn"><svg aria-hidden="true"><use href="#i-linkedin"/></svg></a></div></div>
+      </div>
     </section>
 
     <footer class="doc">

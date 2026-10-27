@@ -137,7 +137,7 @@ Contagem em B: OK 185.651 (80,4%) / RISCO 16.383 (7,1%) / FALHA 28.820 (12,5%).
 - Preditor “12 minutos à frente” (horizonte deixado para depois; hoje é **detector da medição atual**)
 - RFC do grupo preenchido no diário da Tarefa 1 (checkbox em aberto)
 
-### Linha paralela ED2 (`Modelo/`)
+### Linha paralela ED2 (`etapas_anteriores/modelo_sintetico/`)
 - Árvore CART **escrita à mão** + gerador sintético
 - Usa latência/perda/jitter **absolutos**
 - No dado real antigo, RISCO quase some — exatamente o problema que `src/` resolve com métricas relativas
@@ -181,10 +181,10 @@ Projeto-WebAgriculture-/
 │       ├── Tarefa1_Coleta_Bruta.md
 │       ├── Tarefa2_Baseline_e_Rotulagem.md
 │       └── Tarefa3_Arvore_Inicial.md
-├── Modelo/                            ← ED2 (árvore na mão + sintético); não é o pipeline 1–3
-└── HISTÓRICO (não usar nas Tarefas 1–3)
-    ├── Coleta de Dados/               ← notebooks e coletas antigas
-    ├── memorando-de-decisao/          ← escolha RIPE Atlas vs Kaggle
+└── etapas_anteriores/                ← HISTÓRICO (não usar nas Tarefas 1–5)
+    ├── modelo_sintetico/              ← ED2 (árvore na mão + sintético)
+    ├── coleta_de_dados/               ← notebooks e coletas antigas
+    ├── memorando_de_decisao/          ← escolha RIPE Atlas vs Kaggle
     └── Anchors.txt                    ← destinos; agora estão em config/coleta.json
 ```
 

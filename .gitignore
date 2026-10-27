@@ -3,3 +3,6 @@ __pycache__/
 .venv/
 venv/
 *.tmp
+.ipynb_checkpoints/
+.DS_Store
+Thumbs.db

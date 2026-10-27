@@ -56,7 +56,7 @@ Fonte: medições públicas e contínuas de ping IPv4 entre Anchors do RIPE Atla
 
 Desenho da coleta:
 
-- **Destinos e origens:** 20 Anchors de destino em 7 países (BR 5, US 3, CO 3, DE 3, JP 2, NZ 2, FI 2). Cada destino tem 5 Anchors de origem da mesma região, num total de 100 pares, sorteados com semente 42 no `Coleta de Dados/coleta_multidestino.ipynb`.
+- **Destinos e origens:** 20 Anchors de destino em 7 países (BR 5, US 3, CO 3, DE 3, JP 2, NZ 2, FI 2). Cada destino tem 5 Anchors de origem da mesma região, num total de 100 pares, sorteados com semente 42 no `etapas_anteriores/coleta_de_dados/coleta_multidestino.ipynb`.
 - **Auto-ping excluído:** três pares mediam a própria Anchor de destino (`7019 → br-pgz`, `6349 → br-poa` e `7694 → co-ptx`, com RTT perto de 0,2 ms). Pela seção 5 do Guia de Coleta, eles ficaram de fora. O motivo está marcado em `config/coleta.json`. Restam **97 fluxos**.
 - **Blocos de download:** um dia por pedido (`bloco_horas` = 24), 280 blocos ao todo (20 destinos × 14 dias).
 

@@ -19,7 +19,7 @@
     }
   },
   "bloco_horas": 24,
-  "origem_dos_pares": "Mesmos 100 pares (20 destinos x 5 origens da mesma região) sorteados em Coleta de Dados/coleta_multidestino.ipynb (semente 42).",
+  "origem_dos_pares": "Mesmos 100 pares (20 destinos x 5 origens da mesma região) sorteados em etapas_anteriores/coleta_de_dados/coleta_multidestino.ipynb (semente 42).",
   "destinos": [
     {
       "destino_fqdn": "br-for-as37468.anchors.atlas.ripe.net",

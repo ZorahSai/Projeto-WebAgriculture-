@@ -165,9 +165,11 @@ Projeto-WebAgriculture-/
 │   ├── tarefa4/
 │   └── tarefa5/
 ├── src/                     # scripts do pipeline (Tarefas 1 a 5)
-├── Modelo/                  # protótipo anterior com dataset sintético
-├── Coleta de Dados/         # notebooks das entregas anteriores (histórico)
-├── memorando-de-decisao/    # memorando RIPE Atlas × Kaggle (histórico)
+├── etapas_anteriores/       # histórico das entregas anteriores (não usado nas Tarefas 1 a 5)
+│   ├── coleta_de_dados/     # notebooks e coletas antigas
+│   ├── modelo_sintetico/    # protótipo com dataset sintético
+│   ├── memorando_de_decisao/# memorando RIPE Atlas × Kaggle
+│   └── Anchors.txt          # Anchors de destino escolhidas
 ├── requirements.txt
 └── README.md
 ```
@@ -237,13 +239,13 @@ Estas pastas registram as entregas anteriores e **não são usadas** pelas Taref
 
 | Pasta / arquivo | O que é | Por que não é usado agora |
 |---|---|---|
-| `1 - Template_Memorando_de_Decisao.md`, `memorando-de-decisao/` | Memorando: escolha do RIPE Atlas no lugar do dataset do Kaggle | Decisão já tomada. A fonte continua sendo o RIPE Atlas |
-| `Anchors.txt` | As 20 Anchors de destino escolhidas pela equipe | Os mesmos destinos estão em `config/coleta.json` |
-| `Coleta de Dados/Coleta_de_dados.ipynb` | Entrega 1: coleta one-off das medições 210957734 e 210958049 | Medição one-off, sem série temporal |
-| `Coleta de Dados/passo_a_passo_fluxo.ipynb` | Tutorial: como achar Anchor, medição e sondas | Material de estudo |
-| `Coleta de Dados/coleta_destino_unico.ipynb`, `coleta_multidestino.ipynb` | Coletas contínuas de outubro (um destino; 20 destinos) | Uma janela só (sem Períodos A e B). O jitter é a média das diferenças, não o desvio-padrão. O rótulo usa média e desvio da própria janela. O `coleta_multidestino.ipynb` continua sendo a origem do sorteio dos 100 pares |
-| `Coleta de Dados/RAW/`, `Coleta de Dados/PROCESSADO/`, `limpar_dataset_multidestino.py` | Saídas dessas coletas e a limpeza do dataset multidestino | Substituídas por `data/` |
-| `Modelo/` | Protótipo com gerador de dataset sintético e árvore própria | Substituído pelo pipeline com dados reais em `src/` |
+| `etapas_anteriores/memorando_de_decisao/` | Memorando: escolha do RIPE Atlas no lugar do dataset do Kaggle | Decisão já tomada. A fonte continua sendo o RIPE Atlas |
+| `etapas_anteriores/Anchors.txt` | As 20 Anchors de destino escolhidas pela equipe | Os mesmos destinos estão em `config/coleta.json` |
+| `etapas_anteriores/coleta_de_dados/Coleta_de_dados.ipynb` | Entrega 1: coleta one-off das medições 210957734 e 210958049 | Medição one-off, sem série temporal |
+| `etapas_anteriores/coleta_de_dados/passo_a_passo_fluxo.ipynb` | Tutorial: como achar Anchor, medição e sondas | Material de estudo |
+| `etapas_anteriores/coleta_de_dados/coleta_destino_unico.ipynb`, `coleta_multidestino.ipynb` | Coletas contínuas de outubro (um destino; 20 destinos) | Uma janela só (sem Períodos A e B). O jitter é a média das diferenças, não o desvio-padrão. O rótulo usa média e desvio da própria janela. O `coleta_multidestino.ipynb` continua sendo a origem do sorteio dos 100 pares |
+| `etapas_anteriores/coleta_de_dados/RAW/`, `PROCESSADO/`, `limpar_dataset_multidestino.py` | Saídas dessas coletas e a limpeza do dataset multidestino | Substituídas por `data/` |
+| `etapas_anteriores/modelo_sintetico/` | Protótipo com gerador de dataset sintético e árvore própria | Substituído pelo pipeline com dados reais em `src/` |
 
 ---
 

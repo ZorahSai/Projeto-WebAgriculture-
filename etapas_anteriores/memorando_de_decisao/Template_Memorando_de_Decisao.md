@@ -94,14 +94,14 @@ Limitações
 - **O que fez nesta etapa:** `[Redigiu o texto explicando os Riscos e limitações ]`
 - **Tempo dedicado (aprox.):** `[1h]`
 - **Evidência da contribuição** *(print de conversa, rascunho, e-mail, documento compartilhado etc.)*:
-`[https://github.com/ZorahSai/Projeto-WebAgriculture-/blob/main/memorando-de-decisao/Riscos%20e%20Limita%C3%A7%C3%B5es.docx]` 
+`[https://github.com/ZorahSai/Projeto-WebAgriculture-/blob/main/etapas_anteriores/memorando_de_decisao/Riscos%20e%20Limita%C3%A7%C3%B5es.docx]` 
 
 ### Integrante 3 — `[Ieda de Oliveira]`
 - **O que fez nesta etapa:** `[Fez a Comparação entre o Dataset real (Kaggle) e a API do RIPE ATLAS]`
 - **Tempo dedicado (aprox.):** `[3h30]`
 - **Evidência da contribuição** *(print de conversa, rascunho, e-mail, documento compartilhado etc.)*: 
 `[Subiu 2 arquivos do google Colab no repositório, pasta Memorando]`
-`[https://github.com/ZorahSai/Projeto-WebAgriculture-/tree/main/memorando-de-decisao]` 
+`[https://github.com/ZorahSai/Projeto-WebAgriculture-/tree/main/etapas_anteriores/memorando_de_decisao]` 
 `[arquivo "Opção A" refere se ao teste do Dataset real (Kaggle)]`
 `[arquivo "Opção B" refere se ao teste do API do RIPE ATLAS]`
 `[ https://www.kaggle.com/datasets/deavanathan/network-traffic-dataset-captured-through-wireshark?resource=download]`
@@ -116,8 +116,8 @@ Limitações
 - **O que fez nesta etapa:** `[Desenvolveu o texto referente a Recomendação e a Justificativa]`
 - **Tempo dedicado (aprox.):** `[40min]`
 - **Evidência da contribuição** *(print de conversa, rascunho, e-mail, documento compartilhado etc.)*: 
-`[https://github.com/ZorahSai/Projeto-WebAgriculture-/blob/main/memorando-de-decisao/Recomenda%C3%A7%C3%A3o_Justificativa.md]` 
-`[https://github.com/ZorahSai/Projeto-WebAgriculture-/tree/main/memorando-de-decisao]`
+`[https://github.com/ZorahSai/Projeto-WebAgriculture-/blob/main/etapas_anteriores/memorando_de_decisao/Recomenda%C3%A7%C3%A3o_Justificativa.md]` 
+`[https://github.com/ZorahSai/Projeto-WebAgriculture-/tree/main/etapas_anteriores/memorando_de_decisao]`
 
 ---
 ## Fontes consultadas

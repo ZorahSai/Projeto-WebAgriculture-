@@ -372,6 +372,37 @@ footer.doc {
 .icon-link:hover { background: var(--accent); color: var(--surface); }
 .icon-link svg { width: 18px; height: 18px; fill: currentColor; }
 @media (prefers-reduced-motion: reduce) { .author { transition: none; } .author:hover { transform: none; } }
+
+/* Interatividade */
+.toc a.ativo { color: var(--accent); background: var(--accent-soft); font-weight: 600; }
+.progresso { position: fixed; top: 0; left: 0; height: 3px; width: 0; background: var(--accent); z-index: 50; }
+.flutuantes { position: fixed; right: 16px; bottom: 16px; display: flex; flex-direction: column; gap: 8px; z-index: 40; }
+.flutuante { width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--rule); background: var(--surface); color: var(--ink); box-shadow: var(--shadow); cursor: pointer; font-size: 18px; display: grid; place-items: center; }
+.flutuante:hover, .flutuante:focus-visible { background: var(--accent); color: var(--surface); }
+#topo { opacity: 0; pointer-events: none; transition: opacity .2s; }
+#topo.visivel { opacity: 1; pointer-events: auto; }
+.dica { position: fixed; z-index: 60; pointer-events: none; max-width: 260px; padding: 6px 10px; border-radius: 8px; background: var(--ink); color: var(--surface); font-size: var(--step--1); line-height: 1.35; box-shadow: var(--shadow); opacity: 0; transition: opacity .12s; }
+.dica.visivel { opacity: 1; }
+svg [data-dica] { cursor: pointer; }
+svg [data-dica]:focus { outline: none; stroke: var(--ink); stroke-width: 2; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 12px; }
+.chip { font: inherit; font-size: var(--step--1); padding: 4px 12px; border-radius: 999px; border: 1px solid var(--rule); background: var(--surface); color: var(--ink); cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--surface); }
+.bloco-acoes { display: flex; justify-content: flex-end; gap: 8px; margin: 0 0 6px; }
+.btn-mini { font: inherit; font-size: var(--step--1); padding: 3px 10px; border-radius: 6px; border: 1px solid var(--rule); background: var(--surface); color: var(--ink); cursor: pointer; }
+.btn-mini:hover, .btn-mini:focus-visible { border-color: var(--accent); color: var(--accent); }
+pre.arvore.recolhida { max-height: 220px; overflow: hidden; -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent); mask-image: linear-gradient(to bottom, #000 60%, transparent); }
+.simulador { background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 18px; box-shadow: var(--shadow); margin: 0 0 24px; }
+.simulador .presets { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.sim-grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px 18px; }
+.sim-grade label { display: flex; flex-direction: column; gap: 4px; font-size: var(--step--1); color: var(--muted); }
+.sim-grade label span { display: flex; justify-content: space-between; gap: 8px; }
+.sim-grade output { font-family: var(--font-mono); color: var(--ink); }
+.sim-grade input[type=range] { width: 100%; accent-color: var(--accent); }
+.sim-resultado { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--rule); display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+.sim-resultado .cls { font-size: var(--step-0); }
+.sim-regra { color: var(--muted); font-size: var(--step--1); flex: 1 1 240px; }
+@media (prefers-reduced-motion: reduce) { #topo, .dica { transition: none; } }
 </style>
 
 <div class="page">
@@ -555,6 +586,29 @@ footer.doc {
           </tbody>
           <caption>321 ms seria FALHA numa regra absoluta, mas está a 1 desvio robusto do normal do fluxo. Já 143 ms num caminho de 30 ms é FALHA.</caption>
         </table>
+      </div>
+
+      <h3>Experimente o rótulo</h3>
+      <p>Mexa nos valores e veja qual regra dispara. Os botões carregam os três casos reais acima.</p>
+      <div class="simulador" id="simulador">
+        <div class="presets" role="group" aria-label="Casos reais">
+          <button type="button" class="chip" data-preset="ok">IQ → jp-tch</button>
+          <button type="button" class="chip" data-preset="risco">AR → br-poa</button>
+          <button type="button" class="chip" data-preset="falha">HN → us-mia</button>
+        </div>
+        <div class="sim-grade">
+          <label><span>z robusto <output for="s-z" id="o-z"></output></span><input type="range" id="s-z" min="0" max="10" step="0.05" value="1"></label>
+          <label><span>aumento sobre o normal (%) <output for="s-aum" id="o-aum"></output></span><input type="range" id="s-aum" min="-20" max="400" step="1" value="2"></label>
+          <label><span>jitter relativo <output for="s-jit" id="o-jit"></output></span><input type="range" id="s-jit" min="0" max="10" step="0.1" value="0.5"></label>
+          <label><span>perda (%) <output for="s-perda" id="o-perda"></output></span><input type="range" id="s-perda" min="0" max="100" step="1" value="0"></label>
+          <label><span>n5_timeout <output for="s-to" id="o-to"></output></span><input type="range" id="s-to" min="0" max="5" step="1" value="0"></label>
+          <label><span>n5_aumento80 <output for="s-a80" id="o-a80"></output></span><input type="range" id="s-a80" min="0" max="5" step="1" value="0"></label>
+          <label><span>n5_risco <output for="s-ri" id="o-ri"></output></span><input type="range" id="s-ri" min="0" max="5" step="1" value="0"></label>
+        </div>
+        <div class="sim-resultado" aria-live="polite">
+          <span class="cls ok" id="sim-cls">OK</span>
+          <span class="sim-regra" id="sim-regra"></span>
+        </div>
       </div>
 
       <h3>Corte no tempo dentro do Período B</h3>
@@ -849,6 +903,216 @@ python src/arvore_final.py           # Tarefa 5: árvore final e teste único</p
     });
     g2.appendChild(el("text", { x: R2 + 10, y: yy + 19, "font-size": 12, fill: "var(--muted)" }, b.n.toLocaleString("pt-BR")));
   });
+})();
+</script>
+
+<script>
+(function () {
+  var reduzir = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function br(n, casas) { return n.toFixed(casas).replace(".", ","); }
+  function novo(tag, attrs, texto) {
+    var e = document.createElement(tag);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (texto != null) e.textContent = texto;
+    return e;
+  }
+
+  // Barra de progresso e botão de voltar ao topo
+  var barra = novo("div", { "class": "progresso", "aria-hidden": "true" });
+  document.body.appendChild(barra);
+  var flut = novo("div", { "class": "flutuantes" });
+  var tema = novo("button", { type: "button", "class": "flutuante", id: "tema" });
+  var topo = novo("button", { type: "button", "class": "flutuante", id: "topo", "aria-label": "Voltar ao topo", title: "Voltar ao topo" }, "↑");
+  flut.appendChild(tema); flut.appendChild(topo);
+  document.body.appendChild(flut);
+  function rolar() {
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    barra.style.width = (h > 0 ? window.scrollY / h * 100 : 0) + "%";
+    topo.classList.toggle("visivel", window.scrollY > 600);
+  }
+  window.addEventListener("scroll", rolar, { passive: true });
+  rolar();
+  topo.addEventListener("click", function () { window.scrollTo({ top: 0, behavior: reduzir ? "auto" : "smooth" }); });
+
+  // Tema claro/escuro
+  var raiz = document.documentElement;
+  try { var salvo = localStorage.getItem("tema"); if (salvo) raiz.dataset.theme = salvo; } catch (e) {}
+  function escuroAtivo() {
+    return raiz.dataset.theme ? raiz.dataset.theme === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+  }
+  function rotularTema() {
+    var escuro = escuroAtivo();
+    tema.textContent = escuro ? "☀" : "☾";
+    tema.setAttribute("aria-label", escuro ? "Usar tema claro" : "Usar tema escuro");
+    tema.title = tema.getAttribute("aria-label");
+  }
+  tema.addEventListener("click", function () {
+    raiz.dataset.theme = escuroAtivo() ? "light" : "dark";
+    try { localStorage.setItem("tema", raiz.dataset.theme); } catch (e) {}
+    rotularTema();
+  });
+  rotularTema();
+
+  // Sumário destaca a seção visível
+  var links = {};
+  document.querySelectorAll(".toc a[href^='#']").forEach(function (a) { links[a.getAttribute("href").slice(1)] = a; });
+  if ("IntersectionObserver" in window) {
+    var obs = new IntersectionObserver(function (ents) {
+      ents.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        for (var id in links) links[id].classList.remove("ativo");
+        if (links[en.target.id]) links[en.target.id].classList.add("ativo");
+      });
+    }, { rootMargin: "-20% 0px -70% 0px" });
+    Object.keys(links).forEach(function (id) { var s = document.getElementById(id); if (s) obs.observe(s); });
+  }
+
+  // Números do topo contam até o valor
+  if (!reduzir && "IntersectionObserver" in window) {
+    document.querySelectorAll(".fato b").forEach(function (b) {
+      var txt = b.textContent.trim();
+      if (!/^[\d.,]+$/.test(txt)) return;
+      var casas = txt.indexOf(",") >= 0 ? txt.split(",")[1].length : 0;
+      var alvo = parseFloat(txt.replace(/\./g, "").replace(",", "."));
+      var fmt = function (v) { return v.toLocaleString("pt-BR", { minimumFractionDigits: casas, maximumFractionDigits: casas }); };
+      var o = new IntersectionObserver(function (ents) {
+        if (!ents[0].isIntersecting) return;
+        o.disconnect();
+        var t0 = performance.now(), dur = 1100;
+        (function passo(t) {
+          var p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+          b.textContent = p < 1 ? fmt(alvo * e) : txt;
+          if (p < 1) requestAnimationFrame(passo);
+        })(t0);
+      });
+      o.observe(b);
+    });
+  }
+
+  // Dica flutuante nos gráficos (mouse, toque e teclado)
+  var dica = novo("div", { "class": "dica", role: "tooltip", id: "dica" });
+  document.body.appendChild(dica);
+  function mostrar(alvo, x, y) {
+    dica.textContent = alvo.getAttribute("data-dica");
+    dica.classList.add("visivel");
+    var w = dica.offsetWidth, h = dica.offsetHeight;
+    var left = Math.min(Math.max(8, x - w / 2), window.innerWidth - w - 8);
+    var top = y - h - 12; if (top < 8) top = y + 16;
+    dica.style.left = left + "px"; dica.style.top = top + "px";
+  }
+  function esconder() { dica.classList.remove("visivel"); }
+  ["g-fluxos", "g-blocos"].forEach(function (id) {
+    var svg = document.getElementById(id);
+    if (!svg) return;
+    svg.querySelectorAll("circle, rect").forEach(function (n) {
+      var t = n.querySelector("title");
+      if (!t) return;
+      n.setAttribute("data-dica", t.textContent);
+      n.setAttribute("aria-label", t.textContent);
+      n.setAttribute("tabindex", "0");
+      n.setAttribute("role", "img");
+      t.remove();
+      n.addEventListener("pointerenter", function (e) { mostrar(n, e.clientX, e.clientY); });
+      n.addEventListener("pointermove", function (e) { mostrar(n, e.clientX, e.clientY); });
+      n.addEventListener("pointerleave", esconder);
+      n.addEventListener("focus", function () { var r = n.getBoundingClientRect(); mostrar(n, r.left + r.width / 2, r.top); });
+      n.addEventListener("blur", esconder);
+    });
+  });
+  window.addEventListener("scroll", esconder, { passive: true });
+
+  // Filtros do gráfico de fluxos
+  var g1 = document.getElementById("g-fluxos");
+  if (g1) {
+    var chips = novo("div", { "class": "chips", role: "group", "aria-label": "Filtrar fluxos" });
+    var filtros = [["todos", "Todos os 97"], ["alta", "FALHA acima de 10%"], ["destaque", "Casos comentados"]];
+    filtros.forEach(function (f, i) {
+      var c = novo("button", { type: "button", "class": "chip", "data-filtro": f[0], "aria-pressed": i === 0 ? "true" : "false" }, f[1]);
+      chips.appendChild(c);
+    });
+    var ancora = g1.closest(".grafico") || g1;
+    ancora.parentNode.insertBefore(chips, ancora);
+    chips.addEventListener("click", function (e) {
+      var c = e.target.closest(".chip"); if (!c) return;
+      chips.querySelectorAll(".chip").forEach(function (x) { x.setAttribute("aria-pressed", x === c ? "true" : "false"); });
+      var modo = c.getAttribute("data-filtro");
+      g1.querySelectorAll("circle").forEach(function (n) {
+        var d = n.getAttribute("data-dica") || "";
+        var pct = parseFloat((d.match(/FALHA ([\d,]+)%/) || [0, "0"])[1].replace(",", "."));
+        var dest = n.getAttribute("fill") === "var(--falha)";
+        var mostra = modo === "todos" || (modo === "alta" && pct > 10) || (modo === "destaque" && dest);
+        n.style.opacity = mostra ? "" : "0.08";
+      });
+    });
+  }
+
+  // Recolher/expandir árvores e copiar comandos
+  document.querySelectorAll("pre.arvore").forEach(function (pre) {
+    var acoes = novo("div", { "class": "bloco-acoes" });
+    if (/Árvore/.test(pre.getAttribute("aria-label") || "")) {
+      if (!pre.id) pre.id = "arv-" + Math.random().toString(36).slice(2, 7);
+      pre.classList.add("recolhida");
+      var b = novo("button", { type: "button", "class": "btn-mini", "aria-expanded": "false", "aria-controls": pre.id }, "Expandir árvore");
+      b.addEventListener("click", function () {
+        var aberta = pre.classList.toggle("recolhida") === false;
+        b.setAttribute("aria-expanded", aberta ? "true" : "false");
+        b.textContent = aberta ? "Recolher árvore" : "Expandir árvore";
+      });
+      acoes.appendChild(b);
+    } else if (pre.closest("#reproduzir")) {
+      var c = novo("button", { type: "button", "class": "btn-mini" }, "Copiar comandos");
+      c.addEventListener("click", function () {
+        var ok = function () { c.textContent = "Copiado!"; setTimeout(function () { c.textContent = "Copiar comandos"; }, 1600); };
+        if (navigator.clipboard) navigator.clipboard.writeText(pre.textContent).then(ok, function () { c.textContent = "Não foi possível copiar"; });
+      });
+      acoes.appendChild(c);
+    } else return;
+    pre.parentNode.insertBefore(acoes, pre);
+  });
+
+  // Simulador do rótulo
+  var sim = document.getElementById("simulador");
+  if (sim) {
+    var campos = { z: ["s-z", 2], aum: ["s-aum", 0], jit: ["s-jit", 1], perda: ["s-perda", 0], to: ["s-to", 0], a80: ["s-a80", 0], ri: ["s-ri", 0] };
+    var presets = {
+      ok:    { z: 1.00, aum: 2,   jit: 0.5, perda: 0, to: 0, a80: 0, ri: 0 },
+      risco: { z: 2.18, aum: 2,   jit: 1.2, perda: 0, to: 0, a80: 0, ri: 2 },
+      falha: { z: 10,   aum: 383, jit: 2.0, perda: 0, to: 0, a80: 2, ri: 3 }
+    };
+    var cls = document.getElementById("sim-cls"), regra = document.getElementById("sim-regra");
+    function ler(k) { return parseFloat(document.getElementById(campos[k][0]).value); }
+    function atualizar() {
+      var v = {};
+      for (var k in campos) {
+        v[k] = ler(k);
+        var txt = br(v[k], campos[k][1]);
+        if (k === "z" && v[k] >= 10) txt = "≥ 10";
+        document.getElementById("o-" + k).textContent = txt;
+      }
+      var r, c;
+      if (v.perda >= 10) { c = "falha"; r = "Regra 1: perda ≥ 10%."; }
+      else if (v.to >= 3) { c = "falha"; r = "Regra 2: n5_timeout ≥ 3."; }
+      else if (v.z >= 3.5) { c = "falha"; r = "Regra 3: z ≥ 3,5."; }
+      else if (v.a80 >= 2) { c = "falha"; r = "Regra 4: n5_aumento80 ≥ 2."; }
+      else if (((v.z >= 2 && v.z < 3.5) || (v.aum >= 30 && v.aum < 80) || v.jit >= 3) && v.ri >= 2) { c = "risco"; r = "Regra 5: desvio moderado e n5_risco ≥ 2."; }
+      else {
+        c = "ok";
+        var moderado = (v.z >= 2 && v.z < 3.5) || (v.aum >= 30 && v.aum < 80) || v.jit >= 3;
+        r = moderado ? "Regra 6: desvio moderado, mas isolado (n5_risco < 2)." : "Regra 6: nenhuma regra anterior disparou.";
+      }
+      cls.className = "cls " + c;
+      cls.textContent = c.toUpperCase();
+      regra.textContent = r;
+    }
+    sim.addEventListener("input", atualizar);
+    sim.querySelector(".presets").addEventListener("click", function (e) {
+      var b = e.target.closest("[data-preset]"); if (!b) return;
+      var p = presets[b.getAttribute("data-preset")];
+      for (var k in p) document.getElementById(campos[k][0]).value = p[k];
+      atualizar();
+    });
+    atualizar();
+  }
 })();
 </script>
 

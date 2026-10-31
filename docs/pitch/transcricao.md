@@ -1,35 +1,35 @@
 # Pitch — WebAgriculture
 
-Duração: 90 segundos. Narração sintética em português. Legendas em SRT e WebVTT.
+Duração: 90 segundos. Voz neural sintética em português brasileiro, com pausas naturais.
 
-## 00:00:00–00:00:10 · WebAgriculture
+## 00:00:00–00:00:09 · WebAgriculture
 
-Uma rede pode parecer lenta. Mas está em risco? Conheça o WebAgriculture, projeto de Ciência da Computação da Universidade Brás Cubas.
+Uma rede pode parecer lenta. Mas será que está em risco? Conheça o WebAgriculture, projeto da Universidade Brás Cubas.
 
-## 00:00:10–00:00:22 · 01 / O PROBLEMA
+## 00:00:09–00:00:21 · 01 / O PROBLEMA
 
-Um caminho longo pode ter latência alta e estar saudável. Já um pequeno aumento num caminho curto pode indicar degradação. Um limite global em milissegundos não conta toda a história.
+Uma conexão longa pode ter latência alta e estar saudável. Já um pequeno aumento num caminho curto pode indicar degradação. Cada caminho tem o próprio normal.
 
-## 00:00:22–00:00:34 · 02 / DADOS REAIS
+## 00:00:21–00:00:32 · 02 / DADOS REAIS
 
-Usamos quatorze dias de medições públicas de ping do RIPE Atlas, em noventa e sete fluxos. A primeira semana estima o normal de cada caminho, com mediana e desvio absoluto mediano.
+Analisamos quatorze dias de pings públicos do RIPE Atlas, em noventa e sete fluxos. A primeira semana define o comportamento normal de cada caminho.
 
-## 00:00:34–00:00:46 · 03 / COMO FUNCIONA
+## 00:00:32–00:00:45 · 03 / COMO FUNCIONA
 
-Na segunda semana, calculamos atributos relativos, perda, jitter e histórico de cinco medições. Uma árvore de decisão aprende a classificar cada fluxo como OK, RISCO ou FALHA, seguindo a política de rótulos.
+Na segunda semana, calculamos os desvios, a perda, o jitter e o histórico recente. Uma árvore de decisão classifica o estado atual em OK, risco ou falha.
 
-## 00:00:46–00:00:58 · 04 / AVALIAÇÃO
+## 00:00:45–00:00:55 · 04 / AVALIAÇÃO
 
-Separamos os dados em ordem de tempo. Os parâmetros são escolhidos apenas na validação. O teste é aberto uma única vez, reduzindo o risco de ajustar o modelo aos resultados finais.
+Os dados são separados em ordem de tempo. Os parâmetros são escolhidos na validação. Só depois abrimos o teste, uma única vez.
 
-## 00:00:58–00:01:10 · 05 / RESULTADOS
+## 00:00:55–00:01:05 · 05 / RESULTADOS
 
-No teste, com sessenta e oito mil quatrocentas e setenta e duas medições, o F um macro foi de zero vírgula nove nove nove nove. Foram quatro erros de classificação.
+Em mais de sessenta e oito mil medições de teste, o F um macro foi de zero vírgula nove nove nove nove. Houve quatro erros.
 
-## 00:01:10–00:01:20 · 06 / LIMITES
+## 00:01:05–00:01:17 · 06 / LIMITES
 
-O resultado mede a reprodução de regras heurísticas. Não comprova defeito físico nem prevê falhas futuras. Mudanças de rota podem exigir recalibração do normal do caminho.
+Esse resultado mede a reprodução de regras. Não confirma defeitos físicos nem prevê falhas futuras. Mudanças de rota podem exigir recalibração.
 
-## 00:01:20–00:01:30 · EXPLORE O PROJETO
+## 00:01:17–00:01:30 · EXPLORE O PROJETO
 
-Na página, experimente os cenários, ajuste os atributos e explore a classificação. Consulte também o código, a metodologia e as limitações. WebAgriculture: contexto para entender a degradação da rede.
+Agora é sua vez: escolha um cenário, ajuste os atributos e entenda a classificação. Explore os dados e as limitações. WebAgriculture: contexto para entender a rede.

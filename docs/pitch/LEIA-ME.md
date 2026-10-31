@@ -1,6 +1,6 @@
 # Pitch de 90 segundos
 
-- `webagriculture-90s.mp4`: vídeo 1280 × 720, com narração sintética em português. Duração final de 90 segundos.
+- `webagriculture-90s.mp4`: vídeo 1280 × 720, com voz neural sintética em português brasileiro, sem aceleração artificial da fala. Duração final de 90 segundos.
 - `legendas.srt`: legendas para enviar ao YouTube.
 - `legendas.vtt`: legendas usadas pelo player da página.
 - `transcricao.html` e `transcricao.md`: conteúdo acessível e roteiro para regravar com a voz da equipe, se desejado.

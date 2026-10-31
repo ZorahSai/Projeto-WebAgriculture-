@@ -1,0 +1,127 @@
+{
+  "projeto": "WebAgriculture",
+  "familia": "DecisionTreeClassifier (scikit-learn, CART)",
+  "params": {
+    "criterion": "gini",
+    "max_depth": 8,
+    "min_samples_leaf": 10,
+    "ccp_alpha": 0.0001,
+    "random_state": 42
+  },
+  "entradas": [
+    {
+      "nome": "z_robusto",
+      "tipo": "float",
+      "ordem": 0,
+      "formula": "(latencia_ms - mediana_A) / (1.4826 * MAD_A); NaN quando não há RTT"
+    },
+    {
+      "nome": "aumento_pct",
+      "tipo": "float",
+      "ordem": 1,
+      "formula": "(latencia_ms - mediana_A) / mediana_A * 100"
+    },
+    {
+      "nome": "jitter_relativo",
+      "tipo": "float",
+      "ordem": 2,
+      "formula": "jitter_ms / jitter típico do fluxo no Período A; inf quando o típico é 0 (tratado como >= 3)"
+    },
+    {
+      "nome": "perda_pct",
+      "tipo": "float",
+      "ordem": 3,
+      "formula": "pacotes perdidos / pacotes enviados * 100 na medição"
+    },
+    {
+      "nome": "timeout_atual",
+      "tipo": "float",
+      "ordem": 4,
+      "formula": "1 se a medição não tem RTT ou a perda é 100%, senão 0"
+    },
+    {
+      "nome": "n5_timeout",
+      "tipo": "float",
+      "ordem": 5,
+      "formula": "soma de timeout_atual nas últimas 5 medições do fluxo (inclui a atual)"
+    },
+    {
+      "nome": "n5_aumento80",
+      "tipo": "float",
+      "ordem": 6,
+      "formula": "quantas das últimas 5 medições do fluxo tiveram aumento_pct >= 80"
+    },
+    {
+      "nome": "n5_risco",
+      "tipo": "float",
+      "ordem": 7,
+      "formula": "quantas das últimas 5 medições do fluxo foram rotuladas RISCO"
+    }
+  ],
+  "faltantes_e_divisao_por_zero": {
+    "sem_rtt": "z_robusto e aumento_pct ficam NaN; timeout_atual = 1",
+    "jitter_tipico_zero": "jitter_relativo = inf (tratado como >= 3)",
+    "observacao": "o modelo não imputa: preencha NaN antes de prever ou descarte a linha"
+  },
+  "saidas": {
+    "alvo": "classe",
+    "ordem_classes": [
+      "FALHA",
+      "OK",
+      "RISCO"
+    ],
+    "classes_do_projeto": [
+      "OK",
+      "RISCO",
+      "FALHA"
+    ]
+  },
+  "horizonte": "classifica a medição atual de cada fluxo (sem previsão futura)",
+  "historico_necessario": "últimas 5 medições do mesmo fluxo para as colunas n5_*; as 4 primeiras medições de cada fluxo em validação e teste ficam em embargo",
+  "regras_baseline": {
+    "periodo": "A",
+    "estatisticas": "mediana e MAD do RTT por fluxo_id",
+    "piso_rtt_validos": 1500,
+    "arquivo": "baseline.csv"
+  },
+  "colunas_proibidas": [
+    "pais_origem",
+    "regiao",
+    "dst_addr",
+    "destino_fqdn",
+    "probe_id",
+    "fluxo_id",
+    "latencia_ms",
+    "jitter_ms",
+    "mediana"
+  ],
+  "versoes": {
+    "python": "3.14.7",
+    "scikit-learn": "1.9.1",
+    "pandas": "3.0.6",
+    "numpy": "2.5.4",
+    "joblib": "1.6.0"
+  },
+  "metricas": {
+    "n_treino": 115804,
+    "n_teste": 68472,
+    "profundidade": 7,
+    "folhas": 19
+  },
+  "exemplo_real": {
+    "fluxo_id": "6351|91.198.196.228",
+    "timestamp": "2026-09-18 02:25:13+00:00",
+    "entrada": {
+      "z_robusto": -0.652008,
+      "aumento_pct": -0.25839,
+      "jitter_relativo": 0.307311,
+      "perda_pct": 0.0,
+      "timeout_atual": 0.0,
+      "n5_timeout": 0.0,
+      "n5_aumento80": 0.0,
+      "n5_risco": 0.0
+    },
+    "classe_real": "OK",
+    "classe_prevista": "OK"
+  }
+}

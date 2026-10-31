@@ -13,55 +13,59 @@
       "nome": "z_robusto",
       "tipo": "float",
       "ordem": 0,
-      "formula": "(latencia_ms - mediana_A) / (1.4826 * MAD_A); NaN quando não há RTT"
+      "formula": "desvio = latencia_ms - mediana_A; denominador = 1.4826*MAD_A se MAD_A>0, senão max(IQR_A/1.349, 1.0 ms); z = desvio/denominador. Se MAD_A=0 e desvio=0, z=0; sem RTT, NaN"
     },
     {
       "nome": "aumento_pct",
       "tipo": "float",
       "ordem": 1,
-      "formula": "(latencia_ms - mediana_A) / mediana_A * 100"
+      "formula": "(latencia_ms - mediana_A) / mediana_A * 100; requer mediana_A > 0 e finita para a interface de entrega"
     },
     {
       "nome": "jitter_relativo",
       "tipo": "float",
       "ordem": 2,
-      "formula": "jitter_ms / jitter típico do fluxo no Período A; inf quando o típico é 0 (tratado como >= 3)"
+      "formula": "jitter_ms / jitter_tipico_A; se ambos são 0, retorna 1.0; se típico=0 e atual>0, retorna +inf; se jitter atual ausente, NaN"
     },
     {
       "nome": "perda_pct",
       "tipo": "float",
       "ordem": 3,
-      "formula": "pacotes perdidos / pacotes enviados * 100 na medição"
+      "formula": "pacotes perdidos / pacotes enviados * 100; pacotes enviados deve ser >0; sem denominador válido, não classificar"
     },
     {
       "nome": "timeout_atual",
       "tipo": "float",
       "ordem": 4,
-      "formula": "1 se a medição não tem RTT ou a perda é 100%, senão 0"
+      "formula": "1 se a medição não tem RTT ou perda_pct=100, senão 0"
     },
     {
       "nome": "n5_timeout",
       "tipo": "float",
       "ordem": 5,
-      "formula": "soma de timeout_atual nas últimas 5 medições do fluxo (inclui a atual)"
+      "formula": "soma de timeout_atual nas últimas 5 medições ordenadas do mesmo fluxo, incluindo a atual; min_periods=1 no pipeline"
     },
     {
       "nome": "n5_aumento80",
       "tipo": "float",
       "ordem": 6,
-      "formula": "quantas das últimas 5 medições do fluxo tiveram aumento_pct >= 80"
+      "formula": "contagem de aumento_pct > 80 nas últimas 5 medições do fluxo, incluindo a atual; corte estrito, não >=80"
     },
     {
       "nome": "n5_risco",
       "tipo": "float",
       "ordem": 7,
-      "formula": "quantas das últimas 5 medições do fluxo foram rotuladas RISCO"
+      "formula": "soma do critério moderado, ANTES do rótulo final, nas últimas 5 medições do fluxo: (2<=z_robusto<3.5) OU (30<=aumento_pct<=80) OU (jitter_relativo>=3); inclui a atual"
     }
   ],
   "faltantes_e_divisao_por_zero": {
-    "sem_rtt": "z_robusto e aumento_pct ficam NaN; timeout_atual = 1",
-    "jitter_tipico_zero": "jitter_relativo = inf (tratado como >= 3)",
-    "observacao": "o modelo não imputa: preencha NaN antes de prever ou descarte a linha"
+    "sem_rtt": "z_robusto e aumento_pct ficam NaN; timeout_atual=1. A interface carregar_modelo.py rejeita entradas não finitas sem substituir por zero ou imputar",
+    "mad_zero": "usar max(IQR_A/1.349, 1.0 ms); se também desvio=0, z_robusto=0",
+    "mediana_zero_ou_invalida": "não classificar pela interface de entrega; requer baseline válido com mediana positiva",
+    "jitter_tipico_zero": "jitter atual zero: 1.0; positivo: +inf; atual ausente: NaN",
+    "inf_nan_na_interface": "rejeitar a medição com ValueError e manter sem classificação; não transformar +inf em zero nem fabricar rótulo. O script exemplifica inferência somente para vetores finitos. Isso não redefine o cálculo de features do pipeline",
+    "pacotes_enviados_zero": "não calcular perda nem classificar essa medição",
+    "baseline_ausente_ou_invalido": "não classificar pelo modelo normalizado; coletar/calibrar antes e respeitar a recomendação do baseline.csv"
   },
   "saidas": {
     "alvo": "classe",
@@ -77,12 +81,17 @@
     ]
   },
   "horizonte": "classifica a medição atual de cada fluxo (sem previsão futura)",
-  "historico_necessario": "últimas 5 medições do mesmo fluxo para as colunas n5_*; as 4 primeiras medições de cada fluxo em validação e teste ficam em embargo",
+  "historico_necessario": "5 medições ordenadas por timestamp de um mesmo fluxo, incluindo a atual. No dataset, rolling(5,min_periods=1); as 4 primeiras medições de validação/teste ficam em embargo. Para uso operacional com janela completa, aguardar 5 medições antes de classificar",
   "regras_baseline": {
     "periodo": "A",
     "estatisticas": "mediana e MAD do RTT por fluxo_id",
     "piso_rtt_validos": 1500,
-    "arquivo": "baseline.csv"
+    "arquivo": "baseline.csv",
+    "periodo_utc": {
+      "inicio": "2026-09-06T04:32:00Z",
+      "fim": "2026-09-13T04:32:00Z"
+    },
+    "validacao_interface": "valido=true, recomendacao=usar, mediana positiva e referências necessárias finitas; manter ficha congelada para não vazar informação futura"
   },
   "colunas_proibidas": [
     "pais_origem",
@@ -123,5 +132,19 @@
     },
     "classe_real": "OK",
     "classe_prevista": "OK"
-  }
+  },
+  "nome_modelo": "WebAgri-RTT-CART-T5",
+  "versao_modelo": "1.0.0",
+  "versao_contrato": "1.0.0",
+  "identificacao_artefato": "árvore final T5 com parâmetros congelados escolhidos na validação; nome do artefato: modelo.joblib",
+  "preparacao": [
+    "Identificar fluxo e ordenar timestamps",
+    "Consultar ficha válida do Período A",
+    "Calcular as métricas relativas conforme fórmulas de entradas",
+    "Calcular critério de risco moderado e janelas por fluxo",
+    "Preservar nomes e ordem das oito entradas",
+    "Rejeitar entradas não finitas na interface de entrega",
+    "Aplicar modelo.predict e interpretar classe atual"
+  ],
+  "interpretacao": "OK: nenhuma ação pela política; RISCO: observar; FALHA: investigar. Classes heurísticas de degradação atual, não confirmação de defeito físico nem previsão futura"
 }

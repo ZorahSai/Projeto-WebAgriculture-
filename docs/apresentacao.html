@@ -1,5 +1,6 @@
-<!doctype html><html lang="pt-BR"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
-<title>Preditor de Degradação de Rede</title>
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<title>WebAgriculture · Preditor de Degradação de Rede</title>
+<meta name="description" content="Explore o projeto WebAgriculture: experimente a classificação de fluxos de rede, conheça a árvore de decisão e descubra os resultados com dados reais do RIPE Atlas.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..700&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
@@ -11,8 +12,8 @@
   --ink: #333A57;
   --muted: #4f5a6e;
   --rule: #cddde3;
-  --accent: #336063;
-  --accent-soft: #e1eef2;
+  --accent: #166534;
+  --accent-soft: #e5f2e6;
   --ok: #2f7d4f;
   --risco: #b07a12;
   --falha: #b23a3a;
@@ -405,10 +406,34 @@ pre.arvore.recolhida { max-height: 220px; overflow: hidden; -webkit-mask-image: 
 @media (prefers-reduced-motion: reduce) { #topo, .dica { transition: none; } }
 </style>
 
+<style>
+/* Presentation experience. Static document and all results remain available. */
+:root{--bg:#f3f7f0;--surface:#fffefa;--ink:#143c25;--muted:#4b6553;--accent:#166534;--accent-soft:#e5f2e6;--rule:#cbdccf;--font-display:'Inter Tight','Segoe UI',sans-serif}
+:root[data-theme=dark]{--bg:#0c2115;--surface:#153322;--ink:#edf8ef;--muted:#b6cfbc;--accent:#86efac;--accent-soft:#204a30;--rule:#35543f}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0c2115;--surface:#153322;--ink:#edf8ef;--muted:#b6cfbc;--accent:#86efac;--accent-soft:#204a30;--rule:#35543f}}
+html{scroll-behavior:smooth;scroll-padding-top:90px}body{padding-inline:24px;background:radial-gradient(ellipse at 90% 5%,#86efac15,transparent 40%),var(--bg)}.page{max-width:1440px;gap:44px;grid-template-columns:minmax(0,1fr)}main{max-width:none;min-width:0}.sitebar{position:sticky;top:0;z-index:35;max-width:1440px;margin:auto;min-height:76px;display:flex;align-items:center;gap:28px;background:var(--bg);border-bottom:1px solid var(--rule)}.sitebrand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--ink);text-decoration:none;white-space:nowrap}.sitebrand>img{object-fit:contain;display:inline-grid;place-content:center;background:#14532d;color:#fff;padding:6px 10px;border-radius:10px;font-size:24px;position:relative}.brand-dot{color:#c4e998}.sitebrand small{font:9px var(--font-mono);letter-spacing:.1em;color:var(--muted);border-left:1px solid var(--rule);padding-left:12px}.sitebar nav{display:flex;gap:24px;margin-left:auto;font-size:14px}.sitebar nav a{text-decoration:none;display:grid;place-content:center;min-height:44px;color:var(--ink)}button{font-family:inherit}.tour-launch{border:1px solid var(--rule);border-radius:50px;background:var(--surface);color:var(--ink);padding:10px 18px;min-height:44px;cursor:pointer}
+.skip-link{position:absolute;top:-100px;left:12px;z-index:80;background:var(--surface);padding:12px}.skip-link:focus{top:8px}
+header.doc{margin-top:24px;padding:clamp(24px,4vw,58px);display:grid;grid-template-columns:1.25fr 1fr;column-gap:36px;border-radius:28px;background:radial-gradient(ellipse at 90% 10%,#86efac20,transparent 65%),#14532d;box-shadow:none}header.doc>p,header.doc>h1,header.doc>.hero-buttons{grid-column:1}header.doc .eyebrow{font-size:10px;line-height:1.6;border:0;border-radius:0;background:transparent;padding:0;color:#b8edca}h1{font-family:var(--font-body);font-size:clamp(36px,4.5vw,66px);letter-spacing:-.045em;line-height:1.05;max-width:750px;text-wrap:initial}h1 em{font-style:normal;color:#facc15}.hero-subtitle{font:600 14px var(--font-mono);color:#c1e3cc;margin:0}.lede{font-size:17px;max-width:55ch}.hero-buttons{display:flex;gap:16px;flex-wrap:wrap;margin:8px 0 12px}.hero-buttons a{font-size:14px;min-height:48px;padding:12px 18px;border-radius:8px;text-decoration:none;display:inline-flex;align-items:center;gap:20px}.primary-action{background:#facc15;color:#143c25;font-weight:700}.secondary-action{color:#d5f2df;border:1px solid #6b9d7c}.network-visual{grid-column:2;grid-row:2/6;align-self:center;background:#103c24;border:1px solid #3b8553;border-radius:18px;overflow:hidden;transform:rotate(-2deg);box-shadow:0 24px 60px #0003}.visual-head,.visual-footer{display:flex;justify-content:space-between;gap:12px;padding:16px;font:9px var(--font-mono);color:#bbe2c6}.visual-head i{display:inline-block;width:6px;height:6px;border-radius:50%;background:#facc15;margin-right:6px}.network-visual svg{display:block;width:100%;height:auto}.visual-footer{font-size:12px;border-top:1px solid #37784b}.visual-footer strong{color:#facc15}.packet-line{stroke:#facc15;stroke-width:3;stroke-dasharray:5 20;animation:flow 3s linear infinite}@keyframes flow{to{stroke-dashoffset:-100}}header.doc .meta{grid-column:1/-1;font-size:12px;margin-top:12px;max-width:none;gap:8px 24px}header.doc .meta span:first-child{flex-basis:100%}.meta a{color:#b4ecc7}
+section{scroll-margin-top:90px;padding-block:64px 12px}section>p,section>ul,section>ol{max-width:80ch}h2{font-size:clamp(28px,3.4vw,43px);letter-spacing:-.035em;font-weight:650;line-height:1.12}h3{font-family:var(--font-body);letter-spacing:-.02em}.section-kicker{font:11px var(--font-mono);letter-spacing:.12em;color:var(--accent);margin-bottom:16px}.experience{padding:36px clamp(18px,3vw,40px);border:1px solid var(--rule);background:var(--surface);border-radius:24px;margin-top:36px}.experience>p{max-width:66ch}.scenario-overview{margin:28px 0 0;padding:24px;border:1px solid var(--rule);border-radius:16px 16px 0 0;background:var(--bg)}.demo-label{font:10px var(--font-mono);letter-spacing:.1em;color:var(--accent)}#scenario-description{font-size:18px;margin:12px 0 0;min-height:60px;max-width:70ch}.scenario-overview svg{width:100%;height:90px;display:block;margin-top:8px}#signal-base{fill:none;stroke:var(--rule);stroke-dasharray:4 5}#signal-path{fill:none;stroke:var(--accent);stroke-width:3;stroke-linejoin:round;stroke-linecap:round}.simulador{margin:0;border-top:0;border-radius:0 0 16px 16px;box-shadow:none;padding:24px}.simulador .presets{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.chip{min-height:44px;font-weight:600;padding:10px 14px;border-radius:10px}.presets .chip{text-align:left}.chip:hover{border-color:var(--accent)}.advanced{margin-top:18px}.advanced summary{cursor:pointer;min-height:44px;font-size:14px;font-weight:600}.advanced .sim-grade{padding:20px 0}.sim-grade label{background:var(--bg);border:1px solid var(--rule);padding:14px;border-radius:10px}.sim-grade input{min-height:30px}.sim-resultado{padding:18px;background:var(--bg);border:1px solid var(--rule);border-radius:12px;margin-top:20px}.sim-resultado .cls{font-size:16px}.demo-disclaimer{font-size:12px;color:var(--muted);margin:18px 0 0}.pipeline{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-top:24px}.pipeline button{background:var(--surface);color:var(--ink);border:1px solid var(--rule);border-radius:12px;cursor:pointer;min-height:96px;text-align:left;padding:16px;font-size:15px;font-weight:600}.pipeline button span{display:block;font:11px var(--font-mono);color:var(--muted);margin-bottom:12px}.pipeline button[aria-pressed=true]{background:var(--accent);color:var(--surface)}.pipeline button[aria-pressed=true] span{color:inherit}.stage-panel{background:var(--accent-soft);border-radius:16px;padding:28px;margin:12px 0 0;min-height:230px}.stage-panel>span{font:11px var(--font-mono);color:var(--accent)}.stage-panel h3{margin:12px 0;font-size:24px}.stage-panel a{display:inline-flex;align-items:center;min-height:44px;font-size:14px;font-weight:600}.fatos{grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}.fato{box-shadow:none;padding:24px 18px}.fato b{font-size:26px}.tabela,.grafico{box-shadow:none}.icon-link,.flutuante{min-width:44px;min-height:44px}.toc{top:100px;box-shadow:none;background:transparent;border:0;padding:8px 0;margin-top:36px}.toc a{min-height:44px}.flutuantes{right:20px;bottom:20px}.btn-mini{min-height:44px;padding:8px 14px}.tour-bar{position:fixed;z-index:45;bottom:20px;left:50%;transform:translateX(-50%);width:min(720px,calc(100% - 32px));background:var(--surface);border:1px solid var(--rule);box-shadow:0 12px 70px #0004;border-radius:16px;padding:12px 16px;display:flex;align-items:center;gap:10px}.tour-bar p{font-size:13px;margin:0;flex:1}.tour-bar button{background:var(--bg);color:var(--ink);border:1px solid var(--rule);border-radius:8px;min-height:44px;padding:8px 12px;cursor:pointer}.tour-bar button:disabled{opacity:.4;cursor:default}.tour-bar #tour-next{background:var(--accent);color:var(--surface)}.tour-bar button:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}.in-tour .flutuantes{bottom:110px}.in-tour{padding-bottom:140px}.tour-stop{outline:2px solid var(--accent);outline-offset:8px;border-radius:12px}
+@media(min-width:1250px){.page{grid-template-columns:195px minmax(0,1fr)}.toc{display:block;font-size:12px}.toc a{padding-inline:8px}}
+@media(min-width:1100px) and (max-width:1249px){.toc{display:none}}
+@media(max-width:800px){body{padding-inline:16px}.sitebar{gap:16px;flex-wrap:wrap;padding:10px 0}.sitebar nav{order:3;flex-basis:100%;justify-content:space-around;gap:12px;border-top:1px solid var(--rule);padding-top:4px}.sitebrand{font-size:14px}.sitebrand small{display:none}.tour-launch{margin-left:auto;font-size:12px;padding:8px 12px}.sitebar nav a{font-size:12px;min-height:32px}html{scroll-padding-top:130px}section{scroll-margin-top:130px}header.doc{grid-template-columns:1fr;padding:28px;gap:18px}header.doc .network-visual{grid-column:1;grid-row:auto;transform:none;width:100%;max-width:480px;justify-self:center}header.doc .meta{font-size:11px}.network-visual svg{max-height:200px}.hero-buttons{gap:10px}.hero-buttons a{padding:12px 14px;font-size:13px}.experience{margin-top:24px;padding:24px 16px}.simulador{padding:16px}.simulador .presets{grid-template-columns:1fr}.presets .chip{min-height:52px}.scenario-overview{padding:18px}.pipeline{grid-template-columns:repeat(5,minmax(88px,1fr));overflow-x:auto;padding:4px 2px 10px}.pipeline button{padding:12px;font-size:12px}.tour-bar{flex-wrap:wrap;gap:8px}.tour-bar p{flex-basis:100%}.tour-bar button{flex:1;font-size:12px}.tour-bar .tour-close{flex:0 0 auto}.tour-stop{outline-offset:3px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.packet-line{animation:none}*,*:before,*:after{transition:none!important}}
+@media print{.sitebar,.tour-bar,.flutuantes,.progresso,.hero-buttons{display:none!important}.page{display:block}.toc{display:none}header.doc,.experience{break-inside:avoid}.network-visual{transform:none}section{padding-top:24px}.tour-stop{outline:0}}
+</style>
+<style>:root{--ok:#166534;--risco:#7b5200;--falha:#a52626;--ok-soft:#e4f2e9;--risco-soft:#fff1c2;--falha-soft:#fbe5e5}:root[data-theme=dark]{--ok:#86efac;--risco:#facc15;--falha:#fca5a5;--ok-soft:#153c24;--risco-soft:#3b310d;--falha-soft:#461f23}@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--ok:#86efac;--risco:#facc15;--falha:#fca5a5;--ok-soft:#153c24;--risco-soft:#3b310d;--falha-soft:#461f23}}.sitebrand>img{border-radius:10px;padding:0;display:block}.tour-bar .tour-close{min-width:44px}.signal-legend{font-size:11px;color:var(--muted)}</style>
+<style>.project-access{display:grid;grid-template-columns:180px minmax(0,1fr);gap:28px;align-items:center;padding:24px;background:var(--surface);border:1px solid var(--rule);border-radius:16px}.project-access img{background:white;border-radius:8px}.project-access a{display:inline-block;min-height:44px;padding:8px 0}.project-access p{margin-bottom:4px}@media(max-width:600px){.project-access{grid-template-columns:1fr}.project-access img{justify-self:center}}</style>
+<style>.flow-details{margin-top:20px}.flow-details summary{min-height:44px;cursor:pointer;font-weight:600}.flow-schema{list-style:none;padding:0;margin:12px 0;display:grid;gap:8px;max-width:none}.flow-schema li{padding:16px 20px;border:1px solid var(--rule);border-radius:12px;background:var(--surface)}.flow-schema strong,.flow-schema span{display:block}.flow-schema span{font-size:14px;color:var(--muted);margin-top:4px}</style>
+<style>video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#14532d;border:1px solid var(--rule);border-radius:18px;margin:22px 0}#pitch>p a{display:inline-block;min-height:44px;padding:8px 0}.hero-buttons a span{font-family:Arial,sans-serif}</style>
+</head><body>
+<a class="skip-link" href="#main">Pular para o conteúdo</a>
+<div class="sitebar"><a class="sitebrand" href="#"><img src="logo_webagriculture.png" width="44" height="44" alt="Logo WebAgri RTT"> WebAgriculture <small>NETWORK LAB</small></a><nav aria-label="Navegação principal"><a href="#explorar">Experimentar</a><a href="#jornada">O projeto</a><a href="#final">Resultados</a></nav><button type="button" class="tour-launch" hidden>Apresentar ↗</button></div>
+<noscript><p class="nota">As demonstrações interativas precisam de JavaScript. Todos os textos, resultados e tabelas do projeto continuam disponíveis abaixo.</p><style>.experience,.pipeline,.tour-launch,.primary-action{display:none!important}</style></noscript>
 <div class="page">
   <nav class="toc" aria-label="Sumário">
     <p>Sumário</p>
     <ol>
+      <li><a href="#explorar">Experimentar</a></li><li><a href="#jornada">A jornada</a></li><li><a href="#pitch">Vídeo pitch</a></li>
       <li><a href="#resumo">Resumo</a></li>
       <li><a href="#problema">O problema</a></li>
       <li><a href="#coleta">Coleta bruta</a></li>
@@ -422,18 +447,63 @@ pre.arvore.recolhida { max-height: 220px; overflow: hidden; -webkit-mask-image: 
     </ol>
   </nav>
 
-  <main>
+  <main id="main" tabindex="-1">
     <header class="doc">
       <p class="eyebrow">Projeto integrador · Estrutura de Dados II · Redes · Análise de Sistemas</p>
-      <h1>Preditor de Degradação de Rede</h1>
+      <h1>Uma rede pode parecer lenta.<br><em>Mas está em risco?</em></h1>
+<p class="hero-subtitle">Preditor de Degradação de Rede</p>
       <p class="lede">Uma árvore de decisão que classifica cada medição de ping como OK, RISCO ou FALHA pelo desvio em relação ao normal do próprio caminho, e não pela distância.</p>
-      <p class="meta">
+      <div class="hero-buttons"><a class="primary-action" href="#explorar">Experimente a classificação <span aria-hidden="true">↗</span></a><a class="secondary-action" href="#jornada">Conheça o projeto ↓</a><a class="secondary-action" href="#pitch">Assista em 90 segundos ▶</a></div>
+<div class="network-visual" aria-label="Ilustração de um fluxo de rede" role="img">
+<div class="visual-head"><span><i></i> TOPOLOGIA DO FLUXO</span><span>DEMONSTRAÇÃO</span></div>
+<svg viewBox="0 0 440 250" aria-hidden="true"><defs><pattern id="net-grid" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#86efac" opacity=".2"/></pattern></defs><rect width="440" height="250" fill="url(#net-grid)"/>
+<g fill="none" stroke="#4c9764" stroke-width="1.5"><path d="M70 125H220L355 60M220 125L355 195M220 125H370"/><path class="packet-line" d="M70 125H220L355 60"/></g>
+<g fill="#166534" stroke="#86efac" stroke-width="1.5"><rect x="40" y="95" width="60" height="60" rx="15"/><rect x="187" y="92" width="66" height="66" rx="18"/><circle cx="355" cy="60" r="24"/><circle cx="370" cy="125" r="18"/><circle cx="355" cy="195" r="24"/></g>
+<g fill="none" stroke="#c6f5d4" stroke-width="2"><path d="M56 112h28v19H56zM63 138h14M70 132v6M205 114h30m-30 10h30m-30 10h30M348 56h14m-14 8h14M348 191h14m-14 8h14"/></g>
+<g fill="#b4ddbf" font-family="sans-serif" font-size="10" text-anchor="middle"><text x="70" y="179">SONDA</text><text x="220" y="181">CAMINHO</text><text x="355" y="24">DESTINO</text></g></svg>
+<div class="visual-footer"><span>Estado ilustrativo</span><strong id="hero-state">OK</strong></div></div>
+<p class="meta">
         <span><strong>Equipe WebAgriculture:</strong> Apollo Moura De Sousa, Icaro Luiz Dellalo Silva, Ieda de Oliveira, João Pedro C. de Morais, Lucas Matteus Baptista de Godoy</span>
         <span><strong>Orientação:</strong> Profas. Andréa Ono Sakai e Denise Braito de Souza, Prof. Luis Ricardo de Oliveira</span>
-        <span><strong>Escopo:</strong> Tarefas 1 a 5</span>
+        <span><strong>Curso:</strong> Ciência da Computação · Universidade Brás Cubas</span><span><strong>Escopo:</strong> Tarefas 1 a 5</span>
         <span><strong>Repositório:</strong> <a href="https://github.com/ZorahSai/Projeto-WebAgriculture-">github.com/ZorahSai/Projeto-WebAgriculture-</a></span>
       </p>
     </header>
+
+
+<section id="explorar" aria-labelledby="t-explorar" class="experience">
+<div class="section-kicker">01 / EXPERIMENTE</div><h2 id="t-explorar">Você muda o cenário.<br>A classificação responde.</h2>
+<p>Escolha um caso de referência e explore os atributos. Um caminho longo pode estar saudável; um caminho curto também pode degradar.</p>
+<div class="scenario-overview"><span class="demo-label">LABORATÓRIO · SEM CONEXÃO AO VIVO</span><p id="scenario-description" role="status">Comece por um cenário e observe a regra que dispara.</p><svg id="scenario-signal" viewBox="0 0 600 90" role="img" aria-label="Ilustração do comportamento do cenário, sem escala de medição"><path id="signal-base" d="M0 62H600"/><path id="signal-path" d="M0 55L60 52L120 56L180 51L240 54L300 52L360 56L420 52L480 55L540 51L600 53"/></svg></div>
+<div class="simulador" id="simulador">
+        <div class="presets" role="group" aria-label="Carregar um caso de referência">
+          <button type="button" class="chip" data-preset="ok">01 · Caminho saudável</button>
+          <button type="button" class="chip" data-preset="risco">02 · Sinal de risco</button>
+          <button type="button" class="chip" data-preset="falha">03 · Degradação</button>
+        </div>
+        <details class="advanced"><summary>Ajustar os atributos manualmente</summary><div class="sim-grade">
+          <label><span>z robusto <output for="s-z" id="o-z"></output></span><input type="range" id="s-z" min="0" max="10" step="0.05" value="1"></label>
+          <label><span>aumento sobre o normal (%) <output for="s-aum" id="o-aum"></output></span><input type="range" id="s-aum" min="-20" max="400" step="1" value="2"></label>
+          <label><span>jitter relativo <output for="s-jit" id="o-jit"></output></span><input type="range" id="s-jit" min="0" max="10" step="0.1" value="0.5"></label>
+          <label><span>perda (%) <output for="s-perda" id="o-perda"></output></span><input type="range" id="s-perda" min="0" max="100" step="1" value="0"></label>
+          <label><span>n5_timeout <output for="s-to" id="o-to"></output></span><input type="range" id="s-to" min="0" max="5" step="1" value="0"></label>
+          <label><span>n5_aumento80 <output for="s-a80" id="o-a80"></output></span><input type="range" id="s-a80" min="0" max="5" step="1" value="0"></label>
+          <label><span>n5_risco <output for="s-ri" id="o-ri"></output></span><input type="range" id="s-ri" min="0" max="5" step="1" value="0"></label>
+        </div>
+        </details><div class="sim-resultado" aria-live="polite">
+          <span class="cls ok" id="sim-cls">OK</span>
+          <span class="sim-regra" id="sim-regra"></span>
+        </div>
+      </div>
+
+
+<p class="demo-disclaimer">Demonstração da <strong>política de rotulagem</strong>, com valores de referência arredondados. Não executa a árvore Python nem monitora dispositivos. A forma de onda é apenas ilustrativa. <a href="#baseline">Entenda as regras e os casos originais →</a></p>
+</section>
+<section id="pitch" aria-labelledby="t-pitch"><div class="section-kicker">O PROJETO EM 90 SEGUNDOS</div><h2 id="t-pitch">Assista. Experimente. Entenda.</h2><p>Uma apresentação breve do problema, dos dados e dos resultados, com narração sintética em português e legendas.</p><video controls playsinline preload="metadata" poster="pitch/capa.png" aria-label="Vídeo pitch do WebAgriculture, 90 segundos"><source src="pitch/webagriculture-90s.mp4" type="video/mp4"><track kind="captions" src="pitch/legendas.vtt" srclang="pt-BR" label="Português" default><p><a href="pitch/webagriculture-90s.mp4">Baixar o vídeo pitch</a></p></video><p><a href="pitch/transcricao.html">Ler a transcrição acessível →</a> · <a href="pitch/webagriculture-90s.mp4" download>Baixar o vídeo (MP4)</a></p></section>
+<section id="jornada" aria-labelledby="t-jornada" class="journey"><div class="section-kicker">02 / DO PING À DECISÃO</div><h2 id="t-jornada">Como transformamos sinais em contexto.</h2><p>Cinco etapas, um mesmo cuidado: comparar cada caminho com o próprio normal.</p>
+<div class="pipeline" role="group" aria-label="Explorar as etapas do projeto">
+<button type="button" data-stage="0" aria-pressed="true"><span>01</span>Coletar</button><button type="button" data-stage="1" aria-pressed="false"><span>02</span>Normalizar</button><button type="button" data-stage="2" aria-pressed="false"><span>03</span>Treinar</button><button type="button" data-stage="3" aria-pressed="false"><span>04</span>Ajustar</button><button type="button" data-stage="4" aria-pressed="false"><span>05</span>Validar</button></div>
+<div class="stage-panel" aria-live="polite" aria-atomic="true"><span id="stage-label">ETAPA 01</span><h3 id="stage-title">O ponto de partida é uma rede real.</h3><p id="stage-description">14 dias de medições públicas do RIPE Atlas, em 97 fluxos. Cada fluxo liga uma sonda a um destino.</p><a id="stage-link" href="#coleta">Explorar a coleta →</a></div><details class="flow-details"><summary>Ver o pipeline completo: entradas e saídas</summary><ol class="flow-schema" aria-label="Pipeline completo do projeto"><li><strong>Fonte · RIPE Atlas</strong><span>Entrada: medições públicas de ping IPv4. Saída: respostas JSON dos períodos A e B.</span></li><li><strong>Coleta e organização</strong><span>Entrada: JSON. Saída: tabela bruta por fluxo e instante, com RTT, perda e jitter.</span></li><li><strong>Preparação e baseline</strong><span>Entrada: tabela bruta. Saída: ficha do período A, dados B rotulados e divisão temporal.</span></li><li><strong>Atributos relativos</strong><span>Entrada: medição, ficha e histórico do fluxo. Saída: oito atributos, incluindo z robusto e contagens das últimas cinco medições.</span></li><li><strong>Treino e validação</strong><span>Entrada: blocos de treino e validação. Saída: árvore ajustada; avaliação final no teste reservado.</span></li><li><strong>Classificação</strong><span>Entrada: vetor de atributos na ordem do modelo. Saída: classe atual OK, RISCO ou FALHA.</span></li><li><strong>Apresentação do resultado</strong><span>Entrada: classe, regras e métricas. Saída: informação para observar ou investigar o fluxo. Nesta página, o laboratório demonstra a política de rótulo.</span></li></ol></details></section>
 
     <section id="resumo" aria-labelledby="t-resumo">
       <h2 id="t-resumo">Resumo</h2>
@@ -588,29 +658,7 @@ pre.arvore.recolhida { max-height: 220px; overflow: hidden; -webkit-mask-image: 
         </table>
       </div>
 
-      <h3>Experimente o rótulo</h3>
-      <p>Mexa nos valores e veja qual regra dispara. Os botões carregam os três casos reais acima.</p>
-      <div class="simulador" id="simulador">
-        <div class="presets" role="group" aria-label="Casos reais">
-          <button type="button" class="chip" data-preset="ok">IQ → jp-tch</button>
-          <button type="button" class="chip" data-preset="risco">AR → br-poa</button>
-          <button type="button" class="chip" data-preset="falha">HN → us-mia</button>
-        </div>
-        <div class="sim-grade">
-          <label><span>z robusto <output for="s-z" id="o-z"></output></span><input type="range" id="s-z" min="0" max="10" step="0.05" value="1"></label>
-          <label><span>aumento sobre o normal (%) <output for="s-aum" id="o-aum"></output></span><input type="range" id="s-aum" min="-20" max="400" step="1" value="2"></label>
-          <label><span>jitter relativo <output for="s-jit" id="o-jit"></output></span><input type="range" id="s-jit" min="0" max="10" step="0.1" value="0.5"></label>
-          <label><span>perda (%) <output for="s-perda" id="o-perda"></output></span><input type="range" id="s-perda" min="0" max="100" step="1" value="0"></label>
-          <label><span>n5_timeout <output for="s-to" id="o-to"></output></span><input type="range" id="s-to" min="0" max="5" step="1" value="0"></label>
-          <label><span>n5_aumento80 <output for="s-a80" id="o-a80"></output></span><input type="range" id="s-a80" min="0" max="5" step="1" value="0"></label>
-          <label><span>n5_risco <output for="s-ri" id="o-ri"></output></span><input type="range" id="s-ri" min="0" max="5" step="1" value="0"></label>
-        </div>
-        <div class="sim-resultado" aria-live="polite">
-          <span class="cls ok" id="sim-cls">OK</span>
-          <span class="sim-regra" id="sim-regra"></span>
-        </div>
-      </div>
-
+      <p class="nota">Quer testar as regras? <a href="#explorar">Abra o laboratório interativo</a> e ajuste os atributos do fluxo.</p>
       <h3>Corte no tempo dentro do Período B</h3>
       <p>O corte usa as mesmas datas para todos os fluxos, sem sorteio de linhas:</p>
       <ul>
@@ -815,8 +863,9 @@ python src/arvore_final.py           # Tarefa 5: árvore final e teste único</p
     </section>
 
     <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="i-github" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></symbol><symbol id="i-linkedin" viewBox="0 0 24 24"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></symbol></svg>
+<section id="acesso" aria-labelledby="t-acesso"><div class="section-kicker">CONTINUE EXPLORANDO</div><h2 id="t-acesso">Leve o projeto com você.</h2><div class="project-access"><img src="qrcode.png" width="180" height="180" loading="lazy" alt="QR Code para abrir esta apresentação em outro dispositivo"><div><p>Abra a apresentação no celular ou consulte o código e a documentação do projeto.</p><p><a href="https://zorahsai.github.io/Projeto-WebAgriculture-/">Abrir a página do projeto →</a></p><p><a href="https://github.com/ZorahSai/Projeto-WebAgriculture-">Código e documentação no GitHub →</a></p><p><a href="https://iedahirari.github.io/artigo-preditor-redes/">Artigo complementar: comparação de modelos →</a></p><p class="demo-disclaimer">O artigo complementar estuda a previsão a 12 minutos. Os resultados desta apresentação descrevem a classificação do estado atual.</p></div></div><h3>Fontes e referências</h3><ul><li><a href="https://atlas.ripe.net/">RIPE Atlas — medições públicas do RIPE NCC</a></li><li><a href="https://scikit-learn.org/stable/modules/tree.html">scikit-learn — árvores de decisão</a></li><li><a href="https://github.com/ZorahSai/Projeto-WebAgriculture-/blob/main/docs/RFC_Preditor_Degradacao_Rede.md">RFC e metodologia do grupo</a></li></ul></section>
     <section id="autores" aria-labelledby="t-autores">
-      <h2 id="t-autores">Autores</h2>
+      <h2 id="t-autores">Autores</h2><p>Ciência da Computação · Universidade Brás Cubas</p>
       <div class="authors">
         <div class="author"><span class="author-photo" aria-hidden="true">AS<img onerror="this.remove()" src="https://github.com/apollomoura.png?size=128" width="64" height="64" loading="lazy" decoding="async" alt=""></span><b>Apollo Moura De Sousa</b><div class="author-links"><a class="icon-link" href="https://github.com/apollomoura" target="_blank" rel="noopener" aria-label="GitHub de Apollo Moura De Sousa" title="GitHub: @apollomoura"><svg aria-hidden="true"><use href="#i-github"/></svg></a> <a class="icon-link" href="https://www.linkedin.com/in/apollo-moura-215306320/" target="_blank" rel="noopener" aria-label="LinkedIn de Apollo Moura De Sousa" title="LinkedIn"><svg aria-hidden="true"><use href="#i-linkedin"/></svg></a></div></div>
         <div class="author"><span class="author-photo" aria-hidden="true">IS<img onerror="this.remove()" src="https://github.com/clicaro.png?size=128" width="64" height="64" loading="lazy" decoding="async" alt=""></span><b>Icaro Luiz Dellalo Silva</b><div class="author-links"><a class="icon-link" href="https://github.com/clicaro" target="_blank" rel="noopener" aria-label="GitHub de Icaro Luiz Dellalo Silva" title="GitHub: @clicaro"><svg aria-hidden="true"><use href="#i-github"/></svg></a> <a class="icon-link" href="https://www.linkedin.com/in/icaro-dellalo/" target="_blank" rel="noopener" aria-label="LinkedIn de Icaro Luiz Dellalo Silva" title="LinkedIn"><svg aria-hidden="true"><use href="#i-linkedin"/></svg></a></div></div>
@@ -990,9 +1039,10 @@ python src/arvore_final.py           # Tarefa 5: árvore final e teste único</p
   }
 
   // Dica flutuante nos gráficos (mouse, toque e teclado)
-  var dica = novo("div", { "class": "dica", role: "tooltip", id: "dica" });
+  var dica = novo("div", { "class": "dica", role: "tooltip", id: "dica", hidden: "" });
   document.body.appendChild(dica);
   function mostrar(alvo, x, y) {
+    dica.hidden = false;
     dica.textContent = alvo.getAttribute("data-dica");
     dica.classList.add("visivel");
     var w = dica.offsetWidth, h = dica.offsetHeight;
@@ -1000,7 +1050,8 @@ python src/arvore_final.py           # Tarefa 5: árvore final e teste único</p
     var top = y - h - 12; if (top < 8) top = y + 16;
     dica.style.left = left + "px"; dica.style.top = top + "px";
   }
-  function esconder() { dica.classList.remove("visivel"); }
+  function esconder() { dica.classList.remove("visivel"); dica.hidden = true; }
+  document.addEventListener("keydown", function(e) { if (e.key === "Escape") esconder(); });
   ["g-fluxos", "g-blocos"].forEach(function (id) {
     var svg = document.getElementById(id);
     if (!svg) return;
@@ -1014,18 +1065,20 @@ python src/arvore_final.py           # Tarefa 5: árvore final e teste único</p
       t.remove();
       n.addEventListener("pointerenter", function (e) { mostrar(n, e.clientX, e.clientY); });
       n.addEventListener("pointermove", function (e) { mostrar(n, e.clientX, e.clientY); });
-      n.addEventListener("pointerleave", esconder);
+      n.addEventListener("pointerleave", function(e) { if (e.relatedTarget !== dica) esconder(); });
       n.addEventListener("focus", function () { var r = n.getBoundingClientRect(); mostrar(n, r.left + r.width / 2, r.top); });
       n.addEventListener("blur", esconder);
     });
   });
+  dica.style.pointerEvents = "auto";
+  dica.addEventListener("pointerleave", esconder);
   window.addEventListener("scroll", esconder, { passive: true });
 
   // Filtros do gráfico de fluxos
   var g1 = document.getElementById("g-fluxos");
   if (g1) {
     var chips = novo("div", { "class": "chips", role: "group", "aria-label": "Filtrar fluxos" });
-    var filtros = [["todos", "Todos os 97"], ["alta", "FALHA acima de 10%"], ["destaque", "Casos comentados"]];
+    var filtros = [["todos", "Todos os 92 com baseline"], ["alta", "FALHA acima de 10%"], ["destaque", "Casos comentados"]];
     filtros.forEach(function (f, i) {
       var c = novo("button", { type: "button", "class": "chip", "data-filtro": f[0], "aria-pressed": i === 0 ? "true" : "false" }, f[1]);
       chips.appendChild(c);
@@ -1094,10 +1147,10 @@ python src/arvore_final.py           # Tarefa 5: árvore final e teste único</p
       else if (v.to >= 3) { c = "falha"; r = "Regra 2: n5_timeout ≥ 3."; }
       else if (v.z >= 3.5) { c = "falha"; r = "Regra 3: z ≥ 3,5."; }
       else if (v.a80 >= 2) { c = "falha"; r = "Regra 4: n5_aumento80 ≥ 2."; }
-      else if (((v.z >= 2 && v.z < 3.5) || (v.aum >= 30 && v.aum < 80) || v.jit >= 3) && v.ri >= 2) { c = "risco"; r = "Regra 5: desvio moderado e n5_risco ≥ 2."; }
+      else if (((v.z >= 2 && v.z < 3.5) || (v.aum >= 30 && v.aum <= 80) || v.jit >= 3) && v.ri >= 2) { c = "risco"; r = "Regra 5: desvio moderado e n5_risco ≥ 2."; }
       else {
         c = "ok";
-        var moderado = (v.z >= 2 && v.z < 3.5) || (v.aum >= 30 && v.aum < 80) || v.jit >= 3;
+        var moderado = (v.z >= 2 && v.z < 3.5) || (v.aum >= 30 && v.aum <= 80) || v.jit >= 3;
         r = moderado ? "Regra 6: desvio moderado, mas isolado (n5_risco < 2)." : "Regra 6: nenhuma regra anterior disparou.";
       }
       cls.className = "cls " + c;
@@ -1113,6 +1166,31 @@ python src/arvore_final.py           # Tarefa 5: árvore final e teste único</p
     });
     atualizar();
   }
+})();
+</script>
+
+
+<script>
+(function(){
+'use strict';
+var sim=document.getElementById('simulador');
+var descriptions={ok:'IQ → jp-tch: cerca de 315 ms é o normal deste caminho. Latência alta, sozinha, não significa falha.',risco:'AR → br-poa: um desvio moderado se repete. A política recomenda observar o fluxo.',falha:'HN → us-mia: um caminho com normal de cerca de 30 ms apresentou forte degradação.'};
+var waves={ok:'M0 55L60 52L120 56L180 51L240 54L300 52L360 56L420 52L480 55L540 51L600 53',risco:'M0 60L60 56L120 60L180 42L240 50L300 30L360 42L420 24L480 38L540 18L600 30',falha:'M0 65L60 62L120 65L180 60L210 15L240 20L270 8L300 23L360 12L420 16L480 10L540 20L600 12'};
+var lastPreset='ok';
+function signal(custom){var c=document.getElementById('sim-cls').textContent.toLowerCase();var color=c==='falha'?'var(--falha)':c==='risco'?'var(--risco)':'var(--ok)';document.getElementById('signal-path').setAttribute('d',waves[c]);document.getElementById('signal-path').style.stroke=color;document.getElementById('hero-state').textContent=c.toUpperCase();document.getElementById('hero-state').style.color=c==='falha'?'#ffa8a8':c==='risco'?'#f6d67d':'#facc15';document.getElementById('scenario-description').textContent=custom?'Cenário personalizado: ajuste os atributos e observe a política de rotulagem abaixo.':descriptions[lastPreset];}
+sim.querySelector('.presets').addEventListener('click',function(e){var b=e.target.closest('[data-preset]');if(!b)return;lastPreset=b.dataset.preset;sim.querySelectorAll('[data-preset]').forEach(function(x){x.setAttribute('aria-pressed',String(x===b));});signal(false);});
+sim.addEventListener('input',function(){sim.querySelectorAll('[data-preset]').forEach(function(x){x.setAttribute('aria-pressed','false');});signal(true);});
+sim.querySelector('[data-preset=ok]').click();
+var stages=[['O ponto de partida é uma rede real.','14 dias de medições públicas do RIPE Atlas, em 97 fluxos. Cada fluxo liga uma sonda a um destino.','coleta','Explorar a coleta'],['Cada caminho tem o próprio normal.','A primeira semana estima mediana e MAD de cada fluxo. A segunda recebe os rótulos OK, RISCO e FALHA pelo desvio desse normal.','baseline','Entender o baseline'],['A árvore aprende regras relativas.','Atributos normalizados evitam tratar um caminho longo como uma falha permanente. O corte temporal separa treino, validação e teste.','arvore','Conhecer a árvore'],['Ajustar sem espiar o teste.','A grade escolhe os parâmetros apenas na validação. O ajuste reduziu de 10 para zero as FALHA classificadas como OK nesse bloco.','ajuste','Explorar o ajuste'],['O teste fica para o final.','68.472 medições no teste, aberto uma única vez. F1 macro de 0,9999 para reproduzir a política de classificação atual, sem antecipar o futuro.','final','Ver os resultados']];
+document.querySelectorAll('[data-stage]').forEach(function(b){b.addEventListener('click',function(){var i=Number(b.dataset.stage),s=stages[i];document.querySelectorAll('[data-stage]').forEach(function(x){x.setAttribute('aria-pressed',String(x===b));});document.getElementById('stage-label').textContent='ETAPA 0'+(i+1);document.getElementById('stage-title').textContent=s[0];document.getElementById('stage-description').textContent=s[1];var link=document.getElementById('stage-link');link.href='#'+s[2];link.textContent=s[3]+' →';});});
+var launch=document.querySelector('.tour-launch');launch.hidden=false;
+var bar=document.createElement('nav');bar.className='tour-bar';bar.hidden=true;bar.setAttribute('aria-label','Roteiro da apresentação');bar.innerHTML='<p id="tour-label" role="status"></p><button type="button" id="tour-prev">← Anterior</button><button type="button" id="tour-next">Próxima →</button><button type="button" class="tour-close" aria-label="Encerrar roteiro">Sair</button>';document.body.append(bar);
+var stops=[['main','A pergunta que move o projeto'],['explorar','Convide o público a experimentar'],['jornada','Explique as cinco etapas'],['coleta','Mostre os dados reais'],['baseline','Compare com o normal do fluxo'],['final','Resultados e alcance do modelo'],['limitacoes','Limitações com transparência'],['autores','Conheça a equipe']];var index=0;
+function show(){document.querySelectorAll('.tour-stop').forEach(function(x){x.classList.remove('tour-stop');});var target=document.getElementById(stops[index][0]);if(index!==0)target.classList.add('tour-stop');target.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});document.getElementById('tour-label').textContent=(index+1)+' / '+stops.length+' · '+stops[index][1];document.getElementById('tour-prev').disabled=index===0;document.getElementById('tour-next').textContent=index===stops.length-1?'Concluir ✓':'Próxima →';}
+function close(){bar.hidden=true;document.body.classList.remove('in-tour');document.querySelectorAll('.tour-stop').forEach(function(x){x.classList.remove('tour-stop');});launch.focus({preventScroll:true});}
+launch.addEventListener('click',function(){index=0;bar.hidden=false;document.body.classList.add('in-tour');show();document.getElementById('tour-next').focus({preventScroll:true});});bar.querySelector('.tour-close').addEventListener('click',close);document.getElementById('tour-next').addEventListener('click',function(){if(index===stops.length-1){close();return;}index++;show();});document.getElementById('tour-prev').addEventListener('click',function(){if(index>0){index--;show();}});document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!bar.hidden)close();});
+// Supply semantic current-section state alongside the existing visual highlight.
+var toc=document.querySelector('.toc');new MutationObserver(function(){toc.querySelectorAll('a').forEach(function(a){if(a.classList.contains('ativo'))a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');});}).observe(toc,{attributes:true,subtree:true,attributeFilter:['class']});
 })();
 </script>
 

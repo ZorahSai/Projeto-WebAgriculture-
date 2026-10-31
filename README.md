@@ -1,5 +1,21 @@
 # 📡 Preditor de Degradação de Rede com RTT Normalizado
 
+<p><img src="docs/logo_webagriculture.png" width="120" height="120" alt="Logo WebAgri RTT"></p>
+
+**Ciência da Computação · Universidade Brás Cubas**
+
+- [Página interativa do projeto](https://zorahsai.github.io/Projeto-WebAgriculture-/)
+- [Vídeo pitch de 90 segundos (MP4)](docs/pitch/webagriculture-90s.mp4) · [transcrição](docs/pitch/transcricao.md) · [legendas](docs/pitch/legendas.srt)
+- [Artigo complementar: comparação de modelos a 12 minutos](https://iedahirari.github.io/artigo-preditor-redes/)
+- [Registros `tarefas.md`](tarefas.md) · [checklist final](docs/analise_entrega_final.md) · [dados de inscrição](docs/inscricao_mostra.md)
+- [Pacote para o Blackboard](entrega/WebAgriculture.zip) · [instruções de carga](entrega/LEIA-ME.md)
+
+**YouTube:** o vídeo está pronto em MP4; a URL não listada ainda precisa ser registrada aqui após envio à conta da equipe. [Passo a passo](docs/pitch/LEIA-ME.md).
+
+**Prazos do PDF da professora:** inscrição na mostra até **02/11/2026**; GitHub, pitch, página, QR Code e Blackboard até **04/11/2026**; avaliação individual em sala em **05/11/2026**. O cronograma antigo cita 10–12/11 para apresentação; confirmar se é outro evento.
+
+> O sistema desta página classifica o **estado atual** segundo rótulos heurísticos. O artigo complementar estuda outro alvo, a previsão a 12 minutos. Não misturar os resultados.
+
 > **Projeto Integrador** — Redes de Computadores · Estrutura de Dados II · Análise de Sistemas
 > Preditor de falha/risco em dispositivos de rede, com modelo de predição em árvore de decisão.
 
@@ -141,7 +157,8 @@ O detalhamento está no RFC do grupo: [Preditor de degradação de rede com RTT 
 | T4 | Ajuste da árvore a partir do erro | ✅ |
 | T5 | Árvore final e teste único | ✅ |
 | — | Apresentação web (GitHub Pages) | ✅ |
-| — | Apresentação final (10 a 12/11/2026) | ⏳ |
+| — | Avaliação individual em sala (05/11/2026, conforme PDF) | ⏳ |
+| — | Envio ao YouTube, inscrição e Blackboard | ⏳ Confirmar comprovantes |
 
 ---
 
@@ -284,3 +301,16 @@ Estas pastas registram as entregas anteriores e **não são usadas** pelas Taref
 ---
 
 <p align="center">Projeto acadêmico — 2026</p>
+
+## Entrega do modelo sem novo treino
+
+Para apenas reempacotar os artefatos existentes e verificar o contrato:
+
+```sh
+python -m pip install -r entrega/requirements.txt
+python entrega/carregar_modelo.py
+python src/empacotar_entrega.py
+python -m unittest discover -s tests -v
+```
+
+Esse caminho não roda novamente a coleta, não ajusta a árvore e não reabre o bloco de teste. `src/exportar_entrega.py` continua sendo o exportador com treino; use `empacotar_entrega.py` quando só quiser fechar o ZIP existente.

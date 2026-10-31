@@ -4,3 +4,6 @@ pandas==3.0.6
 numpy==2.5.4
 # Tarefa 3: árvore de decisão (src/treinar_arvore.py)
 scikit-learn==1.9.1
+
+# Persistência e carga do pacote de entrega
+joblib==1.6.0

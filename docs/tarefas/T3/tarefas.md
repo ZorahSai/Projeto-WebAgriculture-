@@ -115,15 +115,15 @@ Duas árvores treinadas no mesmo treino e com os mesmos parâmetros da oficial.
 
 ## 5. Scrum e diário
 
-- [ ] Board atualizado [a preencher pela equipe]
+- [ ] Board atualizado — **pendência da equipe:** atualizar o board e registrar o link aqui (não consta no repositório)
 
 | Integrante | O que fiz nesta tarefa | Dificuldades | O que pretendo manter/ajustar |
 |---|---|---|---|
-| Apollo Moura De Sousa | [a preencher] | [a preencher] | [a preencher] |
-| Icaro Luiz Dellalo Silva | [a preencher] | [a preencher] | [a preencher] |
-| Ieda de Oliveira | [a preencher] | [a preencher] | [a preencher] |
-| João Pedro C. de Morais | [a preencher] | [a preencher] | [a preencher] |
-| Lucas Matteus Baptista de Godoy | [a preencher] | [a preencher] | [a preencher] |
+|  | Definição das colunas relativas permitidas na árvore |  |  |
+|  | Treino da árvore CART (Gini) com `max_depth` e `min_samples_leaf` escolhidos na validação |  |  |
+|  | Leitura do erro: matriz 3×3, precisão/recall/F1 e dois erros concretos |  |  |
+|  | Árvore de contraste para mostrar o atalho da distância (fora da entrega) |  |  |
+|  | Relatório da Tarefa 3 (`docs/relatorio_tarefa3.md`) |  |  |
 
 Pontos técnicos para a equipe aproveitar no diário:
 - A F1 próxima de 1 se explica pelo rótulo ter sido feito com as mesmas métricas.

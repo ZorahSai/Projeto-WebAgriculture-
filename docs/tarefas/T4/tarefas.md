@@ -94,18 +94,18 @@ A Tarefa 3 já reaprendia a tabela de rótulo; faltava o ramo da linha 4 (`n5_au
 ## 4. Revisão com o docente
 
 **O que foi mostrado:** o relatório da Tarefa 4, a tabela Tarefa 3 → Tarefa 4 e a árvore em `results/tarefa4/`.  
-**O que foi pedido para ajustar antes da Tarefa 5:** [a preencher depois da revisão com o docente]
+**O que foi pedido para ajustar antes da Tarefa 5:** **Pendência da equipe:** registrar o retorno do docente; ele não consta no repositório.
 
 ---
 
 ## 5. Scrum e diário
 
-- [ ] Board atualizado [a preencher pela equipe]
+- [ ] Board atualizado — **pendência da equipe:** atualizar o board e registrar o link aqui (não consta no repositório)
 
 | Integrante | O que fiz nesta tarefa | Dificuldades | O que pretendo manter/ajustar |
 |---|---|---|---|
-| Apollo Moura De Sousa | [a preencher] | [a preencher] | [a preencher] |
-| Icaro Luiz Dellalo Silva | [a preencher] | [a preencher] | [a preencher] |
-| Ieda de Oliveira | [a preencher] | [a preencher] | [a preencher] |
-| João Pedro C. de Morais | [a preencher] | [a preencher] | [a preencher] |
+|  | Levantamento dos erros da Tarefa 3 (10 FALHA→OK ligados à linha 4 da tabela) |  |  |
+|  | Ajuste da árvore (`src/ajustar_arvore.py`, `config/arvore_tarefa4.json`) com parâmetros escolhidos na validação |  |  |
+|  | Comparação Tarefa 3 → Tarefa 4 na validação e registro das tentativas descartadas |  |  |
+|  | Relatório da Tarefa 4 (`docs/relatorio_tarefa4.md`) e resultados em `results/tarefa4/` |  |  |
 | Lucas Matteus Baptista de Godoy | Implementei o ajuste da árvore (`src/ajustar_arvore.py`, `config/arvore_tarefa4.json`, `results/tarefa4/`) a partir dos 10 FALHA→OK da Tarefa 3, preenchi o diário e o relatório, sem abrir o teste e sem coluna de rota. | Ligar cada hiperparâmetro a um erro concreto, e não só “subir a profundidade porque a F1 sobe”. Entropia e poda com profundidade 6 pareciam ajuste, mas devolviam FALHA→OK. | Manter a árvore Gini profunda o suficiente para a linha 4. A Tarefa 5 usa esta árvore no teste. O 1 OK→RISCO residual fica documentado, sem inventar feature de rota. |

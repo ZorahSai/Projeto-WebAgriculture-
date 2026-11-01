@@ -134,14 +134,15 @@ Também usamos um **embargo**: as 4 primeiras medições de cada fluxo na valida
 
 ## 6. Scrum e diário
 
-- [ ] Board atualizado [a preencher pela equipe]
+- [ ] Board atualizado — **pendência da equipe:** atualizar o board e registrar o link aqui (não consta no repositório)
 
-**Link do board:** [a preencher pela equipe]
+**Pendência da equipe:** incluir o link do board (To do / Doing / Done); o link não consta no repositório.
 
 | Integrante | O que fiz nesta tarefa | Dificuldades | O que pretendo manter/ajustar |
 |---|---|---|---|
-| Apollo Moura De Sousa | [a preencher] | [a preencher] | [a preencher] |
-| Icaro Luiz Dellalo Silva | [a preencher] | [a preencher] | [a preencher] |
-| Ieda de Oliveira | [a preencher] | [a preencher] | [a preencher] |
-| João Pedro C. de Morais | [a preencher] | [a preencher] | [a preencher] |
-| Lucas Matteus Baptista de Godoy | [a preencher] | [a preencher] | [a preencher] |
+|  | Inspeção do bruto (linhas, fluxos, duplicatas, RTT vazio, separação A/B) |  |  |
+|  | Cálculo do baseline por fluxo no Período A e exclusão dos fluxos com menos de 1.500 RTT válidos |  |  |
+|  | Métricas de cada medição do Período B |  |  |
+|  | Tabela de rotulagem (`config/rotulagem.json`, `src/baseline_e_rotulo.py`) e três exemplos auditáveis |  |  |
+|  | Dicionário v0.2 com colunas proibidas na árvore (`docs/dicionario_v0.2.md`) |  |  |
+|  | Recorte temporal treino/validação/teste (50/20/30) e relatório (`docs/relatorio_tarefa2.md`) |  |  |

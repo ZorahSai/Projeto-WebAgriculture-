@@ -169,15 +169,15 @@ O alvo do projeto é o estado **atual** da medição, não o estado 12 minutos �
 
 ## 6. Scrum e diário
 
-- [ ] Board atualizado [a preencher pela equipe]
+- [ ] Board atualizado — **pendência da equipe:** atualizar o board e registrar o link aqui (não consta no repositório)
 
 | Integrante | O que fiz nesta tarefa | Dificuldades | O que pretendo manter/ajustar |
 |---|---|---|---|
-| Apollo Moura De Sousa | | | |
-| Icaro Luiz Dellalo Silva | | | |
-| Ieda de Oliveira | | | |
-| João Pedro C. de Morais | | | |
-| Lucas Matteus Baptista de Godoy | | | |
+|  | Árvore final (`src/arvore_final.py`) com parâmetros lidos da Tarefa 4 |  |  |
+|  | Teste temporal único: matriz 3×3, métricas por classe e F1 macro |  |  |
+|  | Avaliação em fluxo que a árvore não viu |  |  |
+|  | Declarações e limitações (detector do estado atual, baseline fixo, Anchors) |  |  |
+|  | Ficha da árvore |  |  |
 
 ---
 

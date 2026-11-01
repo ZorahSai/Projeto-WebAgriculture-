@@ -109,7 +109,7 @@ Relatório completo: [`docs/relatorio_qualidade_tarefa1.md`](../../relatorio_qua
 ## 4. Scrum
 
 - [x] Product Owner = docente; Scrum Master da tarefa = Apollo Moura De Sousa; time de desenvolvimento = demais integrantes
-- [ ] Board com To do / Doing / Done [a preencher pela equipe]
+- [ ] Board com To do / Doing / Done — **pendência da equipe:** criar/atualizar o board e registrar o link (não consta no repositório)
 - [x] Pelo menos 3 histórias (rascunho abaixo; a equipe pode ajustar)
 
 **Histórias:**
@@ -117,16 +117,18 @@ Relatório completo: [`docs/relatorio_qualidade_tarefa1.md`](../../relatorio_qua
 2. Como analista de rede, quero preservar a resposta bruta da API com os timeouts e sem RTT igual a 0, para poder auditar e refazer qualquer tabela.
 3. Como cientista de dados, quero separar o Período A do Período B sem rotular nada, para que o baseline da Tarefa 2 não use as medições que serão rotuladas.
 
-**Link do board:** [a preencher pela equipe]
+**Pendência da equipe:** incluir o link do board (To do / Doing / Done); o link não consta no repositório.
 
 ## 5. Diário de bordo
 
 | Integrante | O que fiz nesta tarefa | Dificuldades | O que pretendo manter/ajustar |
 |---|---|---|---|
-| Apollo Moura De Sousa | [a preencher] | [a preencher] | [a preencher] |
-| Icaro Luiz Dellalo Silva | [a preencher] | [a preencher] | [a preencher] |
-| Ieda de Oliveira | [a preencher] | [a preencher] | [a preencher] |
-| João Pedro C. de Morais | [a preencher] | [a preencher] | [a preencher] |
+|  | Preenchimento do RFC do grupo (`docs/RFC_Preditor_Degradacao_Rede.md`) |  |  |
+|  | Coleta das medições RIPE Atlas com parâmetros em `config/coleta.json` (timeout, novas tentativas e coleta idempotente) |  |  |
+|  | Preservação do JSON bruto e geração de `data/raw/medicoes_brutas.csv.gz` |  |  |
+|  | Dicionário v0.1 só com colunas brutas (`docs/dicionario_v0.1.md`) |  |  |
+|  | Relatório de qualidade sem classe (`docs/relatorio_qualidade_tarefa1.md`) |  |  |
+|  | Rascunho das 3 histórias do Scrum |  |  |
 | Lucas Matteus Baptista de Godoy | Elaborei o RFC do grupo (`docs/RFC_Preditor_Degradacao_Rede.md`) a partir do modelo da professora e das regras da Tarefa 1, usando o recorte real da coleta (97 fluxos, períodos A/B, dicionário v0.1). Revisei a documentação ligada a essa entrega: diário da Tarefa 1, `README.md` e links do RFC, do dicionário e dos commits. | Separar o que é contrato do RFC (rótulo, baseline, horizonte) do que a Tarefa 1 de fato entrega (bruto sem classe). Não copiar números da professora (67 fluxos, outro volume) e não misturar Período A/B com treino/validação/teste. | Manter o RFC como contrato único do problema e a regra de RTT normalizado por fluxo. Ajustar depois: coluna RECALIBRAR, Protocolo B (fluxos novos) e o preditor de 12 minutos, que o RFC deixa em aberto. |
 
 Dificuldades técnicas registradas, para a equipe aproveitar no diário:

@@ -9,6 +9,16 @@
 
 📄 **Artigo complementar:** [comparação de modelos para previsão a 12 minutos](https://iedahirari.github.io/artigo-preditor-redes/)
 
+<p align="center"><img src="docs/logo_webagriculture.png" alt="Logo WebAgriculture" width="160"></p>
+
+| Identidade | |
+|---|---|
+| **Nome** | Preditor de Degradação de Rede |
+| **Descrição** | Classifica fluxos de rede em OK, RISCO ou FALHA a partir de pings reais do RIPE Atlas, usando RTT normalizado por baseline e uma árvore de decisão interpretável. |
+| **Tags** | `redes` `machine-learning` `arvore-de-decisao` `ripe-atlas` `rtt` `python` |
+
+<p align="center"><img src="docs/qrcode.png" alt="QR code da apresentação" width="140"><br><sub>Aponte a câmera para abrir a apresentação</sub></p>
+
 ![Python](https://img.shields.io/badge/Python-3.x-3776AB?logo=python&logoColor=white)
 ![scikit-learn](https://img.shields.io/badge/scikit--learn-árvore%20de%20decisão-F7931E?logo=scikitlearn&logoColor=white)
 ![pandas](https://img.shields.io/badge/pandas-dados-150458?logo=pandas&logoColor=white)

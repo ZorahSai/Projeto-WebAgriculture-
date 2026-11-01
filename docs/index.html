@@ -2,11 +2,122 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Preditor de Degradação de Rede</title>
-<meta http-equiv="refresh" content="0; url=apresentacao.html">
-<link rel="canonical" href="apresentacao.html">
+<meta name="description" content="Classifica fluxos de rede em OK, RISCO ou FALHA a partir de pings reais do RIPE Atlas, com RTT normalizado e árvore de decisão.">
+<style>
+:root{--bg:#f6f8f4;--card:#fff;--tx:#1b2a1f;--mu:#56655a;--ac:#2c7a3f;--ac2:#e0a100;--bd:#dfe6dc}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1712;--card:#17221a;--tx:#e6efe7;--mu:#9fb2a3;--ac:#5cc277;--ac2:#f2c14e;--bd:#2a3a2e}}
+*{box-sizing:border-box}img{max-width:100%}code{overflow-wrap:anywhere}body{overflow-x:hidden;margin:0;background:var(--bg);color:var(--tx);font:16px/1.6 system-ui,Segoe UI,Roboto,sans-serif}
+header{position:sticky;top:0;background:var(--card);border-bottom:1px solid var(--bd);z-index:5}
+nav{max-width:1000px;margin:auto;display:flex;gap:14px;overflow-x:auto;padding:10px 16px;font-size:14px}
+nav a{color:var(--mu);text-decoration:none;white-space:nowrap}nav a:hover{color:var(--ac)}
+main{max-width:1000px;margin:auto;padding:0 16px}
+section{padding:48px 0;border-bottom:1px solid var(--bd)}
+h1{font-size:clamp(28px,5vw,44px);margin:.2em 0}h2{color:var(--ac);margin-top:0}
+.hero{text-align:center}.hero img{width:130px}
+.btn{display:inline-block;background:var(--ac);color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none;margin:6px}
+.btn.alt{background:transparent;color:var(--ac);border:1px solid var(--ac)}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:16px}
+.stat{font-size:32px;font-weight:700;color:var(--ac)}
+.steps{counter-reset:s;list-style:none;padding:0}.steps li{counter-increment:s;margin:10px 0;padding-left:42px;position:relative}
+.steps li::before{content:"T" counter(s);position:absolute;left:0;top:0;background:var(--ac);color:#fff;border-radius:6px;padding:0 6px;font-weight:700}
+.tag{display:inline-block;padding:2px 10px;border-radius:99px;font-weight:600;font-size:14px;margin-right:6px}
+.ok{background:#d6f0dc;color:#1d6b33}.risco{background:#fbefc8;color:#7a5a00}.falha{background:#f8d4d4;color:#8a1f1f}
+video{width:100%;border-radius:10px;background:#000}
+.team{text-align:center}.team img{width:84px;height:84px;border-radius:50%}
+.team a{color:var(--ac)}
+footer{text-align:center;color:var(--mu);padding:30px 16px;font-size:14px}
+code{background:var(--bd);padding:1px 5px;border-radius:4px}
+</style>
 </head>
 <body>
-<p><a href="apresentacao.html">Abrir a apresentação</a></p>
+<header><nav>
+<a href="#intro">Intro</a><a href="#problema">Problema</a><a href="#como">Como funciona</a><a href="#pipeline">Pipeline</a><a href="#dados">Dados</a><a href="#resultados">Resultados</a><a href="#limitacoes">Limitações</a><a href="#video">Vídeo</a><a href="#equipe">Equipe</a>
+</nav></header>
+<main>
+
+<section id="intro" class="hero">
+<img src="logo_webagriculture.png" alt="Logo WebAgriculture">
+<h1>Preditor de Degradação de Rede</h1>
+<p>Classifica fluxos de rede em <span class="tag ok">OK</span><span class="tag risco">RISCO</span><span class="tag falha">FALHA</span> a partir de pings reais do RIPE Atlas, usando RTT normalizado e uma árvore de decisão interpretável.</p>
+<a class="btn" href="apresentacao.html">Abrir a apresentação interativa</a>
+<a class="btn alt" href="https://github.com/ZorahSai/Projeto-WebAgriculture-">Ver o código</a>
+</section>
+
+<section id="problema">
+<h2>1. Problema e objetivo</h2>
+<p>Quedas e lentidão em links de rede costumam ser percebidas só depois que o usuário já foi afetado. Cada link tem uma latência "normal" diferente, então um limite fixo de RTT gera alarmes falsos em uns e deixa passar problemas em outros.</p>
+<p><strong>Objetivo:</strong> sinalizar risco de falha antes dela acontecer, comparando cada fluxo com o próprio comportamento habitual.</p>
+</section>
+
+<section id="como">
+<h2>2. Como funciona</h2>
+<div class="grid">
+<div class="card"><strong>Baseline por fluxo</strong><br>Mediana e MAD do RTT de cada fluxo definem o "normal" daquele link.</div>
+<div class="card"><strong>RTT normalizado</strong><br>Cada medição vira um desvio relativo ao baseline, comparável entre links diferentes.</div>
+<div class="card"><strong>Árvore de decisão</strong><br>Modelo com 8 features que gera regras legíveis para OK, RISCO e FALHA.</div>
+</div>
+</section>
+
+<section id="pipeline">
+<h2>3. Pipeline</h2>
+<ol class="steps">
+<li>Coleta de pings públicos na API do RIPE Atlas.</li>
+<li>Limpeza e organização das medições por fluxo (<code>fluxo_id</code>).</li>
+<li>Cálculo do baseline (mediana e MAD) e das features normalizadas.</li>
+<li>Rotulagem em OK, RISCO e FALHA e treino da árvore (gini, seed 42).</li>
+<li>Avaliação, exportação das regras e visualização.</li>
+</ol>
+</section>
+
+<section id="dados">
+<h2>4. Dados e avaliação</h2>
+<p>As medições vêm de sondas públicas do RIPE Atlas. Cada fluxo é identificado por sonda e destino, como <code>6420|23.237.111.10</code>.</p>
+<p>A avaliação usa separação entre treino e teste, métricas por classe (F1 macro e acurácia) e um teste de generalização com um fluxo que o modelo nunca viu no treino.</p>
+</section>
+
+<section id="resultados">
+<h2>5. Resultados</h2>
+<div class="grid">
+<div class="card"><div class="stat">0.9999</div>F1 macro</div>
+<div class="card"><div class="stat">99,994%</div>Acurácia</div>
+<div class="card"><div class="stat">1.0</div>Acurácia em fluxo nunca visto</div>
+<div class="card"><div class="stat">7 / 19</div>Profundidade / folhas da árvore</div>
+</div>
+</section>
+
+<section id="limitacoes">
+<h2>6. Limitações</h2>
+<ul>
+<li>Os rótulos derivam de regras sobre o próprio RTT, o que explica parte das métricas tão altas.</li>
+<li>Poucos fluxos e janela de tempo limitada; o resultado pode não se repetir em outras redes.</li>
+<li>Considera só latência e perda de pacotes, sem outras métricas de rede.</li>
+</ul>
+</section>
+
+<section id="video">
+<h2>7. Vídeo pitch</h2>
+<video controls preload="metadata" poster="pitch/capa.png">
+<source src="pitch/webagriculture-90s-voz-neural-v2.mp4" type="video/mp4">
+<track kind="captions" src="pitch/legendas.vtt" srclang="pt-BR" label="Português" default>
+</video>
+</section>
+
+<section id="equipe">
+<h2>8. Equipe e acesso</h2>
+<div class="grid team">
+<div><img src="https://github.com/apollomoura.png?size=100" alt="Apollo Moura De Sousa"><br>Apollo Moura De Sousa<br><a href="https://github.com/apollomoura">GitHub</a> · <a href="https://www.linkedin.com/in/apollo-moura-215306320/">LinkedIn</a></div>
+<div><img src="https://github.com/clicaro.png?size=100" alt="Icaro Luiz Dellalo Silva"><br>Icaro Luiz Dellalo Silva<br><a href="https://github.com/clicaro">GitHub</a> · <a href="https://www.linkedin.com/in/icaro-dellalo/">LinkedIn</a></div>
+<div><img src="https://github.com/iedahirari.png?size=100" alt="Ieda de Oliveira"><br>Ieda de Oliveira<br><a href="https://github.com/iedahirari">GitHub</a> · <a href="https://www.linkedin.com/in/ieda-oliveira/">LinkedIn</a></div>
+<div><img src="https://github.com/ZorahSai.png?size=100" alt="João Pedro C. de Morais"><br>João Pedro C. de Morais<br><a href="https://github.com/ZorahSai">GitHub</a> · <a href="https://www.linkedin.com/in/jo%C3%A3o-pedro-06724430b/">LinkedIn</a></div>
+<div><img src="https://github.com/SuperLucas2000.png?size=100" alt="Lucas Matteus Baptista de Godoy"><br>Lucas Matteus Baptista de Godoy<br><a href="https://github.com/SuperLucas2000">GitHub</a> · <a href="https://www.linkedin.com/in/lucasmatteus/">LinkedIn</a></div>
+</div>
+<p style="text-align:center;margin-top:28px"><img src="qrcode.png" alt="QR code da apresentação" width="150"><br>Aponte a câmera para abrir a apresentação</p>
+</section>
+
+</main>
+<footer>Projeto Integrador · Redes de Computadores · Estrutura de Dados II · Análise de Sistemas</footer>
 </body>
 </html>

@@ -17,8 +17,8 @@
 
 | | Artefato | Onde está |
 |---|---|---|
-| **Sai** | RFC preenchido pelo grupo | [`docs/RFC_Preditor_Degradacao_Rede.md`](../RFC_Preditor_Degradacao_Rede.md) |
-| **Sai** | Dicionário v0.1 só com colunas **brutas** | [`docs/dicionario_v0.1.md`](../dicionario_v0.1.md) |
+| **Sai** | RFC preenchido pelo grupo | [`docs/RFC_Preditor_Degradacao_Rede.md`](../../RFC_Preditor_Degradacao_Rede.md) |
+| **Sai** | Dicionário v0.1 só com colunas **brutas** | [`docs/dicionario_v0.1.md`](../../dicionario_v0.1.md) |
 | **Sai** | `data/raw/` + `config/` + `requirements.txt` | `data/raw/json/`, `data/raw/medicoes_brutas.csv.gz`, `config/coleta.json`, `requirements.txt` |
 | **Sai** | Este diário | `docs/diarios/Tarefa1_Coleta_Bruta.md` |
 
@@ -35,7 +35,7 @@
 | Quem usa o alerta? | Quem opera o enlace: investigar (FALHA), observar (RISCO) ou não agir (OK). |
 | O que está proibido como definição de falha? | Limiar global de RTT, país, continente ou nome da rota. |
 
-- [x] RFC do grupo preenchido a partir desta tabela: [`docs/RFC_Preditor_Degradacao_Rede.md`](../RFC_Preditor_Degradacao_Rede.md)
+- [x] RFC do grupo preenchido a partir desta tabela: [`docs/RFC_Preditor_Degradacao_Rede.md`](../../RFC_Preditor_Degradacao_Rede.md)
 - [x] Dicionário v0.1 só com variáveis brutas
 
 ## 2. O que coletar (e o que não criar)
@@ -87,7 +87,7 @@ Regras da coleta:
 
 ## 3. Relatório de qualidade — ainda sem classe
 
-Relatório completo: [`docs/relatorio_qualidade_tarefa1.md`](../relatorio_qualidade_tarefa1.md).
+Relatório completo: [`docs/relatorio_qualidade_tarefa1.md`](../../relatorio_qualidade_tarefa1.md).
 
 - [x] Registros por `fluxo_id`: de 4.486 a 5.040, com cerca de 2.520 por período, o que corresponde a 360 por dia.
 - [x] Início e fim de cada fluxo: entre 06/09 04:32 e 20/09 04:31 UTC, detalhados por fluxo no relatório.

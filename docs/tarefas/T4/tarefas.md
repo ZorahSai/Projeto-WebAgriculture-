@@ -17,9 +17,9 @@
 
 | | Artefato | Origem / destino |
 |---|---|---|
-| **Entra** | Árvore da Tarefa 3, matriz e erros | `results/tarefa3/`, [`docs/relatorio_tarefa3.md`](../relatorio_tarefa3.md) |
+| **Entra** | Árvore da Tarefa 3, matriz e erros | `results/tarefa3/`, [`docs/relatorio_tarefa3.md`](../../relatorio_tarefa3.md) |
 | **Entra** | Mesmo baseline, mesmo rótulo, mesmo corte | `data/processed/` (Tarefa 2) |
-| **Sai** | Árvore ajustada e tabela Tarefa 3 → Tarefa 4 | `results/tarefa4/`, [`docs/relatorio_tarefa4.md`](../relatorio_tarefa4.md) |
+| **Sai** | Árvore ajustada e tabela Tarefa 3 → Tarefa 4 | `results/tarefa4/`, [`docs/relatorio_tarefa4.md`](../../relatorio_tarefa4.md) |
 | **Sai** | Regras novas em português | Seção 2 abaixo |
 | **Sai** | Dicionário v0.3, se nasceu coluna relativa nova | **Não nasceu.** Permanece o v0.2 |
 
@@ -87,7 +87,7 @@ A árvore completa está em `results/tarefa4/arvore_ajustada.txt`. A Tarefa 5 pa
 
 **Leitura do ganho (ou da falta de ganho):**
 
-A Tarefa 3 já reaprendia a tabela de rótulo; faltava o ramo da linha 4 (`n5_aumento80`). Subir a profundidade fecha os 10 FALHA que viravam OK, sem RTT absoluto e sem rota. O recall de FALHA vai de 0,9984 para 1,0000. Resta 1 OK→RISCO. Continua sendo a política da Tarefa 2, não falha confirmada em equipamento. Relatório: [`docs/relatorio_tarefa4.md`](../relatorio_tarefa4.md).
+A Tarefa 3 já reaprendia a tabela de rótulo; faltava o ramo da linha 4 (`n5_aumento80`). Subir a profundidade fecha os 10 FALHA que viravam OK, sem RTT absoluto e sem rota. O recall de FALHA vai de 0,9984 para 1,0000. Resta 1 OK→RISCO. Continua sendo a política da Tarefa 2, não falha confirmada em equipamento. Relatório: [`docs/relatorio_tarefa4.md`](../../relatorio_tarefa4.md).
 
 ---
 

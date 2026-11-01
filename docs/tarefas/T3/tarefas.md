@@ -15,7 +15,7 @@
 |---|---|---|
 | **Entra** | Ficha de baseline, dataset rotulado e corte temporal | `data/processed/` (Tarefa 2, **os mesmos**) |
 | **Sai** | Árvore treinada só no treino, com profundidade e critério registrados | `results/tarefa3/arvore_oficial.txt`, `results/tarefa3/metricas_validacao.json` |
-| **Sai** | Regras em texto e matriz 3×3 | Seções 2 e 3 abaixo; [`docs/relatorio_tarefa3.md`](../relatorio_tarefa3.md) |
+| **Sai** | Regras em texto e matriz 3×3 | Seções 2 e 3 abaixo; [`docs/relatorio_tarefa3.md`](../../relatorio_tarefa3.md) |
 | **Sai** | Árvore de contraste e a frase do que ela aprendeu | Seção 4 abaixo |
 
 Código: `src/treinar_arvore.py`. Parâmetros: `config/arvore.json`.

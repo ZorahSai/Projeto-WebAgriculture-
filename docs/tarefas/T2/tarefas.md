@@ -13,13 +13,13 @@
 
 | | Artefato | Onde está |
 |---|---|---|
-| **Entra** | `data/raw/` e dicionário v0.1 | `data/raw/medicoes_brutas.csv.gz`, [`docs/dicionario_v0.1.md`](../dicionario_v0.1.md) |
+| **Entra** | `data/raw/` e dicionário v0.1 | `data/raw/medicoes_brutas.csv.gz`, [`docs/dicionario_v0.1.md`](../../dicionario_v0.1.md) |
 | **Sai** | `baseline_por_fluxo.csv` | `data/processed/baseline_por_fluxo.csv` |
 | **Sai** | Dataset rotulado do Período B | `data/processed/dataset_rotulado_B.csv.gz` |
 | **Sai** | Recorte temporal dentro de B | `data/processed/corte_temporal.json` (coluna `bloco` do dataset) |
-| **Sai** | Dicionário v0.2 | [`docs/dicionario_v0.2.md`](../dicionario_v0.2.md) |
+| **Sai** | Dicionário v0.2 | [`docs/dicionario_v0.2.md`](../../dicionario_v0.2.md) |
 
-Código: `src/baseline_e_rotulo.py`. Limiares em `config/rotulagem.json`. Relatório completo: [`docs/relatorio_tarefa2.md`](../relatorio_tarefa2.md).
+Código: `src/baseline_e_rotulo.py`. Limiares em `config/rotulagem.json`. Relatório completo: [`docs/relatorio_tarefa2.md`](../../relatorio_tarefa2.md).
 
 - [x] O código lê o bruto da Tarefa 1 (`data/raw/medicoes_brutas.csv.gz`), sem trocar a coleta. O trabalho foi feito em script Python, como no repositório de exemplo da professora, e não em notebook.
 
@@ -35,7 +35,7 @@ Código: `src/baseline_e_rotulo.py`. Limiares em `config/rotulagem.json`. Relat�
 
 **N bruto:** 486.487  
 **N de fluxos:** 97  
-**Evidências:** seção 1 de [`docs/relatorio_tarefa2.md`](../relatorio_tarefa2.md).
+**Evidências:** seção 1 de [`docs/relatorio_tarefa2.md`](../../relatorio_tarefa2.md).
 
 ## 2. Como obter o baseline
 
@@ -66,7 +66,7 @@ As duas medianas são o "normal" de cada fluxo, embora uma seja 300 vezes maior 
 
 ## 3. Métricas de cada medição do Período B
 
-Calculadas com a ficha congelada de cada `fluxo_id`, com as fórmulas e os casos especiais da Tarefa 2 (ver [`docs/dicionario_v0.2.md`](../dicionario_v0.2.md)):
+Calculadas com a ficha congelada de cada `fluxo_id`, com as fórmulas e os casos especiais da Tarefa 2 (ver [`docs/dicionario_v0.2.md`](../../dicionario_v0.2.md)):
 - `z_robusto`, `aumento_pct`, `jitter_relativo`, `perda_pct` e `timeout_atual`.
 - `n5_timeout`, `n5_aumento80` e `n5_risco`, contados nas últimas 5 medições do fluxo, incluindo a atual.
 
@@ -108,7 +108,7 @@ Leitura dos três casos:
 - [x] **O dicionário v0.2 lista as colunas proibidas na árvore:** país, região, IP, `probe_id`, `fluxo_id`, nome do destino e RTT ou jitter absolutos.
 
 **Contagem OK / RISCO / FALHA:** 185.651 / 16.383 / 28.820  
-**Evidências:** as três linhas da tabela acima e a seção 3 de [`docs/relatorio_tarefa2.md`](../relatorio_tarefa2.md).
+**Evidências:** as três linhas da tabela acima e a seção 3 de [`docs/relatorio_tarefa2.md`](../../relatorio_tarefa2.md).
 
 **Observação para as tarefas seguintes (limitação da regra, não erro de código):** a linha 3 (`z_robusto` ≥ 3,5) dispara 94% das FALHAs. Em dois tipos de fluxo isso marca FALHA sem degradação real:
 - **Mudança de patamar.** No fluxo `7399|91.198.196.228` (LU → de-mdt), a mediana passou de 7,2 ms no Período A para 13,1 ms no Período B, estável, sem perda e com jitter normal. As 2.495 medições do Período B saíram FALHA. É o caso RECALIBRAR (mudança de rota) da seção 8.5 do RFC.

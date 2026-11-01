@@ -10,10 +10,10 @@ Base: PDF `projeto final.pdf`, enviado pela equipe, páginas 2–9. As páginas 
 |---|---|---|
 | **02/11** | Logo PNG 600 × 600, `logo_nomedoprojeto.png` | **Pronto:** [logo_webagriculture.png](logo_webagriculture.png), exportação técnica do desenho enviado, em 600 × 600. Original 500 × 500 preservado em `logo_webagriculture_original.png`. |
 | **02/11** | Nome até 30 caracteres | **Pronto:** WebAgriculture, 14 caracteres. |
-| **02/11** | Descritivo até 200 caracteres | **Pronto:** texto de 167 caracteres em [dados de inscrição](inscricao_mostra.md). |
+| **02/11** | Descritivo até 200 caracteres | **Pronto:** texto de 167 caracteres em dados de inscrição (`docs/inscricao_mostra.md`, removido no commit 8813ad4; consulte o histórico). |
 | **02/11** | Tags e formulário da turma | **Tags prontas; envio externo pendente.** A URL do formulário não consta como link recuperável no PDF rasterizado. |
 | **04/11** | GitHub completo: código, documentos e todos os `tarefas.md` | **Arquivos preparados:** pipeline T1–T5 preservado, relatórios/diários, [índice de tarefas](../tarefas.md) e registros em `docs/tarefas/T1…T5/tarefas.md`. Esses registros são cópias identificadas dos diários existentes; não inventam um histórico. |
-| **04/11** | Pitch de 90 s no YouTube como não listado | **Vídeo pronto; YouTube pendente:** [MP4](pitch/webagriculture-90s.mp4), narração sintética em português, [legendas SRT](pitch/legendas.srt), [WebVTT](pitch/legendas.vtt) e [transcrição](pitch/transcricao.html). [Instruções de publicação](pitch/LEIA-ME.md). |
+| **04/11** | Pitch de 90 s no YouTube como não listado | **Vídeo pronto; YouTube pendente:** [MP4](pitch/webagriculture-90s.mp4), narração sintética em português, [legendas SRT](pitch/legendas.srt), [WebVTT](pitch/legendas.vtt) e [transcrição](pitch/transcricao.html). Instruções de publicação (`docs/pitch/LEIA-ME.md`, removido no commit 63e0ca0; consulte o histórico). |
 | **04/11** | README com links do artigo e vídeo | **Artigo e MP4 vinculados.** Substituir/complementar o link do MP4 com a URL não listada após envio ao YouTube. |
 | **04/11** | Página para visitantes, com vídeo | **Pronta:** problema, objetivo, funcionamento, pipeline com entradas/saídas, dados e avaliação, resultados, limitações, pitch incorporado, curso/instituição, equipe, orientação, acesso e fontes. |
 | **04/11** | QR Code que abre a página | **Conferido:** `qrcode.png` decodifica para `https://zorahsai.github.io/Projeto-WebAgriculture-/`. QR incorporado na página e no encerramento do vídeo. Testar a impressão antes da mostra. |

@@ -5,7 +5,7 @@
 
 🌐 **Apresentação no ar:** [zorahsai.github.io/Projeto-WebAgriculture-](https://zorahsai.github.io/Projeto-WebAgriculture-/)
 
-🎬 **Vídeo:** [pitch de 90 segundos](docs/pitch/webagriculture-90s.mp4) · [transcrição](docs/pitch/transcricao.md)
+🎬 **Vídeo:** [pitch de 90 segundos](docs/pitch/webagriculture-90s-voz-neural-v2.mp4) · [transcrição](docs/pitch/transcricao.md)
 
 📄 **Artigo complementar:** [comparação de modelos para previsão a 12 minutos](https://iedahirari.github.io/artigo-preditor-redes/)
 
@@ -79,7 +79,7 @@ Desenvolver, de forma iterativa e incremental via Scrum, uma aplicação que tre
 | Início do projeto | semana de 17/08/2026 |
 | Período A — baseline | 06/09/2026 04:32 → 13/09/2026 04:32 UTC |
 | Período B — rotulado | 13/09/2026 04:32 → 20/09/2026 04:32 UTC |
-| Apresentação | 10 a 12/11/2026 |
+| Apresentação e avaliação individual | 05/11/2026 |
 
 ---
 
@@ -172,7 +172,11 @@ Projeto-WebAgriculture-/
 │   ├── RFC_Preditor_Degradacao_Rede.md
 │   ├── relatorio_*.md       # relatórios das tarefas
 │   ├── dicionario_v*.md     # dicionário de dados versionado
-│   └── diarios/             # diários das Tarefas 1 a 5
+│   ├── analise_entrega_final.md # análise da entrega final
+│   ├── diarios/             # diários das Tarefas 1 a 5
+│   └── tarefas/             # material das Tarefas T1 a T5
+├── entrega/                 # pacote de entrega (modelo, baseline, metadados, ZIP)
+├── tests/                   # testes da entrega (unittest)
 ├── results/
 │   ├── tarefa3/
 │   ├── tarefa4/
@@ -184,6 +188,7 @@ Projeto-WebAgriculture-/
 │   ├── memorando_de_decisao/# memorando RIPE Atlas × Kaggle
 │   └── Anchors.txt          # Anchors de destino escolhidas
 ├── requirements.txt
+├── tarefas.md               # checklist de tarefas da entrega
 └── README.md
 ```
 
@@ -243,6 +248,8 @@ Para ver a apresentação localmente, abra [`docs/apresentacao.html`](docs/apres
 | [Dicionário v0.1](docs/dicionario_v0.1.md) · [v0.2](docs/dicionario_v0.2.md) · [v0.4](docs/dicionario_v0.4.md) | Dicionário de dados versionado |
 | [Diários](docs/diarios/) | Diários das Tarefas 1 a 5 |
 | [Resumo do mapa mental](docs/resumo_mapa_mental_grupo.md) | Síntese do mapa mental do grupo |
+| [Análise da entrega final](docs/analise_entrega_final.md) | Prazos do PDF e situação da entrega final |
+| [Tarefas](tarefas.md) | Checklist de tarefas da entrega |
 
 ---
 
@@ -294,10 +301,6 @@ Estas pastas registram as entregas anteriores e **não são usadas** pelas Taref
   </tr>
 </table>
 
----
-
-<p align="center">Projeto acadêmico — 2026</p>
-
 ## Uso do modelo e verificação
 
 Para apenas reempacotar os artefatos existentes e verificar o contrato:
@@ -310,3 +313,7 @@ python -m unittest discover -s tests -v
 ```
 
 Esse caminho não roda novamente a coleta, não ajusta a árvore e não reabre o bloco de teste. `src/exportar_entrega.py` continua sendo o exportador com treino; use `empacotar_entrega.py` quando só quiser fechar o ZIP existente.
+
+---
+
+<p align="center">Projeto acadêmico — 2026</p>

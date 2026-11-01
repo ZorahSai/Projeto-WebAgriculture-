@@ -17,9 +17,9 @@
 
 | | Artefato | Origem / destino |
 |---|---|---|
-| **Entra** | Árvore da Tarefa 3, matriz e erros | `results/tarefa3/`, [`docs/relatorio_tarefa3.md`](../relatorio_tarefa3.md) |
+| **Entra** | Árvore da Tarefa 3, matriz e erros | `results/tarefa3/`, [`docs/relatorio_tarefa3.md`](../../relatorio_tarefa3.md) |
 | **Entra** | Mesmo baseline, mesmo rótulo, mesmo corte | `data/processed/` (Tarefa 2) |
-| **Sai** | Árvore ajustada e tabela Tarefa 3 → Tarefa 4 | `results/tarefa4/`, [`docs/relatorio_tarefa4.md`](../relatorio_tarefa4.md) |
+| **Sai** | Árvore ajustada e tabela Tarefa 3 → Tarefa 4 | `results/tarefa4/`, [`docs/relatorio_tarefa4.md`](../../relatorio_tarefa4.md) |
 | **Sai** | Regras novas em português | Seção 2 abaixo |
 | **Sai** | Dicionário v0.3, se nasceu coluna relativa nova | **Não nasceu.** Permanece o v0.2 |
 
@@ -87,25 +87,25 @@ A árvore completa está em `results/tarefa4/arvore_ajustada.txt`. A Tarefa 5 pa
 
 **Leitura do ganho (ou da falta de ganho):**
 
-A Tarefa 3 já reaprendia a tabela de rótulo; faltava o ramo da linha 4 (`n5_aumento80`). Subir a profundidade fecha os 10 FALHA que viravam OK, sem RTT absoluto e sem rota. O recall de FALHA vai de 0,9984 para 1,0000. Resta 1 OK→RISCO. Continua sendo a política da Tarefa 2, não falha confirmada em equipamento. Relatório: [`docs/relatorio_tarefa4.md`](../relatorio_tarefa4.md).
+A Tarefa 3 já reaprendia a tabela de rótulo; faltava o ramo da linha 4 (`n5_aumento80`). Subir a profundidade fecha os 10 FALHA que viravam OK, sem RTT absoluto e sem rota. O recall de FALHA vai de 0,9984 para 1,0000. Resta 1 OK→RISCO. Continua sendo a política da Tarefa 2, não falha confirmada em equipamento. Relatório: [`docs/relatorio_tarefa4.md`](../../relatorio_tarefa4.md).
 
 ---
 
 ## 4. Revisão com o docente
 
 **O que foi mostrado:** o relatório da Tarefa 4, a tabela Tarefa 3 → Tarefa 4 e a árvore em `results/tarefa4/`.  
-**O que foi pedido para ajustar antes da Tarefa 5:** [a preencher depois da revisão com o docente]
+**O que foi pedido para ajustar antes da Tarefa 5:** **Pendência da equipe:** registrar o retorno do docente; ele não consta no repositório.
 
 ---
 
 ## 5. Scrum e diário
 
-- [ ] Board atualizado [a preencher pela equipe]
+- [ ] Board atualizado — **pendência da equipe:** atualizar o board e registrar o link aqui (não consta no repositório)
 
 | Integrante | O que fiz nesta tarefa | Dificuldades | O que pretendo manter/ajustar |
 |---|---|---|---|
-| Apollo Moura De Sousa | [a preencher] | [a preencher] | [a preencher] |
-| Icaro Luiz Dellalo Silva | [a preencher] | [a preencher] | [a preencher] |
-| Ieda de Oliveira | [a preencher] | [a preencher] | [a preencher] |
-| João Pedro C. de Morais | [a preencher] | [a preencher] | [a preencher] |
+|  | Levantamento dos erros da Tarefa 3 (10 FALHA→OK ligados à linha 4 da tabela) |  |  |
+|  | Ajuste da árvore (`src/ajustar_arvore.py`, `config/arvore_tarefa4.json`) com parâmetros escolhidos na validação |  |  |
+|  | Comparação Tarefa 3 → Tarefa 4 na validação e registro das tentativas descartadas |  |  |
+|  | Relatório da Tarefa 4 (`docs/relatorio_tarefa4.md`) e resultados em `results/tarefa4/` |  |  |
 | Lucas Matteus Baptista de Godoy | Implementei o ajuste da árvore (`src/ajustar_arvore.py`, `config/arvore_tarefa4.json`, `results/tarefa4/`) a partir dos 10 FALHA→OK da Tarefa 3, preenchi o diário e o relatório, sem abrir o teste e sem coluna de rota. | Ligar cada hiperparâmetro a um erro concreto, e não só “subir a profundidade porque a F1 sobe”. Entropia e poda com profundidade 6 pareciam ajuste, mas devolviam FALHA→OK. | Manter a árvore Gini profunda o suficiente para a linha 4. A Tarefa 5 usa esta árvore no teste. O 1 OK→RISCO residual fica documentado, sem inventar feature de rota. |

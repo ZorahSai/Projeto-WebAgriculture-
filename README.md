@@ -5,7 +5,7 @@
 
 🌐 **Apresentação no ar:** [zorahsai.github.io/Projeto-WebAgriculture-](https://zorahsai.github.io/Projeto-WebAgriculture-/)
 
-🎬 **Vídeo:** [pitch de 90 segundos](docs/pitch/webagriculture-90s.mp4)  [VideoYoutube](https://youtu.be/xHqcS4YHtME) · [transcrição](docs/pitch/transcricao.md)
+🎬 **Vídeo:** [pitch de 90 segundos](docs/pitch/webagriculture-90s.mp4) · [VideoYoutube](https://youtu.be/xHqcS4YHtME) · [transcrição](docs/pitch/transcricao.md)
 
 📄 **Artigo complementar:** [comparação de modelos para previsão a 12 minutos](https://iedahirari.github.io/artigo-preditor-redes/)
 

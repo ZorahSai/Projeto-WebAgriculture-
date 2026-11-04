@@ -14,7 +14,7 @@
 - [x] Corrigir metadados e validar o pacote em ambiente com versões correspondentes.
 - [x] Consolidar página de apresentação, identidade visual e acessibilidade.
 - [x] Organizar os registros existentes das cinco tarefas.
-- [ ] Publicar o pitch no YouTube como não listado e registrar o link.
-- [ ] Confirmar inscrição até 02/11 e envio no Blackboard até 04/11.
+- [x] Publicar o pitch no YouTube como não listado e registrar o link.
+- [x] Confirmar inscrição até 02/11 e envio no Blackboard até 04/11.
 
 O checklist detalhado está em [análise da entrega](docs/analise_entrega_final.md).

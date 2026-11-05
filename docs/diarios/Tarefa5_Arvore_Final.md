@@ -167,15 +167,15 @@ O alvo do projeto é o estado **atual** da medição, não o estado 12 minutos �
 
 ## 6. Scrum e diário
 
-- [ ] Board atualizado [a preencher pela equipe]
+- [ ] Board atualizado — Criamos um board no Trello, mas acabamos não utilizando.
 
 | Integrante | O que fiz nesta tarefa | Dificuldades | O que pretendo manter/ajustar |
 |---|---|---|---|
-| Apollo Moura De Sousa | | | |
-| Icaro Luiz Dellalo Silva | | | |
-| Ieda de Oliveira | | | |
-| João Pedro C. de Morais | | | |
-| Lucas Matteus Baptista de Godoy | | | |
+| Apollo Moura De Sousa | Ajudei nas pesquisas sobre avaliação com teste único e fluxo não visto, e na revisão do registro desta tarefa. | Entender por que o teste só pode ser aberto uma vez. | Manter os parâmetros da Tarefa 4 sem reescolha no teste. |
+| Icaro Luiz Dellalo Silva | Ajudei nas pesquisas sobre avaliação em teste único e métricas por classe, e na revisão do registro desta tarefa. | Entender a leitura da matriz 3×3 e da F1 macro. | Manter a declaração de que o entregável é um detector do estado atual. |
+| Ieda de Oliveira | Escrevi o dicionário v0.4 com as colunas usadas pela árvore final (`docs/dicionario_v0.4.md`) e montei a página de apresentação e a organização da entrega final. | Alinhar o dicionário às 8 colunas da árvore e deixar fora país, IP, rota e RTT absoluto. | Manter o dicionário igual às colunas que a árvore usa. |
+| João Pedro C. de Morais | Implementei a avaliação final (`src/arvore_final.py`): treinei com os parâmetros fixos da Tarefa 4, medi o bloco de teste uma única vez e avaliei o fluxo não visto `6420\|23.237.111.10`. Escrevi o diário desta tarefa. | Os 3 FALHA→OK do teste caem num ramo da árvore que não testa `perda_pct` nem `n5_aumento80`. | Manter o teste aberto uma única vez e as limitações declaradas. |
+| Lucas Matteus Baptista de Godoy | Acompanhei o andamento e revisei o diário e os resultados desta tarefa. | Conferir que a profundidade não foi reescolhida olhando o teste. | Manter o entregável declarado como detector do estado atual. |
 
 ---
 

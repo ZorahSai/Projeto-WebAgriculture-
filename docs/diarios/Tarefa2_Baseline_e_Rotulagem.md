@@ -134,14 +134,14 @@ Também usamos um **embargo**: as 4 primeiras medições de cada fluxo na valida
 
 ## 6. Scrum e diário
 
-- [ ] Board atualizado [a preencher pela equipe]
+- [ ] Board atualizado — Criamos um board no Trello, mas acabamos não utilizando.
 
-**Link do board:** [a preencher pela equipe]
+**Link do board:** não há (o board do Trello não foi utilizado).
 
 | Integrante | O que fiz nesta tarefa | Dificuldades | O que pretendo manter/ajustar |
 |---|---|---|---|
-| Apollo Moura De Sousa | [a preencher] | [a preencher] | [a preencher] |
-| Icaro Luiz Dellalo Silva | [a preencher] | [a preencher] | [a preencher] |
-| Ieda de Oliveira | [a preencher] | [a preencher] | [a preencher] |
-| João Pedro C. de Morais | [a preencher] | [a preencher] | [a preencher] |
-| Lucas Matteus Baptista de Godoy | [a preencher] | [a preencher] | [a preencher] |
+| Apollo Moura De Sousa | Implementei, com o João e o Lucas, o cálculo do baseline por fluxo e a rotulagem OK, RISCO e FALHA (`src/baseline_e_rotulo.py`, `config/rotulagem.json`). | A linha `z_robusto` ≥ 3,5 dispara 94% das FALHAs e marca mudança de patamar estável como FALHA (fluxo `7399 → de-mdt`). | Manter o baseline congelado no Período A e registrar o caso RECALIBRAR como limitação. |
+| Icaro Luiz Dellalo Silva | Ajudei nas pesquisas sobre baseline robusto com mediana e MAD e na revisão do registro desta tarefa. | Entender por que mediana e MAD são usados no lugar de média e desvio-padrão. | Manter o baseline calculado só com o Período A. |
+| Ieda de Oliveira | Ajudei na revisão, nas discussões e nas pesquisas desta tarefa sobre o baseline por fluxo e a rotulagem. | Acompanhar as decisões técnicas da tarefa e relacioná-las às etapas do projeto. | Manter a revisão em grupo dos registros da tarefa. |
+| João Pedro C. de Morais | Implementei, com o Apollo e o Lucas, o cálculo das métricas relativas do Período B e o recorte temporal em treino, validação e teste (`src/baseline_e_rotulo.py`). | Fluxos com MAD muito pequeno, como `7049 → br-for` (0,09 ms), viram FALHA com aumento de cerca de 1 ms. | Manter o embargo das 4 primeiras medições de cada fluxo entre os blocos. |
+| Lucas Matteus Baptista de Godoy | Implementei, com o Apollo e o João, o baseline por fluxo, a tabela de rotulagem e o relatório da tarefa (`src/baseline_e_rotulo.py`, `docs/relatorio_tarefa2.md`). | Tratar as janelas `n5_*` nas 4 primeiras medições de cada fluxo e os 5 fluxos de Bogotá sem baseline suficiente. | Manter o piso de 1.500 RTT válidos, sem inventar mediana para fluxo que não atinge o piso. |

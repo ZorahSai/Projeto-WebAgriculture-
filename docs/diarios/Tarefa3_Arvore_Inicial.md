@@ -113,15 +113,15 @@ Duas árvores treinadas no mesmo treino e com os mesmos parâmetros da oficial.
 
 ## 5. Scrum e diário
 
-- [ ] Board atualizado [a preencher pela equipe]
+- [ ] Board atualizado — Criamos um board no Trello, mas acabamos não utilizando.
 
 | Integrante | O que fiz nesta tarefa | Dificuldades | O que pretendo manter/ajustar |
 |---|---|---|---|
-| Apollo Moura De Sousa | [a preencher] | [a preencher] | [a preencher] |
-| Icaro Luiz Dellalo Silva | [a preencher] | [a preencher] | [a preencher] |
-| Ieda de Oliveira | [a preencher] | [a preencher] | [a preencher] |
-| João Pedro C. de Morais | [a preencher] | [a preencher] | [a preencher] |
-| Lucas Matteus Baptista de Godoy | [a preencher] | [a preencher] | [a preencher] |
+| Apollo Moura De Sousa | Participei, junto com o grupo, do desenvolvimento do treino da primeira árvore de decisão (`src/treinar_arvore.py`, `config/arvore.json`) e do relatório da tarefa (`docs/relatorio_tarefa3.md`). | A árvore de contraste com medidas absolutas corta em milissegundos fixos e a F1 macro cai para 0,510. | Usar a árvore de contraste só para mostrar o atalho da distância. |
+| Icaro Luiz Dellalo Silva | Ajudei nas pesquisas sobre árvore de decisão e o critério Gini e na revisão do registro desta tarefa. | Entender como a árvore escolhe a divisão pelo critério Gini. | Manter a árvore legível, com poucas folhas e regras em português. |
+| Ieda de Oliveira | Participei, junto com o grupo, do desenvolvimento do treino da primeira árvore de decisão (`src/treinar_arvore.py`, `config/arvore.json`) e do relatório da tarefa (`docs/relatorio_tarefa3.md`). | A F1 macro ficou perto de 1 porque o rótulo usa as mesmas 8 colunas que a árvore lê, então a árvore reaprende a política de rótulo. | Deixar para a Tarefa 4 os 10 FALHA→OK ligados ao `n5_aumento80`. |
+| João Pedro C. de Morais | Participei, junto com o grupo, do desenvolvimento do treino da primeira árvore de decisão (`src/treinar_arvore.py`, `config/arvore.json`) e do relatório da tarefa (`docs/relatorio_tarefa3.md`). | Mudanças de patamar de rota, como `7399 → de-mdt`, viram FALHA pela regra da Tarefa 2. | Manter o bloco de teste fechado até a Tarefa 5. |
+| Lucas Matteus Baptista de Godoy | Participei, junto com o grupo, do desenvolvimento do treino da primeira árvore de decisão (`src/treinar_arvore.py`, `config/arvore.json`) e do relatório da tarefa (`docs/relatorio_tarefa3.md`). | A profundidade 6 não reproduz a linha 4 da tabela (`n5_aumento80`) em todos os casos. | Manter a escolha de parâmetros só pela validação, entre as combinações de menos folhas. |
 
 Pontos técnicos para a equipe aproveitar no diário:
 - A F1 próxima de 1 se explica pelo rótulo ter sido feito com as mesmas métricas.

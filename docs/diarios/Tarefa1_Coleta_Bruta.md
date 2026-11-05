@@ -107,7 +107,7 @@ Relatório completo: [`docs/relatorio_qualidade_tarefa1.md`](../relatorio_qualid
 ## 4. Scrum
 
 - [x] Product Owner = docente; Scrum Master da tarefa = Apollo Moura De Sousa; time de desenvolvimento = demais integrantes
-- [ ] Board com To do / Doing / Done [a preencher pela equipe]
+- [ ] Board atualizado — Criamos um board no Trello, mas acabamos não utilizando.
 - [x] Pelo menos 3 histórias (rascunho abaixo; a equipe pode ajustar)
 
 **Histórias:**
@@ -115,17 +115,17 @@ Relatório completo: [`docs/relatorio_qualidade_tarefa1.md`](../relatorio_qualid
 2. Como analista de rede, quero preservar a resposta bruta da API com os timeouts e sem RTT igual a 0, para poder auditar e refazer qualquer tabela.
 3. Como cientista de dados, quero separar o Período A do Período B sem rotular nada, para que o baseline da Tarefa 2 não use as medições que serão rotuladas.
 
-**Link do board:** [a preencher pela equipe]
+**Link do board:** não há (o board do Trello não foi utilizado).
 
 ## 5. Diário de bordo
 
 | Integrante | O que fiz nesta tarefa | Dificuldades | O que pretendo manter/ajustar |
 |---|---|---|---|
-| Apollo Moura De Sousa | [a preencher] | [a preencher] | [a preencher] |
-| Icaro Luiz Dellalo Silva | [a preencher] | [a preencher] | [a preencher] |
-| Ieda de Oliveira | [a preencher] | [a preencher] | [a preencher] |
-| João Pedro C. de Morais | [a preencher] | [a preencher] | [a preencher] |
-| Lucas Matteus Baptista de Godoy | Elaborei o RFC do grupo (`docs/RFC_Preditor_Degradacao_Rede.md`) a partir do modelo da professora e das regras da Tarefa 1, usando o recorte real da coleta (97 fluxos, períodos A/B, dicionário v0.1). Revisei a documentação ligada a essa entrega: diário da Tarefa 1, `README.md` e links do RFC, do dicionário e dos commits. | Separar o que é contrato do RFC (rótulo, baseline, horizonte) do que a Tarefa 1 de fato entrega (bruto sem classe). Não copiar números da professora (67 fluxos, outro volume) e não misturar Período A/B com treino/validação/teste. | Manter o RFC como contrato único do problema e a regra de RTT normalizado por fluxo. Ajustar depois: coluna RECALIBRAR, Protocolo B (fluxos novos) e o preditor de 12 minutos, que o RFC deixa em aberto. |
+| Apollo Moura De Sousa | Participei, com o João e o Lucas, da implementação dos scripts de coleta e da tabela bruta (`src/coletar_bruto.py`, `src/montar_tabela_bruta.py`) e ajudei nas pesquisas sobre a API pública do RIPE Atlas. | Identificar os três pares de auto-ping, que só apareceram pelo RTT de cerca de 0,2 ms. | Manter a coleta só com `GET`, idempotente e com o JSON bruto preservado. |
+| Icaro Luiz Dellalo Silva | Ajudei nas pesquisas sobre a API pública do RIPE Atlas e as medições de ping entre Anchors, e na revisão do registro desta tarefa. | Entender como as medições públicas se organizam (`measurement_id`, sonda de origem e Anchor de destino). | Manter a regra de não criar medição nem gastar crédito. |
+| Ieda de Oliveira | Ajudei na revisão, nas discussões e nas pesquisas desta tarefa sobre a coleta bruta e a API do RIPE Atlas. | Acompanhar as decisões técnicas da tarefa e relacioná-las às etapas do projeto. | Manter a revisão em grupo dos registros da tarefa. |
+| João Pedro C. de Morais | Participei, com o Apollo e o Lucas, da implementação dos scripts de coleta e da tabela bruta (`src/coletar_bruto.py`, `src/montar_tabela_bruta.py`), com os parâmetros em `config/coleta.json`. | A Anchor de Bogotá respondeu pouco no Período A, e os 5 fluxos dela ficaram abaixo do piso de 1.500 RTT válidos. | Manter os parâmetros da coleta fora do código, em `config/coleta.json`. |
+| Lucas Matteus Baptista de Godoy | Elaborei o RFC do grupo (`docs/RFC_Preditor_Degradacao_Rede.md`) a partir do modelo da professora e das regras da Tarefa 1, usando o recorte real da coleta (97 fluxos, períodos A/B, dicionário v0.1). Revisei a documentação ligada a essa entrega: diário da Tarefa 1, `README.md` e links do RFC, do dicionário e dos commits. Também escrevi o script do relatório de qualidade da coleta (`src/relatorio_qualidade.py`), que gera o `docs/relatorio_qualidade_tarefa1.md`. | Separar o que é contrato do RFC (rótulo, baseline, horizonte) do que a Tarefa 1 de fato entrega (bruto sem classe). Não copiar números da professora (67 fluxos, outro volume) e não misturar Período A/B com treino/validação/teste. | Manter o RFC como contrato único do problema e a regra de RTT normalizado por fluxo. Ajustar depois: coluna RECALIBRAR, Protocolo B (fluxos novos) e o preditor de 12 minutos, que o RFC deixa em aberto. |
 
 Dificuldades técnicas registradas, para a equipe aproveitar no diário:
 - Três pares eram auto-ping e foram identificados pelo RTT de cerca de 0,2 ms.

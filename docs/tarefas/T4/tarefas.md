@@ -94,18 +94,18 @@ A Tarefa 3 já reaprendia a tabela de rótulo; faltava o ramo da linha 4 (`n5_au
 ## 4. Revisão com o docente
 
 **O que foi mostrado:** o relatório da Tarefa 4, a tabela Tarefa 3 → Tarefa 4 e a árvore em `results/tarefa4/`.  
-**O que foi pedido para ajustar antes da Tarefa 5:** [a preencher depois da revisão com o docente]
+**O que foi pedido para ajustar antes da Tarefa 5:** A professora não pediu ajustes antes da Tarefa 5.
 
 ---
 
 ## 5. Scrum e diário
 
-- [ ] Board atualizado [a preencher pela equipe]
+- [ ] Board atualizado — Criamos um board no Trello, mas acabamos não utilizando.
 
 | Integrante | O que fiz nesta tarefa | Dificuldades | O que pretendo manter/ajustar |
 |---|---|---|---|
-| Apollo Moura De Sousa | [a preencher] | [a preencher] | [a preencher] |
-| Icaro Luiz Dellalo Silva | [a preencher] | [a preencher] | [a preencher] |
-| Ieda de Oliveira | [a preencher] | [a preencher] | [a preencher] |
-| João Pedro C. de Morais | [a preencher] | [a preencher] | [a preencher] |
+| Apollo Moura De Sousa | Ajudei nas pesquisas sobre hiperparâmetros da árvore e poda por `ccp_alpha` e na revisão do registro desta tarefa. | Entender o efeito da poda e da profundidade nos erros FALHA→OK. | Manter cada mudança de hiperparâmetro ligada a um erro da Tarefa 3. |
+| Icaro Luiz Dellalo Silva | Ajudei nas pesquisas sobre poda por `ccp_alpha` e a comparação entre Gini e entropia, e na revisão do registro desta tarefa. | Entender por que a entropia não zerou os FALHA→OK. | Manter o critério Gini, que fechou os 10 erros. |
+| Ieda de Oliveira | Ajudei na revisão, nas discussões e nas pesquisas desta tarefa sobre o ajuste da árvore e a poda. | Acompanhar as decisões técnicas da tarefa e relacioná-las às etapas do projeto. | Manter a revisão em grupo dos registros da tarefa. |
+| João Pedro C. de Morais | Ajudei na revisão, nas discussões e nas pesquisas desta tarefa sobre o ajuste da árvore e a poda. | Acompanhar as decisões técnicas da tarefa e relacioná-las às etapas do projeto. | Manter a revisão em grupo dos registros da tarefa. |
 | Lucas Matteus Baptista de Godoy | Implementei o ajuste da árvore (`src/ajustar_arvore.py`, `config/arvore_tarefa4.json`, `results/tarefa4/`) a partir dos 10 FALHA→OK da Tarefa 3, preenchi o diário e o relatório, sem abrir o teste e sem coluna de rota. | Ligar cada hiperparâmetro a um erro concreto, e não só “subir a profundidade porque a F1 sobe”. Entropia e poda com profundidade 6 pareciam ajuste, mas devolviam FALHA→OK. | Manter a árvore Gini profunda o suficiente para a linha 4. A Tarefa 5 usa esta árvore no teste. O 1 OK→RISCO residual fica documentado, sem inventar feature de rota. |
